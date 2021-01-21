@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     string m_Path;
+    int cont = 0, cont2 = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,5 +27,27 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
             ScreenShot.TakeCameraScreenshot(600, 600, m_Path);
+
+        if (cont == 100)
+        {
+            var totalObjs = Resources.LoadAll("Prefabs/Can/", typeof(GameObject)).Cast<GameObject>().ToArray();
+            //var obj = Resources.Load("Prefabs/Can/opened_tunacan2") as GameObject;
+            if (totalObjs[cont2] != null)
+            {
+                var objInst = GameObject.Instantiate(totalObjs[cont2], transform.position, transform.rotation);
+            }
+            else
+                Debug.Log("No se ha podido cargar el objeto indicado");
+
+            cont = 0;
+            if (cont2 >= totalObjs.Length-1)
+                cont2 = 0;
+            else
+                cont2++;
+            Debug.Log("Object created");
+        }
+
+        else cont++;
+
     }
 }
