@@ -8,7 +8,7 @@ public class ScreenShot : MonoBehaviour
 
     private Camera myCamera;
     private bool takeScreenShotOnNextFrame;
-    private string path;
+    private string path, imageName;
 
     private void Awake()
     {
@@ -30,8 +30,8 @@ public class ScreenShot : MonoBehaviour
 
 
             byte[] byteArray = renderResult.EncodeToPNG();
-            System.IO.File.WriteAllBytes(path + "/Photo.png", byteArray);
-            Debug.Log("Created 'Photo.png'");
+            System.IO.File.WriteAllBytes(path + ".png", byteArray);
+            //Debug.Log("Created 'Photo.png'");
             RenderTexture.ReleaseTemporary(renderTexture);
             myCamera.targetTexture = null;
         }
@@ -49,9 +49,4 @@ public class ScreenShot : MonoBehaviour
     {
         instance.TakeScreenshots(width, height, savingPath);
     }
-    //void OnMouseDown()
-    //{
-    //    ScreenCapture.CaptureScreenshot("Prueba1.png");
-    //    Debug.Log("Captura de pantalla");
-    //}
 }
