@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     string m_Path;
     public int objectsCont = 0, photosCont = 0;
-    public int photosQuantity = 70;
+    public int photosQuantity = 10;
     public GameObject[] totalObjs;
     GameObject objInst;
 
@@ -36,27 +36,28 @@ public class GameManager : MonoBehaviour
             //Si acabamos de empezar la vuelta de fotos cargamos el nuevo objeto
             if (photosCont == 0)
             {
-                if (totalObjs[objectsCont] != null) //Instanciamos el nuevo objeto
+                if (totalObjs[objectsCont] != null)//Instanciamos el nuevo objeto
                     objInst = GameObject.Instantiate(totalObjs[objectsCont], transform.position, transform.rotation);
+
 
                 else //Si el objeto no puede ser cargado, pasamos al siguiente
                 {
                     Debug.Log("No se ha podido cargar el objeto indicado");
                     objectsCont++;
                     photosCont = -1;
-                    
+
                 }
             }
-            //    //Pos aleatoria
-            //    objInst.transform.position = RandomPosition.GenerateRandomPosition();
-            //    objInst.transform.rotation = RandomPosition.GenerateRandomRotation();
+            //Pos aleatoria
+            objInst.transform.position = RandomPosition.GenerateRandomPosition();
+            objInst.transform.rotation = RandomPosition.GenerateRandomRotation();
 
             //Hacer foto
-            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, m_Path + objInst.name);
+            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, m_Path + totalObjs[objectsCont].name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));
 
             photosCont++;
         }
-        else
+        else if (photosCont >= photosQuantity - 1 && objectsCont < totalObjs.Length - 1)
         {
             //Destruir objeto de la escena
             Destroy(objInst);

@@ -7,11 +7,11 @@ public class RandomPosition : MonoBehaviour
     private static RandomPosition instance;
 
     private Camera cam;
-    public float maxX = 2.2F, maxY = 1.57F, maxZ = 4.86F;
+    public float maxX = 2.2F, maxY = 1.57F, maxZ = 2F;
     Vector3 newPosition;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         cam = Camera.main;
         instance = this;
@@ -29,13 +29,13 @@ public class RandomPosition : MonoBehaviour
 
     private Vector3 NewRandomPosition()
     {
-        bool outOfFieldOfView = false;
-        while (!outOfFieldOfView)
+        bool inFieldOfView = false;
+        while (!inFieldOfView)
         {
             newPosition = new Vector3(Random.Range(-maxX, maxX),
                                       Random.Range(-maxY, maxY),
                                       Random.Range(-maxZ, maxZ));
-            outOfFieldOfView = IsInFieldOfView(newPosition);
+            inFieldOfView = IsInFieldOfView(newPosition);
         }
         return newPosition;
     }
