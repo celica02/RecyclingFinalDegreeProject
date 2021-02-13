@@ -37,26 +37,29 @@ public class GameManager : MonoBehaviour
             if (photosCont == 0)
             {
                 if (totalObjs[objectsCont] != null)//Instanciamos el nuevo objeto
+                {
                     objInst = GameObject.Instantiate(totalObjs[objectsCont], transform.position, transform.rotation);
+                    objInst.AddComponent<RandomPosition>();
 
+                }
 
                 else //Si el objeto no puede ser cargado, pasamos al siguiente
                 {
-                    Debug.Log("No se ha podido cargar el objeto indicado");
+                    Debug.Log("No se ha podido cargar el objeto" + totalObjs[objectsCont]);
                     objectsCont++;
                     photosCont = -1;
 
                 }
             }
             //Pos aleatoria
-            objInst.transform.position = RandomPosition.GenerateRandomPosition();
-            objInst.transform.rotation = RandomPosition.GenerateRandomRotation();
+            objInst.GetComponent<RandomPosition>().NewRandomPosition();
 
             //Hacer foto
             ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, m_Path + totalObjs[objectsCont].name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));
 
             photosCont++;
         }
+
         else if (photosCont >= photosQuantity - 1 && objectsCont < totalObjs.Length - 1)
         {
             //Destruir objeto de la escena

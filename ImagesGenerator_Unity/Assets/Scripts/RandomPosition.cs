@@ -14,20 +14,9 @@ public class RandomPosition : MonoBehaviour
     void Awake()
     {
         cam = Camera.main;
-        instance = this;
     }
 
-    static public Vector3 GenerateRandomPosition()
-    {
-        return instance.NewRandomPosition();
-    }
-
-    static public Quaternion GenerateRandomRotation()
-    {
-        return Random.rotation;
-    }
-
-    private Vector3 NewRandomPosition()
+    public void NewRandomPosition()
     {
         bool inFieldOfView = false;
         while (!inFieldOfView)
@@ -37,7 +26,8 @@ public class RandomPosition : MonoBehaviour
                                       Random.Range(-maxZ, maxZ));
             inFieldOfView = IsInFieldOfView(newPosition);
         }
-        return newPosition;
+        gameObject.transform.position = newPosition;
+        gameObject.transform.rotation = Random.rotation;
     }
 
     //// Update is called once per frame
@@ -50,15 +40,15 @@ public class RandomPosition : MonoBehaviour
     void OnCollisionEnter()
     {
         //if (coll.gameObject.tag == "MainCamera")
-            GenerateRandomPosition();
+        NewRandomPosition();
     }
 
     bool IsInFieldOfView(Vector3 _newPosition)
     {
-        Vector3 screenPoint = cam.WorldToViewportPoint(_newPosition);
-        bool onScreen = screenPoint.z > 0f 
-                        && screenPoint.x > 0f && screenPoint.x < 1f 
-                        && screenPoint.y > 0f && screenPoint.y < 1f;
+        Vector3 objectScreenPoint = cam.WorldToViewportPoint(_newPosition);
+        bool onScreen = objectScreenPoint.z > 0.1f 
+                        && objectScreenPoint.x > 0.1f && objectScreenPoint.x < 0.9f 
+                        && objectScreenPoint.y > 0.1f && objectScreenPoint.y < 0.9f;
         return onScreen;
     }
 }

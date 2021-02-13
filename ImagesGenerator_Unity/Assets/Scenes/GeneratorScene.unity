@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsCont: 0
   photosCont: 0
-  photosQuantity: 70
+  photosQuantity: 3
   totalObjs: []
 --- !u!4 &564722365
 Transform:
@@ -304,7 +304,7 @@ MeshRenderer:
   m_GameObject: {fileID: 743007754}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
