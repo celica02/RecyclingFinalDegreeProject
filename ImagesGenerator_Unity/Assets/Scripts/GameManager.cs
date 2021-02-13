@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour
 {
     string m_Path;
     public int objectsCont = 0, photosCont = 0;
-    public int photosQuantity = 10;
-    public GameObject[] totalObjs;
-    GameObject objInst;
+    public int photosQuantity = 10, objectsQuantity;
+    //public GameObject[] totalObjs;
+    GameObject obj;
 
     // Start is called before the first frame update
     void Start()
@@ -23,49 +23,44 @@ public class GameManager : MonoBehaviour
         if (!System.IO.Directory.Exists(m_Path))
             System.IO.Directory.CreateDirectory(m_Path);
 
-        totalObjs = Resources.LoadAll("Prefabs/Can/", typeof(GameObject)).Cast<GameObject>().ToArray();
-
+        //totalObjs = Resources.LoadAll("Prefabs/Can/", typeof(GameObject)).Cast<GameObject>().ToArray();
+        //objectsQuantity = ObjectsGenerator.ObjectsQuantity();
     }
 
     // Update is called once per frame
     void Update()
     {
         //Si no hemos terminado la vuelta de fotos ni la vuelta a los objetos
-        if (photosCont < photosQuantity - 1 && objectsCont < totalObjs.Length - 1)
+        if (photosCont < photosQuantity - 1)
         {
             //Si acabamos de empezar la vuelta de fotos cargamos el nuevo objeto
             if (photosCont == 0)
-            {
-                if (totalObjs[objectsCont] != null)//Instanciamos el nuevo objeto
-                {
-                    objInst = GameObject.Instantiate(totalObjs[objectsCont], transform.position, transform.rotation);
-                    objInst.AddComponent<RandomPosition>();
+                obj = ObjectsGenerator.LoadNewObject();
 
-                }
-
-                else //Si el objeto no puede ser cargado, pasamos al siguiente
-                {
-                    Debug.Log("No se ha podido cargar el objeto" + totalObjs[objectsCont]);
-                    objectsCont++;
-                    photosCont = -1;
-
-                }
-            }
             //Pos aleatoria
-            objInst.GetComponent<RandomPosition>().NewRandomPosition();
+            obj.GetComponent<RandomPosition>().NewRandomPosition();
 
             //Hacer foto
-            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, m_Path + totalObjs[objectsCont].name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));
+            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, m_Path + obj.name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));
 
             photosCont++;
         }
 
-        else if (photosCont >= photosQuantity - 1 && objectsCont < totalObjs.Length - 1)
+        else if (photosCont >= photosQuantity - 1 )
         {
             //Destruir objeto de la escena
-            Destroy(objInst);
-            objectsCont++;
+            Destroy(obj);
             photosCont = 0;
+            if (ObjectsGenerator.AllObjectsLoaded()) //Si ya se han cargado todos los objetos se cierra la aplicación
+            {
+                Debug.Log("Todos los objetos han sido cargados y fotografiados");
+                #if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+                #else
+                    Application.Quit();
+                #endif
+
+            }
         }
 
 
