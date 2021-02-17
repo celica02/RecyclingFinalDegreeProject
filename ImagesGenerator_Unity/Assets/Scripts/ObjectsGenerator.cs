@@ -10,17 +10,25 @@ public class ObjectsGenerator : MonoBehaviour
 
     public GameObject[] totalObjs;
     GameObject objInst;
-    int objectsCont = 0;
+    int objectsCont=0;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         instance = this;
 
-        totalObjs = Resources.LoadAll("Prefabs/Can/", typeof(GameObject)).Cast<GameObject>().ToArray();
+    }
 
+    private void NewMaterial(string materialType)
+    {
+        string m_path = "Prefabs/" + materialType + "/";
+        Debug.Log(m_path);
+
+        totalObjs = Resources.LoadAll(m_path, typeof(GameObject)).Cast<GameObject>().ToArray();
+        objectsCont = 0;
 
     }
-    public GameObject NewObject()
+
+    private GameObject NewObject()
     {
         if (totalObjs[objectsCont] != null)//Instanciamos el nuevo objeto
         {
@@ -36,6 +44,7 @@ public class ObjectsGenerator : MonoBehaviour
             objectsCont++;
 
         }
+        Debug.Log(objInst.name + "object " + objectsCont + " of " + totalObjs.Length);
         return objInst;
     }
 
@@ -46,6 +55,11 @@ public class ObjectsGenerator : MonoBehaviour
 
     public static bool AllObjectsLoaded()
     {
-        return instance.objectsCont >= instance.totalObjs.Length - 1 ? true : false;
+        return instance.objectsCont >= instance.totalObjs.Length ? true : false;
+    }
+
+    public static void NewMaterialObjects(string materialType)
+    {
+        instance.NewMaterial(materialType);
     }
 }

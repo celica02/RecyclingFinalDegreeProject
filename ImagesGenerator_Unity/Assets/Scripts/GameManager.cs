@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    string m_Path;
-    public int objectsCont = 0, photosCont = 0;
-    public int photosQuantity = 10, objectsQuantity;
+    string destPath, srcPath, currentPath;
+    public int materialsTypeCont = 0, photosCont = 0;
+    public int photosQuantity = 10;
+    string[] typesPaths;
     //public GameObject[] totalObjs;
     GameObject obj;
 
@@ -15,54 +17,76 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Get the path of the Game data folder
-        m_Path = Application.dataPath + "/ImagesCreated/";
+        destPath = Application.dataPath + "/ImagesCreated/";
+        if (!System.IO.Directory.Exists(destPath))
+            System.IO.Directory.CreateDirectory(destPath);
 
-        //Output the Game data path to the console
-        Debug.Log("dataPath : " + m_Path);
+        srcPath = Application.dataPath + "/Resources/Prefabs/";
+        typesPaths = Directory.GetDirectories(srcPath);
 
-        if (!System.IO.Directory.Exists(m_Path))
-            System.IO.Directory.CreateDirectory(m_Path);
-
+        NewMaterial();
         //totalObjs = Resources.LoadAll("Prefabs/Can/", typeof(GameObject)).Cast<GameObject>().ToArray();
         //objectsQuantity = ObjectsGenerator.ObjectsQuantity();
+    }
+    void NewMaterial()
+    {
+        if (materialsTypeCont < typesPaths.Length)
+        {
+            currentPath = destPath + typesPaths[materialsTypeCont].Remove(0, srcPath.Length) + "/";
+            if (!System.IO.Directory.Exists(currentPath))
+                System.IO.Directory.CreateDirectory(currentPath);
+
+            ObjectsGenerator.NewMaterialObjects(typesPaths[materialsTypeCont].Remove(0, srcPath.Length));
+            Debug.Log(typesPaths[materialsTypeCont].Remove(0, srcPath.Length));
+            Debug.Log(currentPath);
+
+            //Output the Game data path to the console
+            //Debug.Log("dataPath : " + destPath);
+        }
+        else
+        {
+                #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+                #else
+            Application.Quit();
+                #endif
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         //Si no hemos terminado la vuelta de fotos ni la vuelta a los objetos
-        if (photosCont < photosQuantity - 1)
+        if (photosCont < photosQuantity)
         {
             //Si acabamos de empezar la vuelta de fotos cargamos el nuevo objeto
             if (photosCont == 0)
                 obj = ObjectsGenerator.LoadNewObject();
 
             //Pos aleatoria
-            obj.GetComponent<RandomPosition>().NewRandomPosition( 2.2F, 1.57F, 2F);
+            obj.GetComponent<RandomPosition>().NewRandomPosition(2.2F, 1.57F, 2F);
 
             //Background aleatorio
             //BackgroundManager.LoadNewBackground();
 
             //Hacer foto
-            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, m_Path + obj.name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));
+            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, currentPath + obj.name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));
 
             photosCont++;
         }
 
-        else if (photosCont >= photosQuantity - 1 )
+        else if (photosCont >= photosQuantity)
         {
             //Destruir objeto de la escena
             Destroy(obj);
+            Debug.Log("Images taken: " + photosCont);
+
             photosCont = 0;
             if (ObjectsGenerator.AllObjectsLoaded()) //Si ya se han cargado todos los objetos se cierra la aplicación
             {
-                Debug.Log("Todos los objetos han sido cargados y fotografiados");
-                #if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPlaying = false;
-                #else
-                    Application.Quit();
-                #endif
-
+                Debug.Log("Todos los objetos del tipo " + currentPath.Remove(0, destPath.Length) + " han sido cargados y fotografiados");
+                materialsTypeCont++;
+                NewMaterial();
             }
         }
 

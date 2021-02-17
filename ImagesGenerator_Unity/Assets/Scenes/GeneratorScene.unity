@@ -251,10 +251,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 683f3eaad0b588a4ab2a01e22726dbd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsCont: 0
+  materialsTypeCont: 0
   photosCont: 0
-  photosQuantity: 3
-  objectsQuantity: 0
+  photosQuantity: 7
 --- !u!4 &564722365
 Transform:
   m_ObjectHideFlags: 0

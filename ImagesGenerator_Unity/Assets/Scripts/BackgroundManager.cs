@@ -15,7 +15,6 @@ public class BackgroundManager : MonoBehaviour
     {
         instance = this;
         planes = GameObject.FindGameObjectsWithTag("Background");
-        Debug.Log(planes.Length);
         planes[0].transform.position = new Vector3(0, 0, 6);
         planes[0].transform.rotation = Quaternion.Euler(-90, 0, 0);
     }
@@ -30,7 +29,7 @@ public class BackgroundManager : MonoBehaviour
     public void Update()
     {
         nShowingPlanes = Random.Range(1, planes.Length);
-        Debug.Log(nShowingPlanes);
+        //Debug.Log(nShowingPlanes);
 
         for (int i = 0; i < planes.Length - 1; i++)
         {
@@ -44,7 +43,6 @@ public class BackgroundManager : MonoBehaviour
                     planes[i].transform.rotation = Quaternion.Euler(Random.Range(0, 360), 90, -90);
                 }
                 planes[i].GetComponent<MeshRenderer>().material = BackgroundsLoader.GetRandomMaterial();
-                Debug.Log(planes[i].name + planes[i].transform.position);
             }
             else
             {

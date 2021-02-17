@@ -41,7 +41,7 @@ public class ScreenShot : MonoBehaviour
     private void TakeScreenshots(int width, int height, string savingPath)
     {
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
-        takeScreenShotOnNextFrame = true;
+        takeScreenShotOnNextFrame = true;  //Fuarda la captura en el siguiente frame
         path = savingPath;
     }
 
