@@ -38,7 +38,10 @@ public class GameManager : MonoBehaviour
                 obj = ObjectsGenerator.LoadNewObject();
 
             //Pos aleatoria
-            obj.GetComponent<RandomPosition>().NewRandomPosition();
+            obj.GetComponent<RandomPosition>().NewRandomPosition( 2.2F, 1.57F, 2F);
+
+            //Background aleatorio
+            //BackgroundManager.LoadNewBackground();
 
             //Hacer foto
             ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, m_Path + obj.name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));

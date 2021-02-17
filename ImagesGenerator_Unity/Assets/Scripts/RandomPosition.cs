@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class RandomPosition : MonoBehaviour
 {
-    private static RandomPosition instance;
-
     private Camera cam;
-    public float maxX = 2.2F, maxY = 1.57F, maxZ = 2F;
+    //public float maxX = 2.2F, maxY = 1.57F, maxZ = 2F;
     Vector3 newPosition;
 
     // Start is called before the first frame update
@@ -16,7 +14,7 @@ public class RandomPosition : MonoBehaviour
         cam = Camera.main;
     }
 
-    public void NewRandomPosition()
+    public void NewRandomPosition(float maxX, float maxY, float maxZ)
     {
         bool inFieldOfView = false;
         while (!inFieldOfView)
@@ -37,11 +35,11 @@ public class RandomPosition : MonoBehaviour
     //        GenerateRandomPosition();
     //}
     
-    void OnCollisionEnter()
-    {
-        //if (coll.gameObject.tag == "MainCamera")
-        NewRandomPosition();
-    }
+    //void OnCollisionEnter()
+    //{
+    //    //if (coll.gameObject.tag == "MainCamera")
+    //    NewRandomPosition();
+    //}
 
     bool IsInFieldOfView(Vector3 _newPosition)
     {
