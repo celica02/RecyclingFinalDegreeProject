@@ -6,7 +6,6 @@
 #
 # Created:     03/12/2020
 # Copyright:   (c) Celia 2020
-# Licence:     <your licence>
 #-------------------------------------------------------------------------------
 import numpy as np
 
@@ -20,16 +19,20 @@ from tensorflow_examples.lite.model_maker.core.task.model_spec import ImageModel
 
 import matplotlib.pyplot as plt
 
+#../Recursos/Images/ParaRedNeuronal/Train/
 
-data = ImageClassifierDataLoader.from_folder('Images/All')
-train_data, test_data = data.split(0.9)
-print('Imágenes cargadas')
+train_data = ImageClassifierDataLoader.from_folder('../Recursos/Images/ParaRedNeuronal/Train/')
+print('Imágenes de entrenamiento cargadas')
+
+test_data = ImageClassifierDataLoader.from_folder('../Recursos/Images/ParaRedNeuronal/Test/')
+#train_data, test_data = data.split(0.9)
+print('Imágenes de test cargadas')
 
 model = image_classifier.create(train_data)
 print('Modelo entrenado')
 
 loss, accuracy = model.evaluate(test_data)
-print('Test accuracy: %f' % accuracy )
+#print('Test accuracy: %f' % accuracy )
 
 #model.export('Images/')
 model.export(export_dir='Images/', with_metadata=False)

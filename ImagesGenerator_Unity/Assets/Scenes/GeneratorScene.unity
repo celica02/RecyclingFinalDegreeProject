@@ -253,7 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   materialsTypeCont: 0
   photosCont: 0
-  photosQuantity: 7
+  photosQuantity: 50
 --- !u!4 &564722365
 Transform:
   m_ObjectHideFlags: 0
@@ -396,7 +396,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591514824}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: 0.35}
+  m_LocalPosition: {x: 0, y: 0.45, z: -3.169}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
