@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Get the path of the Game data folder
-        destPath = Application.dataPath + "/ImagesCreated/";
+        destPath = "../"/*Application.dataPath */+ "ImagesCreated/";
         if (!System.IO.Directory.Exists(destPath))
             System.IO.Directory.CreateDirectory(destPath);
 

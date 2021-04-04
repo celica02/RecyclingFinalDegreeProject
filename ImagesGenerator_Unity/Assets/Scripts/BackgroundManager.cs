@@ -38,7 +38,7 @@ public class BackgroundManager : MonoBehaviour
                 planes[i].SetActive(true);
                 if (i > 0)
                 {
-                    planes[i].transform.position = new Vector3(Random.Range(-2.2F, 2.2F), Random.Range(-1.57F, 1.57F), 6F - i * 0.1f);
+                    planes[i].transform.position = new Vector3(Random.Range(-2.2F, 2.2F), Random.Range(-1.57F, 1.57F), planes[i].transform.position.z);
                     //planes[i].transform.rotation = Random.rotation;
                     planes[i].transform.rotation = Quaternion.Euler(Random.Range(0, 360), 90, -90);
                 }
