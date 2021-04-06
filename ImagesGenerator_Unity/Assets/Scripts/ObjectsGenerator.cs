@@ -11,13 +11,14 @@ public class ObjectsGenerator : MonoBehaviour
     public GameObject[] totalObjs;
     GameObject objInst;
     int objectsCont=0;
+    
     // Start is called before the first frame update
     void Awake()
     {
         instance = this;
-
     }
 
+    //Loads all the models of a new material
     private void NewMaterial(string materialType)
     {
         string m_path = "Prefabs/" + materialType + "/";
@@ -28,9 +29,10 @@ public class ObjectsGenerator : MonoBehaviour
 
     }
 
+    //Instantiates a new model/game object
     private GameObject NewObject()
     {
-        if (totalObjs[objectsCont] != null)//Instanciamos el nuevo objeto
+        if (totalObjs[objectsCont] != null)
         {
             objInst = GameObject.Instantiate(totalObjs[objectsCont], transform.position, transform.rotation);
             objInst.AddComponent<RandomPosition>();
@@ -38,7 +40,7 @@ public class ObjectsGenerator : MonoBehaviour
 
         }
 
-        else //Si el objeto no puede ser cargado, pasamos al siguiente
+        else //if the model couldn't be loaded
         {
             Debug.Log("No se ha podido cargar el objeto" + totalObjs[objectsCont]);
             objectsCont++;

@@ -6,10 +6,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    string destPath, srcPath, currentPath;
-    public int materialsTypeCont = 0, photosCont = 0;
+    string imagesPath, //Path to the folder where all the images will be saved.
+           srcPath,    //Source path of the 3D models
+           destPath;   //Destination path for each image. It'll be a sub-folder of the "imagesPath"
+
+    [HideInInspector]public int materialsTypeCont = 0, photosCont = 0;
     public int photosQuantity = 10;
-    string[] typesPaths;
+    string[] materialsPath; //Array for the different materials
+
     //public GameObject[] totalObjs;
     GameObject obj;
 
@@ -17,12 +21,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Get the path of the Game data folder
-        destPath = "../"/*Application.dataPath */+ "ImagesCreated/";
-        if (!System.IO.Directory.Exists(destPath))
-            System.IO.Directory.CreateDirectory(destPath);
+        imagesPath = "../"/*Application.dataPath */+ "ImagesCreated/";
+        if (!System.IO.Directory.Exists(imagesPath))
+            System.IO.Directory.CreateDirectory(imagesPath);
 
         srcPath = Application.dataPath + "/Resources/Prefabs/";
-        typesPaths = Directory.GetDirectories(srcPath);
+        materialsPath = Directory.GetDirectories(srcPath);
 
         NewMaterial();
         //totalObjs = Resources.LoadAll("Prefabs/Can/", typeof(GameObject)).Cast<GameObject>().ToArray();
@@ -30,19 +34,22 @@ public class GameManager : MonoBehaviour
     }
     void NewMaterial()
     {
-        if (materialsTypeCont < typesPaths.Length)
+        if (materialsTypeCont < materialsPath.Length)
         {
-            currentPath = destPath + typesPaths[materialsTypeCont].Remove(0, srcPath.Length) + "/";
-            if (!System.IO.Directory.Exists(currentPath))
-                System.IO.Directory.CreateDirectory(currentPath);
+            //A new directory is created for each material as a subfolder of the image destination path.
+            destPath = imagesPath + materialsPath[materialsTypeCont].Remove(0, srcPath.Length) + "/";
+            if (!System.IO.Directory.Exists(destPath))
+                System.IO.Directory.CreateDirectory(destPath);
 
-            ObjectsGenerator.NewMaterialObjects(typesPaths[materialsTypeCont].Remove(0, srcPath.Length));
-            Debug.Log(typesPaths[materialsTypeCont].Remove(0, srcPath.Length));
-            Debug.Log(currentPath);
+            ObjectsGenerator.NewMaterialObjects(materialsPath[materialsTypeCont].Remove(0, srcPath.Length));
+            Debug.Log(materialsPath[materialsTypeCont].Remove(0, srcPath.Length));
+            Debug.Log(destPath);
 
             //Output the Game data path to the console
             //Debug.Log("dataPath : " + destPath);
         }
+
+        //When all the materials and theirs models have been captured the application stops.
         else
         {
                 #if UNITY_EDITOR
@@ -56,63 +63,33 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Si no hemos terminado la vuelta de fotos ni la vuelta a los objetos
         if (photosCont < photosQuantity)
         {
-            //Si acabamos de empezar la vuelta de fotos cargamos el nuevo objeto
+            //If all the pictures have been taken a new object is loaded.
             if (photosCont == 0)
                 obj = ObjectsGenerator.LoadNewObject();
 
-            //Pos aleatoria
+            //Random position for the object
             obj.GetComponent<RandomPosition>().NewRandomPosition(2.2F, 1.57F, 2F);
 
-            //Background aleatorio
-            //BackgroundManager.LoadNewBackground();
-
-            //Hacer foto
-            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, currentPath + obj.name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));
+            
+            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, destPath + obj.name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));
 
             photosCont++;
         }
 
         else if (photosCont >= photosQuantity)
         {
-            //Destruir objeto de la escena
             Destroy(obj);
             Debug.Log("Images taken: " + photosCont);
 
             photosCont = 0;
             if (ObjectsGenerator.AllObjectsLoaded()) //Si ya se han cargado todos los objetos se cierra la aplicación
             {
-                Debug.Log("Todos los objetos del tipo " + currentPath.Remove(0, destPath.Length) + " han sido cargados y fotografiados");
+                Debug.Log("Todos los objetos del tipo " + destPath.Remove(0, imagesPath.Length) + " han sido cargados y fotografiados");
                 materialsTypeCont++;
                 NewMaterial();
             }
         }
-
-
-        //if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
-        //    ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, m_Path);
-
-        //if (photosCont == 100)
-        //{
-        //    //var obj = Resources.Load("Prefabs/Can/opened_tunacan2") as GameObject;
-        //    if (totalObjs[objectsCont] != null)
-        //    {
-        //        var objInst = GameObject.Instantiate(totalObjs[objectsCont], transform.position, transform.rotation);
-        //    }
-        //    else
-        //        Debug.Log("No se ha podido cargar el objeto indicado");
-
-        //    photosCont = 0;
-        //    if (objectsCont >= totalObjs.Length-1)
-        //        objectsCont = 0;
-        //    else
-        //        objectsCont++;
-        //    Debug.Log("Object created");
-        //}
-
-        //else photosCont++;
-
     }
 }

@@ -16,21 +16,48 @@
 \end{FraseCelebre}
 
 \begin{resumen}
-...
+Para evitar tener que hacer o descargar miles de fotos para ser utilizadas para el entrenamiento de la red neuronal se tomó la decisión de tratar de hacer un generador de imágenes a partir de modelos 3D.
 \end{resumen}
 
 
 %-------------------------------------------------------------------
 \section{Unity}
 %-------------------------------------------------------------------
-\label{cap1:sec:unity}
+\label{cap3:sec:unity}
+
+Para llevar a cabo la generación de imágenes se ha utilizado Unity.
+Unity es una herramienta de creción de videojuegos creada por Unity Technologies. Unity no se limita al desarrollo de videojuegos únicamente, sino que su uso está más extendido; es una herramienta utilizada en muchos otros sectores como en el cinemático, el de transporte y la producción o en arquitectura, ingeniería y construcción\footnote{https://unity.com/es}.
+
+
+
+ Además también tienen distinto fondo.
+
+El fondo se compone de tres planos diferentes, para cada captura se muestran entre uno y tres de estos planos, se les asigna una rotación aleatoria en los ejes X e Y y una imagen aleatoria también. Tras asignar todas estas variantes, aleatoriamente, se realiza la captura la cual se guarda en la carpeta indicada dentro de una subcarpeta con el nombre del material. Esta carpeta tendrá el mismo nombre que la carpeta desde la que se han cargado los modelos. 
+
+Al ejecutarse se crea la carpeta en la que van a guardarse las imágenes generadas, si no exite. Además, se guarda la ubicación donde se encuentran los modelos 3D a partir de los que van a generarse las imágenes. Tras hacer esta incialización
+		Modelos:
+Se tienen los modelos separados en carpetas según su material principal. Todo esto está recogido en la carpeta "Resources"** en una subcarpeta de nombre "Prefabs". Se van cargando uno a uno y cada frame se les cambia la posición y rotación dentro de unos límites, además se comprueba que esté dentro del campo de visión (Field of View, FOV) de la cámara y que no colisione con esta; para que no exista riesgo de realizar una captura en la que no aparezca ningún objeto. 
+
+
+Se exploró la idea de hacer de esto una aplicación ejecutable en la que el usuario pudiera introducir, además, sus propios modelos y que la red neuronal y la identificación de objetos fuera más completa. Finalmente se tuvo que descartar la idea debido a la dificultad de importar modelos simplemente desde el editor de Unity y que es una opción no muy explorada en este motor, ya que en los juegos los usuarios no suelen introducir sus modelos 3D.
 
 
 %-------------------------------------------------------------------
 \section{Modelos}
 %-------------------------------------------------------------------
-\label{cap1:sec:Modelos}
+\label{cap3:sec:modelos}
 
+La generación de imágenes se lleva a cabo a partir de modelos 3D. Los modelos están agrupados en carpetas según su material.
+La aplicación recorre todas las carpetas de materiales disponibles
+ Todos los modelos se cargan al iniciar la aplicación, se guarda cuántos materiales dis Estos modelos son de distintos objetos y materiales y están ordenados y separados por esto último. 
+De cada uno de los objetos se toman por defecto diez capturas y en cada una tendrán una posición y rotación diferente, siendo esta y aleatoria.
+
+%-------------------------------------------------------------------
+\section{Capturas}
+%-------------------------------------------------------------------
+\label{cap3:sec:capturas}
+
+Las capturas se guardan como .jpg, formato elegido porque era el más **sencillo** de utilizar y ningún otro formato aportaba nada que lo hiciera mejor para la generación de imágenes. Las imágenes se exportan con un tamaño de **XX** x **YY**. Se les pone como nombre el  del modelo capturado, añadiendo la fecha y hora en la que se realiza la captura. 
 
 ...
 

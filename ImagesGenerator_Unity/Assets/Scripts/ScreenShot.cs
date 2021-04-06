@@ -14,7 +14,6 @@ public class ScreenShot : MonoBehaviour
     {
         instance = this;
         myCamera = gameObject.GetComponent<Camera>();
-     
     }
 
     private void OnPostRender()
@@ -31,7 +30,6 @@ public class ScreenShot : MonoBehaviour
 
             byte[] byteArray = renderResult.EncodeToPNG();
             System.IO.File.WriteAllBytes(path + ".png", byteArray);
-            //Debug.Log("Created 'Photo.png'");
             RenderTexture.ReleaseTemporary(renderTexture);
             myCamera.targetTexture = null;
         }
@@ -41,7 +39,7 @@ public class ScreenShot : MonoBehaviour
     private void TakeScreenshots(int width, int height, string savingPath)
     {
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
-        takeScreenShotOnNextFrame = true;  //Fuarda la captura en el siguiente frame
+        takeScreenShotOnNextFrame = true; 
         path = savingPath;
     }
 

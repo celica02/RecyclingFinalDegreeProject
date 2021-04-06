@@ -15,15 +15,11 @@ public class BackgroundsLoader : MonoBehaviour
     {
         instance = this;
 
+        //Load all the materials and saves them in the array
         totalMaterials = Resources.LoadAll("Background/Materials/", typeof(Material)).Cast<Material>().ToArray();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //Selects a random material from the array
     private Material RandomMaterial()
     {
         int m = Random.Range(0, totalMaterials.Length - 1);

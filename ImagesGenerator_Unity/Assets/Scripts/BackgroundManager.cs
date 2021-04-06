@@ -20,38 +20,33 @@ public class BackgroundManager : MonoBehaviour
     }
 
 
-    /*1. Cuántos planos van a mostrarse (mínimo tiene que haber uno)
-     *2. Poner los planos a visibles o no visibles según corresponda
-     *3. Ponerles a los planos, menos al de por defecto, una posición y rotación aleatoria
-     *4. Ponerles una imagen aleatoria a todos los planos que se vayan a mostrar
-    */
 
+    /*Background generator
+     * 1. How many planes will be shown (at leats one)
+     * 2. Set the planes active or inactive as needed. 
+     * 3. Set a random position and rotation to the plane, except to the furthest one.
+     * 4. Set a random image to the planes to be shown.
+    */
     public void Update()
     {
+        //How many planes will be shown for the background.
         nShowingPlanes = Random.Range(1, planes.Length);
-        //Debug.Log(nShowingPlanes);
 
         for (int i = 0; i < planes.Length - 1; i++)
         {
             if (i < nShowingPlanes)
             {
                 planes[i].SetActive(true);
+                //Random position and rotation for the planes except the furthest
                 if (i > 0)
                 {
                     planes[i].transform.position = new Vector3(Random.Range(-2.2F, 2.2F), Random.Range(-1.57F, 1.57F), planes[i].transform.position.z);
-                    //planes[i].transform.rotation = Random.rotation;
                     planes[i].transform.rotation = Quaternion.Euler(Random.Range(0, 360), 90, -90);
                 }
                 planes[i].GetComponent<MeshRenderer>().material = BackgroundsLoader.GetRandomMaterial();
             }
             else
-            {
                 planes[i].SetActive(false);
-            }
         }
     }
-    //public static void LoadNewBackground()
-    //{
-    //    instance.GenerateBackground();
-    //}
 }
