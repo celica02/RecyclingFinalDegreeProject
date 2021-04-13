@@ -14,12 +14,15 @@ public class GameManager : MonoBehaviour
     public int photosQuantity = 10;
     string[] materialsPath; //Array for the different materials
 
-    //public GameObject[] totalObjs;
+    GameObject[] backgrounds;
+    float nearestBackground;
     GameObject obj;
 
     // Start is called before the first frame update
     void Start()
     {
+        backgrounds = GameObject.FindGameObjectsWithTag("Background");
+
         //Get the path of the Game data folder
         imagesPath = "../"/*Application.dataPath */+ "ImagesCreated/";
         if (!System.IO.Directory.Exists(imagesPath))
@@ -70,7 +73,7 @@ public class GameManager : MonoBehaviour
                 obj = ObjectsGenerator.LoadNewObject();
 
             //Random position for the object
-            obj.GetComponent<RandomPosition>().NewRandomPosition(2.2F, 1.57F, 2F);
+            obj.GetComponent<RandomPosition>().NewRandomPosition(1.5F, 1.57F, backgrounds[0].transform.position.z);
 
             
             ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, destPath + obj.name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));

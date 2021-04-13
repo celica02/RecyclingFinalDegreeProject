@@ -253,7 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   materialsTypeCont: 0
   photosCont: 0
-  photosQuantity: 3
+  photosQuantity: 20
 --- !u!4 &564722365
 Transform:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class RandomPosition : MonoBehaviour
 {
     private Camera cam;
+
     //public float maxX = 2.2F, maxY = 1.57F, maxZ = 2F;
     Vector3 newPosition;
 
@@ -19,9 +20,11 @@ public class RandomPosition : MonoBehaviour
         bool inFieldOfView = false;
         while (!inFieldOfView)
         {
-            newPosition = new Vector3(Random.Range(-maxX, maxX),
+            float newZ = Random.Range(cam.transform.position.z + 2, maxZ);
+
+            newPosition = new Vector3(Random.Range(-newZ, newZ),
                                       Random.Range(-maxY, maxY),
-                                      Random.Range(-maxZ, maxZ));
+                                      Random.Range(cam.transform.position.z + 2, maxZ));
             inFieldOfView = IsInFieldOfView(newPosition);
         }
         gameObject.transform.position = newPosition;
