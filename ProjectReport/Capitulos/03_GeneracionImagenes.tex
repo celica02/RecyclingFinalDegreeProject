@@ -1,22 +1,17 @@
 %---------------------------------------------------------------------
 %
-%                          Cap√≠tulo 3
+%                          CapÌtulo 3
 %
 %---------------------------------------------------------------------
 
-\chapter{Generaci√≥n de Im√°genes}
+\chapter{GeneraciÛn de Im·genes}
 
-\begin{FraseCelebre}
-\begin{Frase}
-...
-\end{Frase}
-\begin{Fuente}
-...
-\end{Fuente}
-\end{FraseCelebre}
 
 \begin{resumen}
-Para evitar tener que hacer o descargar miles de fotos para ser utilizadas para el entrenamiento de la red neuronal se tom√≥ la decisi√≥n de tratar de hacer un generador de im√°genes a partir de modelos 3D.
+Para evitar tener que hacer o descargar miles de fotos para ser 
+utilizadas para el entrenamiento de la red neuronal se tomÛ la 
+decisiÛn de tratar de hacer un generador de im·genes a partir de 
+modelos 3D.
 \end{resumen}
 
 
@@ -25,21 +20,25 @@ Para evitar tener que hacer o descargar miles de fotos para ser utilizadas para 
 %-------------------------------------------------------------------
 \label{cap3:sec:unity}
 
-Para llevar a cabo la generaci√≥n de im√°genes se ha utilizado Unity.
-Unity es una herramienta de creci√≥n de videojuegos creada por Unity Technologies. Unity no se limita al desarrollo de videojuegos √∫nicamente, sino que su uso est√° m√°s extendido; es una herramienta utilizada en muchos otros sectores como en el cinem√°tico, el de transporte y la producci√≥n o en arquitectura, ingenier√≠a y construcci√≥n\footnote{https://unity.com/es}.
+Para llevar a cabo la generaciÛn de im·genes se ha utilizado Unity.
+Unity es una herramienta de creciÛn de videojuegos creada por Unity 
+Technologies. Unity no se limita al desarrollo de videojuegos ˙nicamente,
+sino que su uso est· m·s extendido; es una herramienta utilizada en muchos
+otros sectores como en el cinem·tico, el de transporte y la producciÛn o en
+ arquitectura, ingenierÌa y construcciÛn\footnote{https://unity.com/es}.
 
 
 
-Adem√°s, tambi√©n tienen distinto fondo.
+Adem·s, tambiÈn tienen distinto fondo.
 
-El fondo se compone de tres planos diferentes, para cada captura se muestran entre uno y tres de estos planos, se les asigna una rotaci√≥n aleatoria en los ejes X e Y y una imagen aleatoria tambi√©n. Tras asignar todas estas variantes, aleatoriamente, se realiza la captura la cual se guarda en la carpeta indicada dentro de una subcarpeta con el nombre del material. Esta carpeta tendr√° el mismo nombre que la carpeta desde la que se han cargado los modelos. 
+El fondo se compone de tres planos diferentes, para cada captura se muestran entre uno y tres de estos planos, se les asigna una rotaciÛn aleatoria en los ejes X e Y y una imagen aleatoria tambiÈn. Tras asignar todas estas variantes, aleatoriamente, se realiza la captura la cual se guarda en la carpeta indicada dentro de una subcarpeta con el nombre del material. Esta carpeta tendr· el mismo nombre que la carpeta desde la que se han cargado los modelos. 
 
-Al ejecutarse se crea la carpeta en la que van a guardarse las im√°genes generadas, si no exite. Adem√°s, se guarda la ubicaci√≥n donde se encuentran los modelos 3D a partir de los que van a generarse las im√°genes. Tras hacer esta incializaci√≥n
+Al ejecutarse se crea la carpeta en la que van a guardarse las im·genes generadas, si no exite. Adem·s, se guarda la ubicaciÛn donde se encuentran los modelos 3D a partir de los que van a generarse las im·genes. Tras hacer esta incializaciÛn
 		Modelos:
-Se tienen los modelos separados en carpetas seg√∫n su material principal. Todo esto est√° recogido en la carpeta "Resources"** en una subcarpeta de nombre "Prefabs". Se van cargando uno a uno y cada frame se les cambia la posici√≥n y rotaci√≥n dentro de unos l√≠mites, adem√°s se comprueba que est√© dentro del campo de visi√≥n (Field of View, FOV) de la c√°mara y que no colisione con esta; para que no exista riesgo de realizar una captura en la que no aparezca ning√∫n objeto. 
+Se tienen los modelos separados en carpetas seg˙n su material principal. Todo esto est· recogido en la carpeta "Resources"** en una subcarpeta de nombre "Prefabs". Se van cargando uno a uno y cada frame se les cambia la posiciÛn y rotaciÛn dentro de unos lÌmites, adem·s se comprueba que estÈ dentro del campo de visiÛn (Field of View, FOV) de la c·mara y que no colisione con esta; para que no exista riesgo de realizar una captura en la que no aparezca ning˙n objeto. 
 
 
-Se explor√≥ la idea de hacer de esto una aplicaci√≥n ejecutable en la que el usuario pudiera introducir, adem√°s, sus propios modelos y que la red neuronal y la identificaci√≥n de objetos fuera m√°s completa. Finalmente se tuvo que descartar la idea debido a la dificultad de importar modelos simplemente desde el editor de Unity y que es una opci√≥n no muy explorada en este motor, ya que en los juegos los usuarios no suelen introducir sus modelos 3D.
+Se explorÛ la idea de hacer de esto una aplicaciÛn ejecutable en la que el usuario pudiera introducir, adem·s, sus propios modelos y que la red neuronal y la identificaciÛn de objetos fuera m·s completa. Finalmente se tuvo que descartar la idea debido a la dificultad de importar modelos simplemente desde el editor de Unity y que es una opciÛn no muy explorada en este motor, ya que en los juegos los usuarios no suelen introducir sus modelos 3D.
 
 
 %-------------------------------------------------------------------
@@ -47,10 +46,10 @@ Se explor√≥ la idea de hacer de esto una aplicaci√≥n ejecutable en la que el usu
 %-------------------------------------------------------------------
 \label{cap3:sec:modelos}
 
-La generaci√≥n de im√°genes se lleva a cabo a partir de modelos 3D. Los modelos est√°n agrupados en carpetas seg√∫n su material.
-La aplicaci√≥n recorre todas las carpetas de materiales disponibles
- Todos los modelos se cargan al iniciar la aplicaci√≥n, se guarda cu√°ntos materiales dis Estos modelos son de distintos objetos y materiales y est√°n ordenados y separados por esto √∫ltimo. 
-De cada uno de los objetos se toman por defecto diez capturas y en cada una tendr√°n una posici√≥n y rotaci√≥n diferente, siendo esta y aleatoria.
+La generaciÛn de im·genes se lleva a cabo a partir de modelos 3D. Los modelos est·n agrupados en carpetas seg˙n su material.
+La aplicaciÛn recorre todas las carpetas de materiales disponibles
+ Todos los modelos se cargan al iniciar la aplicaciÛn, se guarda cu·ntos materiales dis Estos modelos son de distintos objetos y materiales y est·n ordenados y separados por esto ˙ltimo. 
+De cada uno de los objetos se toman por defecto diez capturas y en cada una tendr·n una posiciÛn y rotaciÛn diferente, siendo esta y aleatoria.
 
 %-------------------------------------------------------------------
 \section{Capturas}
@@ -58,38 +57,18 @@ De cada uno de los objetos se toman por defecto diez capturas y en cada una tend
 \label{cap3:sec:capturas}
 
 [[Cambiar todo esto]] 
-Las capturas se guardan como .jpg, formato elegido porque era el m√°s **sencillo** de utilizar y ning√∫n otro formato aportaba nada que lo hiciera mejor para la generaci√≥n de im√°genes. Las im√°genes se exportan con un tama√±o de **XX** x **YY**. 
+Las capturas se guardan como .jpg, formato elegido porque era el m·s **sencillo** de utilizar y ning˙n otro formato aportaba nada que lo hiciera mejor para la generaciÛn de im·genes. Las im·genes se exportan con un tamaÒo de **XX** x **YY**. 
 
-Se les pone como nombre el  del modelo capturado, a√±adiendo la fecha y hora en la que se realiza la captura. 
-
-...
-
-%-------------------------------------------------------------------
-\section*{\NotasBibliograficas}
-%-------------------------------------------------------------------
-\TocNotasBibliograficas
-
-Citamos algo para que aparezca en la bibliograf√≠a\ldots
-\citep{ldesc2e}
-
-\medskip
-
-Y tambi√©n ponemos el acr√≥nimo \ac{CVS} para que no cruja.
-
-Ten en cuenta que si no quieres acr√≥nimos (o no quieres que te falle la compilaci√≥n en ``release'' mientras no tengas ninguno) basta con que no definas la constante \verb+\acronimosEnRelease+ (en \texttt{config.tex}).
+Se les pone como nombre el  del modelo capturado, aÒadiendo la fecha y hora en la que se realiza la captura. 
 
 
 %-------------------------------------------------------------------
-\section*{\ProximoCapitulo}
+%\section*{\NotasBibliograficas}
 %-------------------------------------------------------------------
-\TocProximoCapitulo
+%\TocNotasBibliograficas
 
-...
 
-% Variable local para emacs, para  que encuentre el fichero maestro de
-% compilaci√≥n y funcionen mejor algunas teclas r√°pidas de AucTeX
-%%%
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../Tesis.tex"
-%%% End:
+%-------------------------------------------------------------------
+%\section*{\ProximoCapitulo}
+%-------------------------------------------------------------------
+%\TocProximoCapitulo

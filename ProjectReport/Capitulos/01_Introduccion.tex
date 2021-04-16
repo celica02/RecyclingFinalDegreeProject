@@ -6,22 +6,21 @@
 
 \chapter{Introducción}
 
-\begin{FraseCelebre}
-\begin{Frase}
-...
-\end{Frase}
-\begin{Fuente}
-...
-\end{Fuente}
-\end{FraseCelebre}
+%\begin{FraseCelebre}
+%\begin{Frase}
+%\end{Frase}
+%\begin{Fuente}
 
-\begin{resumen}
-...
-\end{resumen}
+%\end{Fuente}
+%\end{FraseCelebre}
+
+%\begin{resumen}
+
+%\end{resumen}
 
 
 %-------------------------------------------------------------------
-%\section{Introducción}
+%\section{Introducciï¿½n}
 %-------------------------------------------------------------------
 %\label{cap1:sec:introduccion}
 
@@ -30,49 +29,46 @@
 \section{Motivación}
 %-------------------------------------------------------------------
 \label{cap1:sec:motivacion}
+La idea de este Trabajo de Fin de Grado surge de una necesidad real de ayuda y aprendizaje para reciclar distintos residuos. Con la cantidad de diferentes materiales existentes en el día a día, actualmente muchas veces se hace complicado saber cómo reciclarlos todos adecuadamente. Así, surgió una necesidad de hacer algo al respecto que no sólo fuera útil, sino además fácil de utilizar.
 
+Como seres humanos la forma principal y más sencilla, para la mayoría, de identificar objetos es la vista; así que por qué no trasladar esto a la identificación de residuos.
+
+
+Por otro lado, para llevar a cabo una aplicación de identificación, ya sea imágenes u objetos, son necesarias redes neuronales y para entrenar estas son necesarias imágenes. En el caso de este TFG miles de fotos para contar con diversidad de objetos y materiales diferentes. Para agilizar la obtención de estas imágenes se ha querido explorar, además, la posibilidad de generarlas de manera automática a partir de un modelo 3D y así no tener que hacer todas las fotos, una a una, personalmente.
 
 %-------------------------------------------------------------------
 \section{Objetivos}
 %-------------------------------------------------------------------
 \label{cap1:sec:objectivos}
 
+Los objetivos de este proyecto son desarrollar un prototipo de aplicación móvil de identificación de objetos para reciclaje, haciendo más accesible la información a los ciudadanos; y encontrar una alternativa a tener que hacer cientos de fotografías a distintos objetos para el entrenamiento de la aplicación. Para evitar esto el objeto es desarrollar otra aplicación, esta para ordenador, que permita generar imágenes para el entrenamiento de redes neuronales a partir de modelos 3D. Además, que dicha aplicación pueda ser distribuida y los usuarios puedan introducir sus propios modelos para generar imágenes de lo que requieran.
 
 %-------------------------------------------------------------------
 \section{Plan de Trabajo}
 %-------------------------------------------------------------------
 \label{cap1:sec:plan-trabajo}
 
-Consta de dos partes, la identificación de objetos y la generación de imágenes para el entrenamiento de la red neuronal.
+El trabajo se divide en tres partes: la generación de imágenes, el entrenamiento de la red neuronal y la identificación de objetos.
 
-...
+En la primera parte se debe llevar a cabo una aplicación que cargue modelos 3D, separados por material, y realice numerosas imágenes a cada uno cambiándoles la posición y rotación y, además, cambiar el fondo para obtener diversidad en las imágenes. Estas imágenes deberán ser guardadas separadas por el material al que corresponden, igual que lo estaban los modelos al cargarlos.
+
+Con las imágenes generadas del paso anterior tiene lugar el entrenamiento de la Red Neuronal. Para llevar a cabo esto se deberá investigar sobre los distinto tipos de Redes Neuronales y elegir la opción más adecuada para que el resultado, el modelo entrenado, sea utilizado desde una aplicación móvil.
+
+Por último, como se ha mencionado antes, tendrá lugar el desarrollo de una aplicación para dispositivos móviles que haciendo uso de la cámara y el modelo entrenado identifique el material del objeto al que se está enfocando y después indique al usuario cómo se debe reciclar dicho material. 
+
 
 %-------------------------------------------------------------------
-\section*{\NotasBibliograficas}
+%\section*{\NotasBibliograficas}
 %-------------------------------------------------------------------
-\TocNotasBibliograficas
+%\TocNotasBibliograficas
 
 %Citamos algo para que aparezca en la bibliografía\ldots
 %\citep{ldesc2e}
 
 %\medskip
 
-%Y también ponemos el acrónimo \ac{CVS} para que no cruja.
-
-%Ten en cuenta que si no quieres acrónimos (o no quieres que te falle la compilación en ``release'' mientras no tengas ninguno) basta con que no definas la constante \verb+\acronimosEnRelease+ (en \texttt{config.tex}).
-
 
 %-------------------------------------------------------------------
-\section*{\ProximoCapitulo}
+%\section*{\ProximoCapitulo}
 %-------------------------------------------------------------------
-\TocProximoCapitulo
-
-...
-
-% Variable local para emacs, para  que encuentre el fichero maestro de
-% compilación y funcionen mejor algunas teclas rápidas de AucTeX
-%%%
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../Tesis.tex"
-%%% End:
+%\TocProximoCapitulo

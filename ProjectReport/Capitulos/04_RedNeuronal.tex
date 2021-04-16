@@ -1,23 +1,10 @@
 %---------------------------------------------------------------------
 %
-%                          Cap√≠tulo 4
+%                          CapÌtulo 4
 %
 %---------------------------------------------------------------------
 
 \chapter{Red Neuronal}
-
-\begin{FraseCelebre}
-\begin{Frase}
-...
-\end{Frase}
-\begin{Fuente}
-...
-\end{Fuente}
-\end{FraseCelebre}
-
-\begin{resumen}
-...
-\end{resumen}
 
 
 %-------------------------------------------------------------------
@@ -31,11 +18,11 @@
 %------------------------------------------------------------------
 \label{cap4:sec:tensorflow-lite}
 
-Para la red neuronal se utiliza TensorFlow Lite, un framework de c√≥digo abierto de aprendizaje profundo para dispositivos m√≥viles. 
-TensorFlow Lite Permite ejecutar modelos de aprendizaje profundo en dispositivos m√≥viles. A trav√©s de √©l se puede utilizar modelos entrenados en una computadora en un dispositivo m√≥vil sin necesidad de utilizar un servidor. Utiliza MobileNet, que est√° dise√±ada y optimizada para im√°genes en m√≥viles, incluyendo detecci√≥n y clasificaci√≥n de objetos, detecci√≥n de caras y reconocimiento de **lugares**
+Para la red neuronal se utiliza TensorFlow Lite, un framework de cÛdigo abierto de aprendizaje profundo para dispositivos mÛviles. 
+TensorFlow Lite Permite ejecutar modelos de aprendizaje profundo en dispositivos mÛviles. A travÈs de Èl se puede utilizar modelos entrenados en una computadora en un dispositivo mÛvil sin necesidad de utilizar un servidor. Utiliza MobileNet, que est· diseÒada y optimizada para im·genes en mÛviles, incluyendo detecciÛn y clasificaciÛn de objetos, detecciÛn de caras y reconocimiento de **lugares**
 
-modelo de TensorFlow Lite (un formato FlatBuffer optimizado que se puede identificar mediante la extensi√≥n de archivo .tflite
-TensorFlow Lite incorpora (esto significa que se ejecuta en el dispositivo m√≥vil) TensorFlow en dispositivos m√≥viles. Anunciado en 2017, el paquete de software TFLite est√° dise√±ado espec√≠ficamente para el desarrollo m√≥vil. TensorFlow Lite ‚ÄúMicro‚Äù es, por otro lado, una versi√≥n especialmente para microcontroladores, que se fusion√≥ recientemente con uTensor de ARM.
+modelo de TensorFlow Lite (un formato FlatBuffer optimizado que se puede identificar mediante la extensiÛn de archivo .tflite
+TensorFlow Lite incorpora (esto significa que se ejecuta en el dispositivo mÛvil) TensorFlow en dispositivos mÛviles. Anunciado en 2017, el paquete de software TFLite est· diseÒado especÌficamente para el desarrollo mÛvil. TensorFlow Lite ``Micro'' es, por otro lado, una versiÛn especialmente para microcontroladores, que se fusionÛ recientemente con uTensor de ARM.
 
 
 %-------------------------------------------------------------------
@@ -43,44 +30,42 @@ TensorFlow Lite incorpora (esto significa que se ejecuta en el dispositivo m√≥vi
 %-------------------------------------------------------------------
 \label{cap4:sec:entrenamiento}
 
-A partir del blog de TensorFlow y sus ejemplos se ha generado un script sencillo de carga de im√°genes, separaci√≥n de etiquetas y entrenamiento con todo esto que genera el modelo entrenado, un .tflite ya que se utiliza la extensi√≥n de TensorFlow: TensorFlow Lite, para dispositivos m√≥viles. Y un documento de texto plano con las distintas etiquetas disponibles.
-Dicho script tiene dos maneras de utilizar las im√°genes, la primera es que carga todas las im√°genes de una carpeta, cada tipo de imagen estar√° separada en subcarpetas las cuales ser√°n las distintas etiquetas. Una vez cargadas todas las im√°genes se separan en las de entrenamiento y las de test, siendo un 90\% para lo primero.
-La otra opci√≥n es para comprobar qu√© tal detectaba los objeto si se entrenaba con las im√°genes generadas (spoiler: sale mal), se cargan primero las im√°genes de entrenamiento de la carpeta correspondiente, la cual tiene la separaci√≥n de materiales en subcarpetas; y despu√©s se cargan las im√°genes de test, que ser√°n im√°genes reales de objetos de ese material, tambi√©n estar√°n organizadas en subcarpetas seg√∫n el material correspondiente, y debe haber tantas como en las de entrenamiento. Despues de entrenar la red se comprueba con cuanta precisi√≥n detecta los objetos en las im√°genes de test.
+A partir del blog de TensorFlow y sus ejemplos se ha generado un script sencillo de carga de im·genes, separaciÛn de etiquetas y entrenamiento con todo esto que genera el modelo entrenado, un .tflite ya que se utiliza la extensiÛn de TensorFlow: TensorFlow Lite, para dispositivos mÛviles. Y un documento de texto plano con las distintas etiquetas disponibles.
+Dicho script tiene dos maneras de utilizar las im·genes, la primera es que carga todas las im·genes de una carpeta, cada tipo de imagen estar· separada en subcarpetas las cuales ser·n las distintas etiquetas. Una vez cargadas todas las im·genes se separan en las de entrenamiento y las de test, siendo un 90\% para lo primero.
+La otra opciÛn es para comprobar quÈ tal detectaba los objeto si se entrenaba con las im·genes generadas (spoiler: sale mal), se cargan primero las im·genes de entrenamiento de la carpeta correspondiente, la cual tiene la separaciÛn de materiales en subcarpetas; y despuÈs se cargan las im·genes de test, que ser·n im·genes reales de objetos de ese material, tambiÈn estar·n organizadas en subcarpetas seg˙n el material correspondiente, y debe haber tantas como en las de entrenamiento. Despues de entrenar la red se comprueba con cuanta precisiÛn detecta los objetos en las im·genes de test.
+
+
+``Todas las distintas opciones que he hecho de elegir im·genes, cu·les para entrenamiento cu·les para test; cu·les reales y cu·les generadas. Pruebas con las latas, pruebas con la madera''
 
 %-------------------------------------------------------------------
-\section{Comparaci√≥n}
+\section{Resultados}
 %-------------------------------------------------------------------
-\label{cap4:sec:comparaci√≥n}
-
-
-...
+\label{cap4:sec:resultados}
+Resultados con cada opciÛn de im·genes. Quiz· im·genes de la aplicaciÛn haciÈndose un lÌo.
 
 %-------------------------------------------------------------------
-\section*{\NotasBibliograficas}
+\section{ComparaciÛn}
 %-------------------------------------------------------------------
-\TocNotasBibliograficas
+\label{cap4:sec:comparacion}
+Comparaciones de cÛmo de bien/mal sale el resultado
 
-%Citamos algo para que aparezca en la bibliograf√≠a\ldots
+
+%-------------------------------------------------------------------
+%\section*{\NotasBibliograficas}
+%-------------------------------------------------------------------
+%\TocNotasBibliograficas
+
+%Citamos algo para que aparezca en la bibliografÌa\ldots
 %\citep{ldesc2e}
 
 %\medskip
 
-%Y tambi√©n ponemos el acr√≥nimo \ac{CVS} para que no cruja.
+%Y tambiÈn ponemos el acrÛnimo \ac{CVS} para que no cruja.
 
-%Ten en cuenta que si no quieres acr√≥nimos (o no quieres que te falle la compilaci√≥n en ``release'' mientras no tengas ninguno) basta con que no definas la constante \verb+\acronimosEnRelease+ (en \texttt{config.tex}).
+%Ten en cuenta que si no quieres acrÛnimos (o no quieres que te falle la compilaciÛn en ``release'' mientras no tengas ninguno) basta con que no definas la constante \verb+\acronimosEnRelease+ (en \texttt{config.tex}).
 
 
 %-------------------------------------------------------------------
-\section*{\ProximoCapitulo}
+%\section*{\ProximoCapitulo}
 %-------------------------------------------------------------------
-\TocProximoCapitulo
-
-...
-
-% Variable local para emacs, para  que encuentre el fichero maestro de
-% compilaci√≥n y funcionen mejor algunas teclas r√°pidas de AucTeX
-%%%
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../Tesis.tex"
-%%% End:
+%\TocProximoCapitulo
