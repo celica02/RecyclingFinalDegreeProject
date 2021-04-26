@@ -14,31 +14,51 @@ decisión de tratar de hacer un generador de imágenes a partir de
 modelos 3D.
 \end{resumen}
 
+%-------------------------------------------------------------------
+\section{Introducción}
+%-------------------------------------------------------------------
+\label{cap3:sec:introduccion}
+
+Como el objetivo del proyecto es reconocer e identificar distintos objetos y residuos, su material principal y cómo se debe desechar adecuadamente, es necesario llevar a cabo el entrenamiento de una red neuronal para conseguirlo. Para dicho entrenamiento son necesarias cientos de fotografías para cada material diferente que se quiera introducir. 
+
+Conseguir tantas imágenes distintas y claras supone un trabajo costoso y lento; sin tener en cuenta el almacenaje de estas. 
+Contamos con varias opciones para conseguir las imágenes. Una de ellas, y quizá la más obvia, es descargándolas de la red. Esta opción cuenta con un par de problemas a tener en cuenta, el primero es lo costoso que resulta este procedimiento. Buscar, seleccionar y descargar una a una cientos de imágenes resulta muy lento. El otro problema que tiene esta opción es que además hay que tener en cuanta los derechos de autor y uso de cada una de ellas.
+Otra opción muy intuitiva es la de llevar a cabo las fotografías personalmente. De la mano de esta opción surgió la idea de llevar a cabo un vídeo de objetos de ese material y luego separar los frames de este y usarlos como imágenes para el entrenamiento. Para esta opción también se encuentran varios problemas. Una manera de hacerlo sería grabar todos los objetos a la vez; esto podría tener como resultado que no hubiera contenido suficiente para el entrenamiento o que los objetos no aparecieran suficientemente claros. Otra manera de llevarlo a cabo es grabando los distintos objetos individualmente, en este caso habría que supervisar el descarte de los frames intermedios, aquellos que tendrían lugar en la transición entre un objeto y el siguiente. 
+
+Para estas dos opciones como encontramos un problema importante, y es que habría que poseer todo aquello con lo que se quiere entrena, o en su defecto hacer las capturas en un establecimiento en el que encontrarlo. Pero en este caso hay que tener en cuenta la legislación para llevar esto a cabo.
+Además, con estas opciones existe un riesgo a perder imágenes, y en el caso de que ocurriera sería necesario volver a pasar por todo el proceso para volver a tener suficiente material.
+Para evitar todos estos inconvenientes se plantea la posibilidad de llevar a cabo una aplicación con la que automatizar este proceso. 
+
+Actualmente se va viendo una gran mejoría en los gráficos de contenidos digitales audiovisuales, ya sean películas, videojuegos, videoclips, anuncios, etc. Esta mejora llega hasta tal punto que a veces puede resultar difícil distinguir entre realidad y CGI (Computer-generated imagery). Teniendo esto en cuenta no se ha querido desaprovechar la oportunidad de enfocarlo desde un punto más cercano a este; y es esta es la opción que se decidió para realizar las imágenes de entrenamiento de la red neuronal. Consiste en llevar a cabo una aplicación en la que se vayan cargando distintos modelos de objetos y residuos; a cada objeto, tras ser cargado, se le harán numerosas capturas en distintas posiciones y rotaciones. Como resultado se contará con el número de capturas que se quieran de cada objeto y cada material pudiendo aumentar esta cantidad siempre que se desee o necesite.
 
 %-------------------------------------------------------------------
 \section{Unity}
 %-------------------------------------------------------------------
 \label{cap3:sec:unity}
 
-Para llevar a cabo la generación de imágenes se ha utilizado Unity.
-Unity es una herramienta de creción de videojuegos creada por Unity 
-Technologies. Unity no se limita al desarrollo de videojuegos únicamente,
+Para llevar a cabo la generación de imágenes se ha utilizado Unity\footnote{\url{https://unity.com/es}}.
+Unity es una herramienta de creación de videojuegos desarrollada por Unity 
+Technologies. Unity no se limita al ámbito de los videojuegos únicamente,
 sino que su uso está más extendido; es una herramienta utilizada en muchos
-otros sectores como en el cinemático, el de transporte y la producción o en
- arquitectura, ingeniería y construcción\footnote{https://unity.com/es}.
+otros sectores, como el cinemático, transporte y producción o en 
+arquitectura, ingeniería y construcción.
+Se ha elegido Unity como herramienta ya que simplifica el trabajo que se quiere realizar, de esta forma no hay que crear y llevar a cabo una estructura compleja, que ya ha sido desarrollada en más ocasiones, que es necesaria para lo que se quiere llevar a cabo. Como Unity hay otros programas que se podrían haber utilizado en su lugar tales como Unreal Engine \footnote{\url{https://www.unrealengine.com/en-US/}} o incluso Blender \footnote{\url{https://www.blender.org/}}. La decisión de utilizar Unity fue tomada debido a que es el programa sobre el que se tiene más conocimiento y más se ha utilizado previamente.
+
+Para este proyecto, Unity las herramientas más necesarias tales como la cámara, el sistema de iluminación o las escenas. Además, hay que contar con la amplia documentación que existe sobre esta herramienta y la gran cantidad de cosas que permite llegar a desarrollar.
+
+A pesar de que Unity facilita el trabajo igualmente hay que plantear y desarrollar el funcionamiento de la aplicación. El funcionamiento básico de esta consiste en ir cargando los modelos guardados, uno a uno, que están agrupados por el material al que pertenecen. En cada frame al ejecutar la aplicación se cambia la posición y la rotación del objeto actual en la escena y el fondo. La nueva posición y rotación serán aleatorias, controlando siempre que no queden fuera de los límites de la cámara. Una vez situado el objeto y generado el fondo se realiza una captura de la pantalla. Cuando se hayan recorrido todos los modelos de todas las carpetas de materiales la aplicación terminará su ejecución.
+
+Se exploró la opción de hacer de esto una aplicación ejecutable en la que el usuario pudiera introducir, además, sus propios modelos para poder generar más imágenes para entrenar la red neuronal y hacer la identificación de objetos más completa. Esta idea se tuvo que descartar debido a la dificultad de importar modelos. Se investigó al respecto pero los resultados no fueron exitosos. La introducción de modelos 3D es algo que no suele utilizarse en videojuegos y Unity no cuenta con una manera fácil de llevarlo a cabo. Otro factor importante para el fracaso de esto fueron los numerosos problemas que surgieron al introducir modelos correctamente al editor de Unity. Viendo que esto ya consumía mucho tiempo y esfuerzo se decidió descartar la aplicación para más usuarios en la que poder introducir nuevos modelos.
 
 
+%El fondo se compone de tres planos diferentes, para cada captura se muestran entre uno y %tres de estos planos, se les asigna una rotación aleatoria en los ejes X e Y y una imagen %aleatoria también. Tras asignar todas estas variantes, aleatoriamente, se realiza la captura %la cual se guarda en la carpeta indicada dentro de una subcarpeta con el nombre del %material. Esta carpeta tendrá el mismo nombre que la carpeta desde la que se han cargado los %modelos. 
 
-Además, también tienen distinto fondo.
-
-El fondo se compone de tres planos diferentes, para cada captura se muestran entre uno y tres de estos planos, se les asigna una rotación aleatoria en los ejes X e Y y una imagen aleatoria también. Tras asignar todas estas variantes, aleatoriamente, se realiza la captura la cual se guarda en la carpeta indicada dentro de una subcarpeta con el nombre del material. Esta carpeta tendrá el mismo nombre que la carpeta desde la que se han cargado los modelos. 
-
-Al ejecutarse se crea la carpeta en la que van a guardarse las imágenes generadas, si no exite. Además, se guarda la ubicación donde se encuentran los modelos 3D a partir de los que van a generarse las imágenes. Tras hacer esta incialización
-		Modelos:
-Se tienen los modelos separados en carpetas según su material principal. Todo esto está recogido en la carpeta "Resources"** en una subcarpeta de nombre "Prefabs". Se van cargando uno a uno y cada frame se les cambia la posición y rotación dentro de unos límites, además se comprueba que esté dentro del campo de visión (Field of View, FOV) de la cámara y que no colisione con esta; para que no exista riesgo de realizar una captura en la que no aparezca ningún objeto. 
+%Al ejecutarse se crea la carpeta en la que van a guardarse las imágenes generadas, si no %existe. Además, se guarda la ubicación donde se encuentran los modelos 3D a partir de los %que van a generarse las imágenes. Tras hacer esta incialización
+%		Modelos:
+%Se tienen los modelos separados en carpetas según su material principal. Todo esto está %recogido en la carpeta "Resources"** en una subcarpeta de nombre "Prefabs". Se van cargando %uno a uno y cada frame se les cambia la posición y rotación dentro de unos límites, además %se comprueba que esté dentro del campo de visión (Field of View, FOV) de la cámara y que no %colisione con esta; para que no exista riesgo de realizar una captura en la que no aparezca %ningún objeto. 
 
 
-Se exploró la idea de hacer de esto una aplicación ejecutable en la que el usuario pudiera introducir, además, sus propios modelos y que la red neuronal y la identificación de objetos fuera más completa. Finalmente se tuvo que descartar la idea debido a la dificultad de importar modelos simplemente desde el editor de Unity y que es una opción no muy explorada en este motor, ya que en los juegos los usuarios no suelen introducir sus modelos 3D.
+%Se exploró la idea de hacer de esto una aplicación ejecutable en la que el usuario pudiera %introducir, además, sus propios modelos y que la red neuronal y la identificación de %objetos fuera más completa. Finalmente se tuvo que descartar la idea debido a la dificultad %de importar modelos simplemente desde el editor de Unity y que es una opción no muy %explorada en este motor, ya que en los juegos los usuarios no suelen introducir sus modelos %3D.
 
 
 %-------------------------------------------------------------------
@@ -46,6 +66,29 @@ Se exploró la idea de hacer de esto una aplicación ejecutable en la que el usuar
 %-------------------------------------------------------------------
 \label{cap3:sec:modelos}
 
+Para llevar a acabo la aplicación de generación de imágenes son necesarios modelos 3D. Todos los modelos utilizados son de libre uso, conseguidos desde varias páginas dedicadas a esto. 
+
+%-------------------------------------------------------------------
+\subsection{Carga de Objetos en Unity}
+%-------------------------------------------------------------------
+\label{cap3:ssec:cargaobjetosunity}
+
+El formato elegido para los modelos es FBX. FBX es un tipo de formato de archivo, propiedad de Autodesk. Se decidió utilizar este formato ya que es uno de los más extendidos, se encuentran bastantes recursos sin problema y su carga en Unity suele ser sencilla. Además, ha sido un formato utilizado para modelos de proyectos anteriores por lo que trabajar con ello generaba más tranquilidad que con algo desconocido.
+
+Con lo comentado previamente parecía que la carga de los modelos en Unity sería un mero trámite sin mucha complicación. Desafortunadamente, esto no es así. Puesto que Unity continúa actualizándose y mejorando funcionalidades, esta es una de las que ha sido editada. 
+La carga de los modelos se hacía correctamente. El problema que surgió es que ni las texturas ni los materiales se cargan correctamente con el modelo.
+
+Para llevar esto a cabo los modelos exportados en FBX tienen que serlo de una manera especial. 
+
+Esto provocó que muchos de los modelos que se tienen han tenido que ser importados primero a blender 
+
+Se hiucieron muchas pruebas tratando de abrirlos desde distintos editores para tratar de comprender qué ocurría con las texturas. Algunos de estos modelos incluso presentaban problemas mayores, por ejemplo que las caras se renderizaran al revés. En este caso concreto se trataba de una bottella de la cual se podían ver las caras internas en vez de las externas \todo{mejorarlo y poner imágenes}
+%-------------------------------------------------------------------
+\subsection{Los modelos en la aplicación}
+%-------------------------------------------------------------------
+\label{cap3:ssec:modelosaplicacion}
+
+La aplicación irá recorriendo todas las carpetas de materiales
 La generación de imágenes se lleva a cabo a partir de modelos 3D. Los modelos están agrupados en carpetas según su material.
 La aplicación recorre todas las carpetas de materiales disponibles
  Todos los modelos se cargan al iniciar la aplicación, se guarda cuántos materiales dis Estos modelos son de distintos objetos y materiales y están ordenados y separados por esto último. 
@@ -56,10 +99,9 @@ De cada uno de los objetos se toman por defecto diez capturas y en cada una tend
 %-------------------------------------------------------------------
 \label{cap3:sec:capturas}
 
-[[Cambiar todo esto]] 
-Las capturas se guardan como .jpg, formato elegido porque era el más **sencillo** de utilizar y ningún otro formato aportaba nada que lo hiciera mejor para la generación de imágenes. Las imágenes se exportan con un tamaño de **XX** x **YY**. 
+\todo {Las capturas se guardan como .jpg, formato elegido porque era el más **sencillo** de utilizar y ningún otro formato aportaba nada que lo hiciera mejor para la generación de imágenes. Las imágenes se exportan con un tamaño de **XX** x **YY**. 
 
-Se les pone como nombre el  del modelo capturado, añadiendo la fecha y hora en la que se realiza la captura. 
+Se les pone como nombre el  del modelo capturado, añadiendo la fecha y hora en la que se realiza la captura. }
 
 
 %-------------------------------------------------------------------
