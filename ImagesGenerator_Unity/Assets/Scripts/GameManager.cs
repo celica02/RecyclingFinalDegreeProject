@@ -32,9 +32,8 @@ public class GameManager : MonoBehaviour
         materialsPath = Directory.GetDirectories(srcPath);
 
         NewMaterial();
-        //totalObjs = Resources.LoadAll("Prefabs/Can/", typeof(GameObject)).Cast<GameObject>().ToArray();
-        //objectsQuantity = ObjectsGenerator.ObjectsQuantity();
     }
+     
     void NewMaterial()
     {
         if (materialsTypeCont < materialsPath.Length)
@@ -87,7 +86,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Images taken: " + photosCont);
 
             photosCont = 0;
-            if (ObjectsGenerator.AllObjectsLoaded()) //Si ya se han cargado todos los objetos se cierra la aplicación
+            if (ObjectsGenerator.AllObjectsLoaded()) //If all objects of a material type have been captured the next material is loaded.
             {
                 Debug.Log("Todos los objetos del tipo " + destPath.Remove(0, imagesPath.Length) + " han sido cargados y fotografiados");
                 materialsTypeCont++;
