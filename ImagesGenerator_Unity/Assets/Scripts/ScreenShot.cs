@@ -7,7 +7,7 @@ public class ScreenShot : MonoBehaviour
     private static ScreenShot instance;
 
     private Camera myCamera;
-    private bool takeScreenShotOnNextFrame;
+    private bool takeScreenShotOnNextFrame/*, png*/;
     private string path, imageName;
 
     private void Awake()
@@ -27,24 +27,32 @@ public class ScreenShot : MonoBehaviour
             Rect rect = new Rect(0, 0, renderTexture.width, renderTexture.height);
             renderResult.ReadPixels(rect, 0, 0);
 
-
-            byte[] byteArray = renderResult.EncodeToPNG();
-            System.IO.File.WriteAllBytes(path + ".png", byteArray);
+            if (png)
+            {
+                byte[] byteArray = renderResult.EncodeToPNG();
+                System.IO.File.WriteAllBytes(path + ".png", byteArray);
+            }
+            else
+            {
+                byte[] byteArray = renderResult.EncodeToJPG();
+                System.IO.File.WriteAllBytes(path + ".jpg", byteArray);
+            }
             RenderTexture.ReleaseTemporary(renderTexture);
             myCamera.targetTexture = null;
         }
 
     }
 
-    private void TakeScreenshots(int width, int height, string savingPath)
+    private void TakeScreenshots(int width, int height, string savingPath, bool isPNG)
     {
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
         takeScreenShotOnNextFrame = true; 
         path = savingPath;
+        png = isPNG;
     }
 
-    public static void TakeCameraScreenshot (int width, int height, string savingPath)
+    public static void TakeCameraScreenshot (int width, int height, string savingPath, bool isPNG)
     {
-        instance.TakeScreenshots(width, height, savingPath);
+        instance.TakeScreenshots(width, height, savingPath, isPNG);
     }
 }

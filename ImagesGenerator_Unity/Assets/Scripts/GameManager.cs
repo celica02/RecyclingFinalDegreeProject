@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]public int materialsTypeCont = 0, photosCont = 0;
     public int photosQuantity = 10;
+    public bool png = true;
     string[] materialsPath; //Array for the different materials
 
     GameObject[] backgrounds;
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour
             obj.GetComponent<RandomPosition>().NewRandomPosition(1.5F, 1.57F, backgrounds[0].transform.position.z);
 
             
-            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, destPath + obj.name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"));
+            ScreenShot.TakeCameraScreenshot(Screen.width, Screen.height, destPath + obj.name + System.DateTime.Now.ToString("_ddMMyyyy-HHmmssfff"), png);
 
             photosCont++;
         }
