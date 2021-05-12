@@ -33,3 +33,11 @@ ImagesCreated/
 ProjectReport/build/
 
 *.aux
+
+*.bak
+
+*.bbl
+
+*.blg
+
+*.dvi

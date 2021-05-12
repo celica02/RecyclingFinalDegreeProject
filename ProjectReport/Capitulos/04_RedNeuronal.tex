@@ -3,26 +3,33 @@
 %                          Capítulo 4
 %
 %---------------------------------------------------------------------
-
 \chapter{Red Neuronal}
+
+\begin{resumen}
+
+
+\end{resumen}
+
 
 
 %-------------------------------------------------------------------
-\section{Tensorflow}
+\section{TensorFlow y TensorFlow Lite}
 %-------------------------------------------------------------------
 \label{cap4:sec:tensorflow}
 
+El equipo de Google Brain comenzó a investigar en 2011 el uso de redes neuronales a gran escala para utilizarlo en los productos de la empresa. Como resultado desarrollaron DistBelief, su primer sistema de entrenamiento e inferencia escalable. A partir de este, basándose en la experiencia y en un entendimiento más completo de las necesidades y requerimientos del sistema ideal, desarrollaron TensorFlow. Este utiliza modelos de flujo de datos y los mapea en una gran variedad de diferentes plataformas, desde dispositivos móviles, como máquinas sencillas de una o varias GPU, hasta sistemas a gran escala de cientos de máquinas especializadas con miles de GPUs. 
+La API de TensorFlow y las implementaciones de referencia fueron lanzadas como un paquete de código abierto bajo una licencia de Apache 2.0 en noviembre de 2015; puede encontrarse todo en su página web\footnote{\url{https://www.tensorflow.org/}} \citep*{tensorflow2015-whitepaper}.
 
-%-------------------------------------------------------------------
-\section{Tensorflow Lite}
-%------------------------------------------------------------------
-\label{cap4:sec:tensorflow-lite}
 
-Para la red neuronal se utiliza TensorFlow Lite, un framework de código abierto de aprendizaje profundo para dispositivos móviles. 
-TensorFlow Lite Permite ejecutar modelos de aprendizaje profundo en dispositivos móviles. A través de él se puede utilizar modelos entrenados en una computadora en un dispositivo móvil sin necesidad de utilizar un servidor. Utiliza MobileNet, que está diseñada y optimizada para imágenes en móviles, incluyendo detección y clasificación de objetos, detección de caras y reconocimiento de **lugares**
+Como el nombre de TesorFlow indica, las operaciones son llevadas a cabo por redes neuronales en \textit{arrays} multidimensionales de datos, mejor conocidos como tensores.
+Puesto que la estructura son grafos de flujo de datos, en estos, los nodos corresponden a las operaciones matemáticas como sumas, multiplicaciones, factorización y demás; en cambio, los bordes corresponden a los tensores. \citep*{Karim2018}.
 
-modelo de TensorFlow Lite (un formato FlatBuffer optimizado que se puede identificar mediante la extensión de archivo .tflite
-TensorFlow Lite incorpora (esto significa que se ejecuta en el dispositivo móvil) TensorFlow en dispositivos móviles. Anunciado en 2017, el paquete de software TFLite está diseñado específicamente para el desarrollo móvil. TensorFlow Lite ``Micro'' es, por otro lado, una versión especialmente para microcontroladores, que se fusionó recientemente con uTensor de ARM.
+Como se ha comentado, TensorFlow fue desarrollado para ser ejecutado en sistemas muy diversos, incluidos dispositivos móviles. Este fue llamado TensorFlow Mobile y permitió a los desarrolladores para móvil crear aplicaciones interactivas sin los retrasos que generaban los cálculos computacionales de aprendizaje automático. A pesar de las optimizaciones para mejorar la actuación de los modelos y que el mínimo \textit{hardware} requerido era bastante accesible; seguía existiendo cuello de botella en la velocidad de cálculo computacional por la baja latencia de los dispositivos móviles. Por ejemplo, un dispositivo móvil cuyo \textit{hardware} era capaz de ejecutar 10 GigaFLOPS estaba limitado a ejecutar un modelo de 5 GFLOPS  a 2 FPS, lo que provocaba que la aplicación no funcionara como era esperado \citep*{Alsing2018}.
+
+TensorFlow Lite es la evolución de TensorFlow Mobile, algunas de las optimizaciones que incluye son el uso de \textit{frameworks} como la API de redes neuronales de Android y redes neuronales optimizadas para móvil como MobileNets \citep*{howard2017mobilenets} y SqueezeNet\citep*{iandola2016squeezenet}.
+Permite ejecutar modelos de aprendizaje profundo en dispositivos móviles. Estos son entrenados en una computadora y posteriormente trasladados al dispositivo sin necesidad de utilizar un servidor. Utiliza MobileNet, la cual está diseñada y optimizada para imágenes en móviles, incluyendo detección y clasificación de objetos, detección de caras y reconocimiento de lugares.
+Los modelos de TensorFlow Lite generados en el entrenamiento tienen como extensión de archivo \textit{.tflite} el cual tiene formato FlatBuffer.
+Tensorflow Lite no se limita a los modelos que han sido directamente creados con esta extensión, sino que en la documentación de TensorFlow se encuentra un conversor que toma un modelo en otro formato y lo convierte a \textit{.tflite}\footnote{\url{https://www.tensorflow.org/lite/convert?hl=es-419}}.
 
 
 %-------------------------------------------------------------------
@@ -30,12 +37,15 @@ TensorFlow Lite incorpora (esto significa que se ejecuta en el dispositivo móvil
 %-------------------------------------------------------------------
 \label{cap4:sec:entrenamiento}
 
-A partir del blog de TensorFlow y sus ejemplos se ha generado un script sencillo de carga de imágenes, separación de etiquetas y entrenamiento con todo esto que genera el modelo entrenado, un .tflite ya que se utiliza la extensión de TensorFlow: TensorFlow Lite, para dispositivos móviles. Y un documento de texto plano con las distintas etiquetas disponibles.
-Dicho script tiene dos maneras de utilizar las imágenes, la primera es que carga todas las imágenes de una carpeta, cada tipo de imagen estará separada en subcarpetas las cuales serán las distintas etiquetas. Una vez cargadas todas las imágenes se separan en las de entrenamiento y las de test, siendo un 90\% para lo primero.
-La otra opción es para comprobar qué tal detectaba los objeto si se entrenaba con las imágenes generadas (spoiler: sale mal), se cargan primero las imágenes de entrenamiento de la carpeta correspondiente, la cual tiene la separación de materiales en subcarpetas; y después se cargan las imágenes de test, que serán imágenes reales de objetos de ese material, también estarán organizadas en subcarpetas según el material correspondiente, y debe haber tantas como en las de entrenamiento. Después de entrenar la red se comprueba con cuanta precisión detecta los objetos en las imágenes de test.
+Para llevar a cabo el entrenamiento de la red neuronal se ha realizado un \textit{script} que se encargue de la lógica de esto. Este \textit{script}, en primer lugar, carga las imágenes con las que se va a entrenar y validar, en este caso estas están separadas según el material al que pertenecen (plástico, metal, vidrio, etc.). La separación entre imágenes de entrenamiento y de validación se puede realizar de dos maneras: la primera es que todas las imágenes de un mismo material se encuentran en la misma carpeta, como se muestra en la figura~\ref{fig:CarpetasUnif}, en este caso separa las imágenes utilizando un 90\% de ellas para entrenamiento y 10\% para validación. En la segunda forma, las imágenes se encuentran separadas como se muestra en la figura~\ref{fig:CarpetasSepar}. En este caso se ha mantenido aproximadamente las mismas proporciones, de 90-10, en la cantidad de las imágenes que en el caso anterior.
 
+\figura{Unificadas.png}{width=.5\textwidth}{fig:CarpetasUnif}{Organización de las carpetas con las imágenes unificadas.}
+\figura{Separadas.png}{width=.5\textwidth}{fig:CarpetasSepar}{Organización de las carpetas con las imágenes separadas.}
 
-``Todas las distintas opciones que he hecho de elegir imágenes, cuáles para entrenamiento cuáles para test; cuáles reales y cuáles generadas. Pruebas con las latas, pruebas con la madera''
+\todo{Poner esto de otra manera: La primera opción es útil cuando todas las imágenes son del mismo tipo, por ejemplo en las pruebas iniciales del script se probó que funcionaba correctamente utilizando únicamente imágenes reales. Posteriormente, al introducir las imágenes sintéticas, puesto que se entrena con estas pero debe validarse con las reales, se pasó al segundo formato quedando este como definitivo.}
+
+Tras llevarse a cabo el entrenamiento se genera el modelo entrenado, este es un archivo con extensión \textit{.tflite}, que pertenece a Tensorflow Lite para que pueda ser utilizado desde dispositivos móviles como se ha comentado previamente 
+\todo{asegurarme de que esto es así}. Además de este archivo, se genera un documento de texto plano con las etiquetas correspondientes a cada material.
 
 %-------------------------------------------------------------------
 \section{Resultados}
