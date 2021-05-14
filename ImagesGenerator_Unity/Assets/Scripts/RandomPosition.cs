@@ -21,7 +21,7 @@ public class RandomPosition : MonoBehaviour
         bool inFieldOfView = false;
         while (!inFieldOfView)
         {
-            float newZ = Random.Range(minDistToCamera, maxZ);
+            float newZ = Random.Range(minDistToCamera, maxZ-2);
 
             newPosition = new Vector3(Random.Range(-newZ, newZ),
                                       Random.Range(-maxY, maxY),

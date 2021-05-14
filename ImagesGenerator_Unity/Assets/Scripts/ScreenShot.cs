@@ -7,7 +7,7 @@ public class ScreenShot : MonoBehaviour
     private static ScreenShot instance;
 
     private Camera myCamera;
-    private bool takeScreenShotOnNextFrame/*, png*/;
+    private bool takeScreenShotOnNextFrame, png;
     private string path, imageName;
 
     private void Awake()

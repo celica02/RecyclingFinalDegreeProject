@@ -40,7 +40,7 @@ public class BackgroundManager : MonoBehaviour
                 //Random position and rotation for the planes except the furthest
                 if (i > 0)
                 {
-                    planes[i].transform.position = new Vector3(Random.Range(-2.2F, 2.2F), Random.Range(-1.57F, 1.57F), planes[i].transform.position.z);
+                    planes[i].transform.position = new Vector3(Random.Range(-2.2F, 2.2F), Random.Range(-1.57F, 1.57F), planes[i-1].transform.position.z -1);
                     planes[i].transform.rotation = Quaternion.Euler(Random.Range(0, 360), 90, -90);
                 }
                 planes[i].GetComponent<MeshRenderer>().material = BackgroundsLoader.GetRandomMaterial();
