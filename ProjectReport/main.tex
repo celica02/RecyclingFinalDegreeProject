@@ -116,11 +116,11 @@ constantes,guionado,Cascaras/bibliografia,config%
 
 \include{Cascaras/cover}
 
-\include{Cascaras/dedicatoria}
+%\include{Cascaras/dedicatoria}
 
-\include{Cascaras/agradecimientos}
+%\include{Cascaras/agradecimientos}
 
-\include{Cascaras/resumen}
+%\include{Cascaras/resumen}
 
 \ifx\generatoc\undefined
 \else
@@ -141,7 +141,7 @@ constantes,guionado,Cascaras/bibliografia,config%
 
 % Apéndices
 \appendix
-\include{Apendices/01ApendiceA}
+%\include{Apendices/01ApendiceA}
 %\include{...}
 %\include{...}
 %\include{...}
@@ -162,13 +162,14 @@ constantes,guionado,Cascaras/bibliografia,config%
 % TeXiS.sty para más información.
 
 % En realidad, el soporte para la generación de índices de palabras
-% en TeXiS no está documentada en el manual, porque no ha sido usada
+
+7% en TeXiS no está documentada en el manual, porque no ha sido usada
 % "en producción". Por tanto, el fichero que genera el índice
 % *no* se incluye aquí (está comentado). Consulta la documentación
 % en TeXiS_pream.tex para más información.
 \ifx\generaindice\undefined
 \else
-%\include{TeXiS/TeXiS_indice}
+\include{TeXiS/TeXiS_indice}
 \fi
 
 %

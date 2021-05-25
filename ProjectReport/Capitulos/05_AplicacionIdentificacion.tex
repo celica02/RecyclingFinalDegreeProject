@@ -4,34 +4,100 @@
 %
 %---------------------------------------------------------------------
 
-\chapter{Aplicación de Identificación de Objetos}
-
+\chapter{Aplicación de identificación de objetos}
+\label{cap5}
 \begin{resumen}
-En este capítulo se habla del desarrollo de la aplicación móvil. Esta aplicación tiene como objetivo identificar y diferenciar diversos objetos y residuos que una vez identificado se explica al usuario cuál es la forma adecuada de desecharlos y reciclarlos. La aplicación es para dispositivos con sistema operativo Android y está llevada a cabo en Android Studio con Java y la librería de TensorFlow Lite para introducir la identificación. 
+En este capítulo se trata el desarrollo de la aplicación móvil. Esta aplicación tiene como objetivo identificar y diferenciar diversos objetos y residuos que una vez identificado se explica al usuario cuál es la forma adecuada de desecharlos y reciclarlos. La aplicación es para dispositivos con sistema operativo Android y está llevada a cabo en Android~Studio con Java y la librería de TensorFlow~Lite para introducir la identificación. 
 
 \end{resumen}
+
+%-------------------------------------------------------------------
+\section{Introducción}
+%-------------------------------------------------------------------
+\label{cap5:sec:introduccion}
+Como se ha comentado, la aplicación de identificación de objetos para reciclaje es el objetivo principal de este trabajo de fin de grado. Se trata de una aplicación para dispositivos móviles la cual, utilizando la cámara del dispositivo en el que está instalada, identifica el material del objeto al que está enfocando el usuario. En la interfaz aparecen las tres opciones con más probabilidad, acompañadas del porcentaje de confianza respecto a esa opción. Independientemente de cuántas etiquetas de materiales distintas hay, siempre se muestran las tres con mayor confianza.
+La aplicación está constantemente interpretando lo que recibe desde la cámara, así que las etiquetas y sus respectivos porcentajes se actualizan ininterrumpidamente sin necesidad de estar tomando fotografías para cada elemento.
+
+El desarrollo se ha centrado en dispositivos con sistema operativo Android puesto que el acceso a las otras opciones posibles, iOS y Raspberry, resultaba inviable. %Asimismo, se destacarán características sobre el desarrollo para estas otras plataformas.
 
 %-------------------------------------------------------------------
 \section{Tensorflow Lite}
 %-------------------------------------------------------------------
 \label{cap5:sec:tensorflow-lite}
-TensorFlow Lite no sólo facilita el trabajo de entrenar la red neuronal, sino también el uso del modelo generado en la aplicación. 
+Como se presentó en la sección~\ref{cap4:sec:tensorflow}, para el desarrollo del proyecto se han empleado las herramientas que brinda TensorFlow~Lite, framework desarrollado por Google para aprendizaje profundo en dispositivos móviles. Además de facilitar el entrenamiento de redes neuronales como se explicó en el capítulo anterior, también simplifica la importación de los modelos generados y su uso en distintas plataformas.
+Los modelos de TensorFlow~Lite pueden manejarse desde dispositivos Android, iOS y Raspberry, y para el desarrollo de una aplicación para cada una de estas opciones pueden utilizarse Android~Studio, Swift y Objective-C; y Python, respectivamente.
 
-Cuenta con dos librerías 
-
-
- Para este proyecto se decidió aprovechar el ejemplo que 
+Para el correcto funcionamiento, en Andorid, de la aplicación con el modelo entrenado son necesarias dos librerías.
+La primera es la librería de tareas de TensorFlow~Lite, que cuenta con un conjunto de bibliotecas específicas de tareas potentes y fáciles de usar por los desarrolladores para crear experiencias de aprendizaje automático. Esta funciona varias plataformas y es compatible con Java y C++.
+La segunda librería necesaria es la de compatibilidad, esta facilita la integración de modelos en la aplicación. Proporciona API de alto nivel que ayuda a transformar los datos de entrada en el formato requerido por el modelo, además de interpretar su salida.
 
 %-------------------------------------------------------------------
 \section{Identificación de objetos}
 %-------------------------------------------------------------------
 \label{cap5:sec:identificacion-objetos}
-\todo{Qué hace -> apuntas a un objeto saca con qué porcentaje considera que es cierto material.}
+La aplicación desarrollada está basada en el ejemplo que proporciona TensorFlow~Lite sobre reconocimiento de flores\footnote{\url{https://codelabs.developers.google.com/codelabs/recognize-flowers-with-tensorflow-on-android/?hl=es-419\#0}}. El funcionamiento es similar pero se ha adaptado de identificar flores a diferenciar distintos materiales. Como se comentó en la sección~\ref{cap4:sec:entrenamiento}, cuando se explicaba el entrenamiento de la red neuronal, como prototipado se ha trabajado simplemente con tres materiales (metal, vidrio y plástico). Para el correcto funcionamiento de la aplicación en Android es importante que haya al menos tres objetivos a identificar; esto es debido a que la librería de TensorFlow~Lite está planteada de tal forma que muestra las tres opciones sobre las que tiene más confianza de qué se trata. Si se utilizan menos de tres no funciona.
+ 
+Para utilizar TensorFlow~Lite en primer lugar se han de incluir las librerías para poder utilizar sus funcionalidades. Una vez hecho esto se importa el intérprete, este carga y ejecuta el modelo dándole una serie de datos de entrada. Tras ejecutarlo escribe los resultados por pantalla. 
+
+La aplicación hace uso de la cámara del dispositivo, lee \textit{frames} desde esta y los convierte a imágenes, estos son los datos que se utilizan como entrada para el modelo. Dichos datos de entrada se reciben desde la cámara en formato \textit{bitmap}, matrices donde cada casilla tiene asignado un color y que en conjunto forman una imagen. 
+Ese \textit{bitmap} es convertido a \textit{byte~buffer}, denominado \textit{IMG data}, lo que lo hace legible para el modelo entrenado. Además utilizar Byte~buffers como entrada permite que la API de Java sea más rápida\footnote{\url{https://www.tensorflow.org/lite/performance/best_practices?authuser=1}}. Estos datos se cargan en el intérprete de TensorFlow~Lite y finalmente se obtienen los valores del resultados. Estos valores que se obtienen son índices respecto a las etiquetas y la probabilidad de que esa imagen corresponda a esa etiqueta, y se devuelven en un array correspondiendo cada posición de este a cada una de las etiquetas disponibles.\footnote{\url{https://www.youtube.com/watch?v=JnhW5tQ_7Vo}} Finalmente, se seleccionan las tres etiquetas con mayor probabilidad que son mostradas por la interfaz; por esto se comentaba previamente que es importante tener al menos tres objetivos de identificación para el correcto funcionamiento de la aplicación. 
+
+Respecto a la interfaz de usuario de la aplicación, se ha mantenido semejante a la proporcionada en el ejemplo. En la parte superior aparece el logo de Tensorflow, en la parte central se muestra lo que se está apuntando con la cámara y en la parte inferior se tiene un panel. En este panel es donde se encuentran las etiquetas sobre el objeto identificado y las probabilidades correspondientes a cada una. Este, además, se despliega hacia arriba y mostrando varias características del proceso. Estas son la resolución con la que se recogen las imágenes, la rotación del dispositivo y el tiempo de inferencia, que es el tiempo que tarda en detectar de qué objeto se trata.
+Además de estas características, cuenta con dos opciones configurables por el usuario que permiten la mejora de la aplicación. La primera es la elección de cuántos hilos utilice, estos permiten acelerar la ejecución de los operadores. Sin embargo, el aumento de hilos utilizados hará que se utilicen más recursos y potencia. La otra opción es elegir entre utilizar la CPU o la GPU. La GPU es uno de los aceleradores que TensorFlow~Lite puede aprovechar. Si la GPU del dispositivo es compatible con las especificaciones de TensorFlow~Lite se utilizará esta, si no, será la CPU con cuatro subprocesos. Según el dispositivo y la opción que se utilice la velocidad variará\footnote{\url{https://codelabs.developers.google.com/codelabs/recognize-flowers-with-tensorflow-on-android/?hl=es-419\#7}}.
+
+%-------------------------------------------------------------------
+\section{Pruebas}
+%-------------------------------------------------------------------
+\label{cap5:sec:pruebas}
+Con todo lo necesario desarrollado, se llevan a cabo varias pruebas para comprobar el funcionamiento de la aplicación de identificación. Para tener suficientes datos con los que comparar el funcionamiento se escogen cuatro de los modelos entrenados con los distintos \textit{datasets}. Estos son los dos modelos extremos, correspondiendo a los compuestos al completo por imágenes sintéticas y por imágenes reales, respectivamente; el modelo óptimo, con el 70\% de imágenes generadas; y, por último, el simétrico del anterior, con el 30\% de imágenes sintéticas.
+
+Para las comparaciones se han cogido diversos objetos y se ha estudiado qué etiqueta cuenta con el mayor valor de confianza para cada uno. También se tiene en cuenta aquellos casos en que las dos primeras etiquetas tienen porcentajes muy similares y por lo tanto van cambiando entre primera y segunda posición.
+
+El objeto de estudio principal han sido los objetos metálicos, ya que son aquellos que han sido entrenados con imágenes generadas. En la figura~\ref{fig:latas} se pueden observar los resultados en los distintos casos con una lata de atún. A excepción del modelo entrenado por completo con imágenes sintéticas, los demás detectan que se trata de una lata con conveniente confianza. Algo similar ocurre al poner como objetivo la tapa metálica de un bote.
+
+Con un tercer objeto metálico diferente los resultados cambian en el modelo con el 70\% de imágenes sintéticas. El resto se mantienen prácticamente igual, variando levemente la confianza, pero manteniendo la misma etiqueta que en los otros casos. En cambio, con el modelo mencionado se observa que el porcentaje queda equilibrado entre las tres etiquetas como se ejemplifica en la figura~\ref{fig:latacacao}.
+
+Una observación importante que se descubre, es la dificultad, en todas las opciones, para distinguir los objetos de vidrio respecto a los de plástico. Para tres objetos de vidrio diferentes todas los identifican como plástico con más de un 60\% de confianza. Esto no genera mucha preocupación puesto que como seres humanos a veces también es costoso diferenciar plástico translúcido de vidrio a simple vista.
 
 
+\begin{figure}
+	\centering
+	\subfloat[0\% imágenes sintéticas]
+		{{\includegraphics[width=0.3\textwidth]{Imagenes/lata0}}}
+	\qquad
+	\subfloat[30\% imágenes sintéticas]
+		{{\includegraphics[width=0.3\textwidth]{Imagenes/lata30}}}
+	\qquad
+	\subfloat[70\% imágenes sintéticas]
+		{{\includegraphics[width=0.3\textwidth]{Imagenes/lata70}}}
+	\qquad
+	\subfloat[100\% imágenes sintéticas]
+		{{\includegraphics[width=0.3\textwidth]{Imagenes/lata1000}}}
+
+	\caption{Comparación con una lata de atún}
+    \label{fig:latas}
+\end{figure}
+
+Un problema importante que se ha observado es la variabilidad del resultado dependiendo de la iluminación. Como se puede observar en la figura~\ref{fig:botellas} para el mismo objeto y con el mismo modelo, en este caso el generado a partir de solamente imágenes reales, se obtienen resultados diferentes al cambiarlo de posición.
+
+\begin{figure}
+	\centering
+	\subfloat[100\% imágenes reales]
+		{{\includegraphics[width=0.3\textwidth]{Imagenes/BotellaLata}}}
+	\qquad
+	\subfloat[100\% imágenes reales]
+		{{\includegraphics[width=0.3\textwidth]{Imagenes/BotellaPlastico}}}
+
+	\caption{Comparación con una botella de agua.}
+    \label{fig:botellas}
+\end{figure}
+
+\figura{latacacao.jpg}{width=0.3\textwidth}{fig:latacacao}{Resultados del modelo 70-30 con una lata de bálsamo labial.}
+%Para comprobar el correcto funcionamiento de la aplicación con los resultados del entrenamiento de la red se han hecho pruebas con tres de los resultados. para ello se han seleccionado los dos modelos extremos (todas las imágenes sintéticas o reales, respectivamente) y dos modelos intermedios de 70\% de imágenes generadas o sintéticas, respectivamente; para comparar el funcionamiento de la aplicación en los distintos casos.
 
 
-...
+%Una vez desarrollada la aplicación de identificación de objetos se probaron cuatro de los modelos entrenados para corroborar el correcto o mal funcionamiento, respectivamente, de cada uno. Para ello se eligieron  los modelos extremos con todas las imágenes reales o todas las imágenes sintéticas; el modelo intermedio, dividido en mitad y mitad; y el modelo con mejor precisión, repartido en 70\% imágenes reales y 30\% generadas.
+
 
 %-------------------------------------------------------------------
 %\section*{\NotasBibliograficas}
@@ -53,7 +119,7 @@ Cuenta con dos librerías
 %-------------------------------------------------------------------
 %\TocProximoCapitulo
 
-...
+
 
 % Variable local para emacs, para  que encuentre el fichero maestro de
 % compilación y funcionen mejor algunas teclas rápidas de AucTeX

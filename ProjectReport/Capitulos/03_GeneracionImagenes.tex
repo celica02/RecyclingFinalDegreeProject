@@ -5,15 +5,14 @@
 %---------------------------------------------------------------------
 
 \chapter{Generación de imágenes}
-
+\label{cap3}
 
 \begin{resumen}
-Para evitar tener que hacer o descargar miles de fotos para ser 
-utilizadas para el entrenamiento de la red neuronal se tomó la 
-decisión de crear un generador de imágenes a partir de 
+Para evitar tener que hacer o descargar miles de fotos para ser utilizadas para el entrenamiento de la red neuronal se tomó la decisión de crear un generador de imágenes a partir de 
 modelos 3D.
 \end{resumen}
 
+%Para dotar a la aplicación d las capacidades de reconocimiento de imágenes es necesario pasar por un proceso previo de entrenamiento con cientos o miles de imágenes correctamente etiquetadas. La disponibilidad de un conjunto de entrenamiento es crítica, pero difícil. En este capítulo se describe una opción alternativa a través de la que esas imágenes son generadas de forma sintética.
 %-------------------------------------------------------------------
 \section{Introducción}
 %-------------------------------------------------------------------
@@ -42,13 +41,13 @@ Unity es una herramienta de creación de videojuegos desarrollada por Unity Techn
 
 Unity permite la creación de escenas y objetos de manera muy sencilla. Además,la interacción con ellos no sólo se puede realizar a través de código, sino también mediante componentes visuales. utilizando Unity pueden desarrollarse juegos y aplicaciones para un gran abanico de plataformas; desde PC, Mac y Linux, pasando por Android e iOS, hasta consolas de videojuegos como PlayStation4, Xbox One, Nintendo Switch o Google Stadia.
 
-Unity además cuenta con una clase base, MonoBehaviour\footnote{\url{https://docs.unity3d.com/ScriptReference/MonoBehaviour.html}}, de la que prácticamente todos los scripts de Unity derivan. Esta puede ser activada o desactivada desde el editor de Unity según se requiera. MonoBehaviour ofrece numerosos métodos y mensajes, explicados en la documentación, que facilitan el desarrollo de aplicaciones en esta plataforma; los ejemplos más utilizados son las funciones Start()\footnote{\url{https://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html}} y Update()\footnote{\url{https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html}}. La primera se llama cuando el script está habilitado antes de que se llame al Update() por primera vez. El Update(), en cambio, es llamado en cada frame si MonoBehaviour está activo.	
+Unity además cuenta con una clase base, \ttfamily{MonoBehaviour}\footnote{\url{https://docs.unity3d.com/ScriptReference/MonoBehaviour.html}}, de la que prácticamente todos los scripts de Unity derivan. Esta puede ser activada o desactivada desde el editor de Unity según se requiera. \ttfamily{MonoBehaviour} ofrece numerosos métodos y mensajes, explicados en la documentación, que facilitan el desarrollo de aplicaciones en esta plataforma; los ejemplos más utilizados son las funciones \ttfamily{Start()}\footnote{\url{https://docs.unity3d.com/ScriptReference/MonoBehaviour.Start.html}} y Update()\footnote{\url{https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html}}. La primera se llama cuando el script está habilitado antes de que se llame al \ttfamily{Update()} por primera vez. El Update(), en cambio, es llamado en cada frame si \ttfamily{MonoBehaviour} está activo.	
 
 Se tenía muy claro que para llevar esto a cabo se quería utilizar algún programa que ya ofreciera muchas de las funcionalidades necesarias ya desarrolladas. Con esto se quiso evitar el tener que crear desde cero escenas, la cámara y la iluminación. Puesto que esta parte del proyecto se basa en tratar de facilitar y automatizar la obtención y generación de datasets para el entrenamiento de redes neuronales, se decidió seguir ese ideal aprovechando aquello que nos facilita el proceso y que está a nuestro alcance, evitándose así el desarrollo desde cero de estas funcionalidades más complejas. 
 
 Existen varias herramientas que se podrían haber utilizado en lugar de Unity para llevar a cabo esta parte del proyecto. 
 Unreal Engine\footnote{\url{https://www.unrealengine.com/en-US/}} es otro motor de videojuegos cuyo uso también se extiende por numerosas industrias diferentes. 
-Blender\footnote{\url{https://www.blender.org/}} es otro programa en el que se podría haber llevado esto a cabo. A pesar de que es una herramienta de creación de gráficos tridimensionales, Blender permite añadir funcionalidades, denominados add-ons, programados en Python; con lo que se podría haber tratado de crear la generación de imágenes.
+Blender\footnote{\url{https://www.blender.org/}} es otro programa en el que se podría haber llevado esto a cabo. A pesar de que es una herramienta de creación de gráficos tridimensionales, Blender permite añadir funcionalidades, denominados \textit{add-ons}, programados en Python; con lo que se podría haber tratado de crear la generación de imágenes.
 
 Puesto que sobre estos programas no se tiene tanto conocimiento y experiencia previa como con Unity, se decidió que iba a ser más costoso de lo necesario, suponiendo que los resultados acabarían siendo similares pero con la posibilidad de que fueran peores al ser algo desconocido.
 
