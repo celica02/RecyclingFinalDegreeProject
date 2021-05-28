@@ -4,7 +4,7 @@
 %
 %---------------------------------------------------------------------
 
-\chapter{Estado de helarte}
+\chapter{Estado del arte}
 
 
 
@@ -48,21 +48,53 @@ Un proyecto basado en el anterior, es la detección de objetos en contextos indus
 
 Perception~\cite{perception2021} es un paquete de Unity en desarrollo que proporciona herramientas para generar \textit{datasets} sintéticos a gran escala. Está planteado para tareas de aprendizaje automático, tales como detección de objetos, segmentación semántica y más. Este \textit{dataset} está en formato por frames, estos son capturados utilizando sensores simulados y es lo que se utiliza para el entrenamiento y la validación del modelo. Perception, además de de permitir al usuario que genere sus propios datos para la tarea que requiera, ofrece una cantidad de etiquetas comunes ya generadas para facilitar la generación de datos sintéticos. Además de la generación de \textit{datasets} sintéticos, incluye herramientas para generar \textit{keypoints}, poses y animaciones aleatorias. Este paquete puede utilizarse para diversidad de proyectos, desde simulación de coches autónomos o \textit{smart cities}\footnote{\url{https://github.com/Unity-Technologies/Unity-Simulation-Smart-Camera-Outdoor}}, pasando por demostraciones de recoger y colocar objetos mediante un brazo robótico\footnote{\url{https://github.com/Unity-Technologies/Robotics-Object-Pose-Estimation}}, hasta detención  de objetos utilizando únicamente imágenes sintéticas para el entrenamiento.
 
-Este último es el proyecto SynthDet~\cite{synthdet2020}, utiliza Perception para crear el \textit{dataset} utilizado en el entrenamiento de la red neuronal. Generan imágenes de productos habituales de supermercados con el fin de estudiar la viabilidad de los supermercado sin cajas registradoras. Este objetivo se basa en el supermercado Amazon~Go~\cite{amazongo2018}, creado por Amazon en 2017. Se entrará más en profundidad sobre este proyecto y sus distintas características en las secciones~\ref{cap2:sec:redes-neuronales} y \ref{cap2:sec:identificacion}.
+Este último es el proyecto SynthDet~\cite{synthdet2020}, utiliza Perception para crear el \textit{dataset} utilizado en el entrenamiento de la red neuronal. Generan imágenes de productos habituales de supermercados con el fin de estudiar la viabilidad de los supermercado sin cajas registradoras. Este objetivo se basa en el supermercado Amazon~Go~\cite{amazongo2018}, creado por Amazon en 2017. Se entrará más en profundidad sobre este proyecto y sus distintas características en la sección~\ref{cap2:sec:identificacion}%\ref{cap2:sec:redes-neuronales}
 
 %-------------------------------------------------------------------
 \section{Redes neuronales}
 %-------------------------------------------------------------------
 \label{cap2:sec:redes-neuronales}
-Redes neuronales más usadas. En qué se usan. Aplicaciones que las utilicen.
 
-Las redes neuronales artificiales vienen inspiradas por la funcionalidad sofisticada del cerebro humano donde miles de millones de neuronas se encuentran interconectadas y procesan información de manera paralela.
-Una red neuronal artificial consta de una capa de entrada de neuronas, una o varias capas ocultas de neuronas y una capa final de neuronas de salida. En la figura\ref{fig:RN} 
-se muestra la estructura habitual de una red neuronal artificial. Se muestra mediante líneas la conexión de las neuronas. Cada una de estas conexiones se asocia con un valor numérico llamado peso. \cite{Wang2003};
+Las redes neuronales artificiales surgen inspiradas por la funcionalidad sofisticada del cerebro humano, donde miles de millones de neuronas se encuentran interconectadas y procesan información de manera paralela. Tratan de emular el comportamiento del cerebro humano caracterizado por el aprendizaje a través de la experiencia y la extracción de conocimiento a partir de de un conjunto de datos~\cite{lopez2008redes}, además de simular las características básicas de las redes neuronales biológicas; el procesamiento paralelo, la memoria distribuida y adaptabilidad. Esto permite a las redes artificiales aprender y generalizar a partir de un conjunto de datos de relación matemática desconocida~\cite{rnafundamentos1995}.
+De esta forma, adquieren, almacenan y utilizan conocimientos basados en la experiencia en lugar de ser programados de manera explícita~\cite{zurada1992introduction}.
+
+Una red neuronal artificial consta de una capa de entrada de neuronas, una o varias capas ocultas y una capa final de salida. En la figura~\ref{fig:RN} 
+se muestra la estructura habitual de una red neuronal artificial.
 
 \figura{RedNeuronal.png}{width=.5\textwidth}{fig:RN}{Estructura de una red neuronal artificial.}
 
+Las neuronas están conectadas entre ellas mediante líneas, cada una de estas conexiones se asocia con un valor numérico llamado peso\cite{Wang2003}.
+Durante el aprendizaje de la red se modifica el valor de los pesos asociados a las neuronas con el fin de que generar una salida a partir de unos datos de entrada. Se considera que el aprendizaje ha terminado cuando los valores de los pesos permanecen estables.
 
+Aunque existen muchas definiciones para las redes neuronales, una de las más extendidas establece que una red neuronal artificial se define como un grafo dirigido, donde los nodos representan las neuronas y las aristas la sinapsis. Aquellos nodos que no cuentan con conexiones entrantes son consideradas las neuronas de entrada, y los que no tiene conexiones salientes las de salida. Por lo tanto, los nodos con conexiones entrantes y salientes corresponden a las neuronas ocultas~\cite{lopez2008redes, annealing2004, rnafundamentos1995, muller1995neural}
+
+
+Se pueden seleccionar varios puntos de inicio de las redes neuronales artificiales. Algunos comienzan hablando de cómo Ramón y Cajal en 1888 demuestra que el sistema nervioso está compuesto por una red de células individuales, las neuronas, ampliamente interconectadas entre sí y su funcionamiento~\cite{larranaga1997tema}. Otros nombran a Alan Turing como pionero al estudiar el cerebro como una forma de ver el mundo de la computación. 
+Independientemente, en todos los casos se toma a Warren McCulloch (neurobiólogo) y Walter Pitts (estadístico) como los primeros teóricos que concibieron fundamentos de la computación neuronal en el artículo \textit{``A logical calculus of Ideas Imminent in Nervous Activity''} en 1943~\cite{firstrna1943}. 
+Posteriormente, en 1956, tuvo lugar el congreso de Dartmouth, comúnmente considerado el nacimiento de la inteligencia artificial. Un año después Frank Rosenblatt comenzó el desarrollo de ``Perceptron''.
+
+Perceptron es considerada la red neuronal más antigua, siendo un sistema clasificador de patrones. Este modelo era capaz de reconocer patrones similares a los del entrenamiento pero que no había visto antes. Sin embargo, contaba con ciertas limitaciones, la más importante fue que no era capaz de resolver la función lógica OR~exclusivo\footnote{XOR u OR exclusiva es una puerta lógica cuya salida es verdadera si una, y sólo una, de las entradas es verdadera. Si ambas son falsas o ambas son verdaderas la salida es falsa.} ni clasificar clases no separables linealmente. Esto fue demostrado matemáticamente en los años 60 por Minsky y Papert, lo que desencadenó un fuerte desinterés en la computación neuronal.
+
+%Antes de esto se desarrollaron algunos modelos más, dos de ellos fueron "Adeline" (\textit{ADAptative LINear Elements}) y "Madeline"\footnote{"Madeline" fue una segunda versión que contaba con dos capas}, por Bernard Widrow, que se utilizaron principalmente, en el desarrollo de filtros adaptativos para eliminar el eco de las líneas telefónicas.
+
+No fue hasta principios de los años 80 cuando se consiguió devolver el interés en este campo con la publicación del artículo \textit{``Hopfield Model o Crossbar Associative Network''} de John Hopfield y el redescubrimiento de David Rumelhart y G. Hinton del algoritmo de aprendizaje de propagación hacia atrás (\textit{backpropagation}) planteado por Paul Werbos en 1974~\cite{basogain2008redes, larranaga1997tema, matich2001conceptos}.
+
+Existen dos tipos de redes neuronales principales, las redes convolucionales y las recurrentes. Las primeras se desarrollaron para el reconocimiento de imágenes y son útiles para distinguir elementos esenciales en una entrada de la red compleja~\cite{movcorporalespavon2020}. Una particularidad de estas redes es la operación de convolución\footnote{Una convolución es un operador matemático que transforma dos funciones \textit{f} y \textit{g} en una tercera que representa la magnitud en la que se superponen \textit{f} y una versión trasladada e invertida de \textit{g}.} que se realiza en las primeras capas utilizándose como filtro, esto permite que tenga muchas aplicaciones en el tratamiento de imágenes~\cite{pacheco2017identificacion}. 
+Por otro lado, las redes neuronales recurrentes son aquellas en las que la salida de una neurona vuelve en forma de entrada, por lo que puede haber ciclos en las conexiones entre las neuronas de cada capa. Cuentan con la peculiaridad de que no sólo aprenden de los datos sino también de secuencias de estos. Todo esto las convierte en buenas candidatas para trabajar con datos con dependencias estructurales en una dimensión, como el texto, o el
+audio~\cite{movcorporalespavon2020, guridi2017modelos}.
+
+También se lleva a cabo una distinción en las redes neuronales según el paradigma de aprendizaje que siguen, existen dos tipos principales, las redes neuronales supervisadas y las no supervisadas. Las redes neuronales supervisadas se caracterizan por la presencia de un agente externo que controla el entrenamiento, este determina la respuesta que debería generar la red a partir de una entrada determinada. El supervisor controla la salida de la red y en caso de que ésta no coincida con la deseada se modifican los pesos de las conexiones con el fin de conseguir una salida aproximada a la esperada. 
+En cambio, las redes con aprendizaje no supervisado no requieren influencia externa para ajustar los pesos de las conexiones entre sus neuronas. La red no recibe ninguna información por parte del entorno que le indique si la salida generada en respuesta a una determinada entrada es o no correcta~\cite{matich2001conceptos}.
+
+Algunas de las Redes Neuronales más expandidas actualmente son AlexNet, VGGNet, MobileNet e InceptionNet.
+
+AlexNet~\cite{krizhevsky2012imagenet} es una red ampliamente utilizada que se dió a conocer en la competición de ImageNet, donde consiguió el primer puesto con una tasa de error del 15.3\% (2012). Su estructura de divide en dos GPUs y fue la primera red neuronal en utilizar ReLu\footnote{ReLu transforma los valores de entrada anulando los negativos y manteniendo los positivos.} como función de activación\footnote{la función de activación en redes neuronales devuelve una salida que es generada por una o varias entradas. Cada capa de la red cuanta con una función de activación.} en vez de la función sigmoide\footnote{La función sigmoide transforma los valores de entrada a una escala entre 0 y 1.}. Este cambio mejoró notablemente la velocidad de entrenamiento de las redes de aprendizaje profundo~\cite{cortina2020automata, iandola2016squeezenet, comparinalexnetvgg2016}.
+
+La segunda red destacada es VGGNet, esta también saltó a la fama gracias a ImageNet en 2014. La diferencia más destacable con AlexNet es la gran cantidad de capas convolucionales más que tiene. Además de una arquitectura más profunda presenta también otros nuevos conceptos~\cite{simonyan2014vgg,comparinalexnetvgg2016}.
+
+InceptionNet, desarrollada por Google, fue de las primeras redes que no se basó en añadir más capas convolucionales para mejorar la red, sino que cambió la estructura de estas usando filtros de varios tamaños. El objetivo era tener filtros de diferentes tamaños para un mismo objeto. Esto provocó que la red fuera más ``ancha'' en vez de más profunda~\cite{inceptionnet2015}.
+
+La última red es MobileNet, esta también fue desarrolalda por Google. Surgió con la intención de adaptar IceptionNet a dispositivos móviles. Su objetivo fue reducir el número de computaciones y parámetros pero manteniendo unos resultados similares~\cite{mobilenev22018,howard2017mobilenets}. 
 
 %-------------------------------------------------------------------
 \section{Identificación de objetos e imágenes}
@@ -78,12 +110,11 @@ Otro ejemplo es el reconocimiento de matrículas de los coches presentes en una i
 
 En el apartado~\ref{cap2:sec:generacion} se mencionaron varios proyectos de generación de \textit{datasets} sintéticos. Todos ellos, además, tienen también como objetivo la identificación de objetos en imágenes.
 
-SynthDet~\cite{synthdet2020} trata de identificar los productos contenidos en carritos de la compra con el objetivo de facturar automáticamente las adquisiciones de los clientes en supermercados. Está basado en Amazon~Go\cite{amazongo2018}, supermercado de la empresa Amazon, ubicado en Seattle (Estados Unidos). 
+SynthDet~\cite{synthdet2020} trata de identificar los distintos productos contenidos en carritos de la compra con el objetivo de facturar automáticamente las adquisiciones de los clientes en supermercados. Está basado en Amazon~Go\cite{amazongo2018}, supermercado de la empresa Amazon, ubicado en Seattle (Estados Unidos). 
 El modelo de Amazon~Go se basa en un sistema de cámaras y sensores distribuidos por el establecimiento que analizan los movimientos de los clientes. Estos, además de obtener la información necesaria para realizar los cobros, también extraen información sobre las pautas de comportamiento de los consumidores~\cite{polacco2018amazon}. SynthDet propone realizar la misma tarea de identificación y facturación de productos, pero entrenando el modelo a partir de imágenes sintéticas.
 
-El proyecto sobre detección de drones~\cite{lepetitdron2014} y el de identificación de piezas industriales~\cite{industrialdetection2020}, cuentan con un trasfondo similar. 
-La generación del \textit{dataset} surge por la necesidad de entrenar el modelo para 
-para finalmente llevar a cabo una identificación de objetos.
+El proyecto sobre detección de drones~\cite{lepetitdrones2014} y el de identificación de piezas industriales~\cite{industrialdetection2020}, cuentan con un trasfondo similar. 
+La generación del \textit{dataset} surge por la necesidad de entrenar el modelo para para finalmente llevar a cabo una identificación de objetos.
 
 
 Pero la inclusión y el desarrollo de la detección y la identificación de objetos se limita al entorno de la investigación; sino que en la vida cotidiana también se percibe un crecimiento de este ámbito. Actualmente el uso de la detección e identificación de objetos se está expandiendo por más aplicaciones, una de las más conocidas y extendidas es Google~Lens\footnote{\url{https://lens.google/intl/es-419/}}, la cual tiene diversas funcionalidades dentro del mundo de la detección de objetos. Esta aplicación es una de las más completas en este dominio, a partir de una imagen o de la cámara del dispositivo escanea y traduce textos; identifica objetos y busca en Google otros similares; reconoce lugares y edificios, ofreciendo información sobre ellos; detecta animales y plantas; y registra operaciones matemáticas sobre las que ofrece explicaciones y resultados de la web. 
@@ -91,13 +122,6 @@ Pero la inclusión y el desarrollo de la detección y la identificación de objetos
 Otra aplicación de Google con identificación de objetos es Google~Fotos\footnote{\url{https://www.google.com/intl/es/photos/about/}}, una aplicación de intercambio y almacenamiento de fotografía y vídeo. Puede utilizarse en conjunto con Google~Lens para tener todas las funcionalidades mencionadas anteriormente sobre las imágenes almacenadas en la aplicación, pero además Google~Fotos cuenta con su propia funcionalidad de identificación de texto, objetos y personas. En la aplicación pueden realizarse búsquedas que devuelven una selección de imágenes y vídeos en los que aparece la persona, objeto o texto buscado, además de funcionas con posturas y acciones.
 
 Otras aplicaciones similares, aunque algo más rústicas, son las recogidas en el paquete de  Microsoft~Office. En este caso la identificación se presenta como una funcionalidad de accesibilidad para personas con discapacidad visual. Se trata del texto alternativo, disponible para imágenes, formas, vídeos, gráficos y tablas, entre otros. En algunas de sus aplicaciones Microsoft va un paso más allá y genera el texto alternativo de las imágenes automáticamente, identificando personas, objetos y situaciones.
-
-
-
-
- Identifica todos los productos que reconoce en el conjunto
-
- SynthDet es entrenado con modelos tridimensionales idénticos a productos de supermercados en distintas posiciones, rotaciones con fondos que 
 
 %-------------------------------------------------------------------
 %\section*{\NotasBibliograficas}

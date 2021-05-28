@@ -41,3 +41,15 @@ ProjectReport/build/
 *.blg
 
 *.dvi
+
+*.idx
+
+*.lof
+
+*.lot
+
+*.out
+
+*.gz
+
+*.toc
