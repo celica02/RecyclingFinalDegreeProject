@@ -42,9 +42,9 @@ public class ClassifierFloatMobileNet extends Classifier {
    *
    * @param activity
    */
-  public ClassifierFloatMobileNet(Activity activity, Device device, int numThreads)
+  public ClassifierFloatMobileNet(Activity activity, Device device, int numThreads, String model)
       throws IOException {
-    super(activity, device, numThreads);
+    super(activity, device, numThreads, model);
   }
 
   // ** Specify model.tflite as the model file and labels.txt as the label file
@@ -52,6 +52,9 @@ public class ClassifierFloatMobileNet extends Classifier {
   @Override
   protected String getModelPath() {
     return "model.tflite";
+  }
+  protected String getModelPath2() {
+    return "1000R_0Gmodel.tflite";
   }
 
   @Override

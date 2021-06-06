@@ -37,7 +37,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
   private Bitmap rgbFrameBitmap = null;
   private long lastProcessingTimeMs;
   private Integer sensorOrientation;
-  private Classifier classifier;
+  private Classifier classifier, classifier2;
   private BorderedText borderedText;
   /** Input image size of the model along x axis. */
   private int imageSizeX;
@@ -107,6 +107,26 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
                     }
                   });
             }
+            if (classifier2 != null) {
+              final long startTime = SystemClock.uptimeMillis();
+              final List<Classifier.Recognition> results2 =
+                  classifier2.recognizeImage(rgbFrameBitmap, sensorOrientation);
+              lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
+              LOGGER.v("Detect: %s", results2);
+
+              runOnUiThread(
+                  new Runnable() {
+                    @Override
+                    public void run() {
+                      showSecondResultsInBottomSheet(results2);
+                      showFrameInfo(previewWidth + "x" + previewHeight);
+                      showCropInfo(imageSizeX + "x" + imageSizeY);
+                      showCameraResolution(cropSize + "x" + cropSize);
+                      showRotationInfo(String.valueOf(sensorOrientation));
+                      showInference(lastProcessingTimeMs + "ms");
+                    }
+                  });
+            }
             readyForNextImage();
           }
         });
@@ -128,11 +148,14 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
       LOGGER.d("Closing classifier.");
       classifier.close();
       classifier = null;
+      classifier2.close();
+      classifier2 = null;
     }
     try {
       LOGGER.d(
           "Creating classifier (device=%s, numThreads=%d)", device, numThreads);
-      classifier = Classifier.create(this, device, numThreads);
+      classifier = Classifier.create(this, device, numThreads, "model.tflite");
+      classifier2 = Classifier.create(this, device, numThreads, "1000R_0Gmodel.tflite");
     } catch (IOException e) {
       LOGGER.e(e, "Failed to create classifier.");
     }

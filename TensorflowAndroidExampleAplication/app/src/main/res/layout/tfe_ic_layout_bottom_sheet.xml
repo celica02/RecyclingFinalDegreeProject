@@ -42,10 +42,19 @@
 
             <TextView
                 android:id="@+id/detected_item_value"
-                android:layout_width="match_parent"
+                android:layout_width="107dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textColor="@android:color/black"
+                android:textColor="@color/tfe_color_primary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/detected_item_value2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/tfe_color_primary"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -65,8 +74,17 @@
 
             <TextView
                 android:id="@+id/detected_item1_value"
+                android:layout_width="259dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/detected_item1_value2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="12sp" />
@@ -88,8 +106,17 @@
 
             <TextView
                 android:id="@+id/detected_item2_value"
-                android:layout_width="match_parent"
+                android:layout_width="261dp"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/detected_item2_value2"
+                android:layout_width="127dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="12sp" />

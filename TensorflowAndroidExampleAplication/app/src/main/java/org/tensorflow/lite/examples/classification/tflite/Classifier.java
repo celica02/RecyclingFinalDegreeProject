@@ -100,10 +100,10 @@ public abstract class Classifier {
    * @param numThreads The number of threads to use for classification.
    * @return A classifier with the desired configuration.
    */
-  public static Classifier create(Activity activity, Device device, int numThreads)
+  public static Classifier create(Activity activity, Device device, int numThreads, String model)
       throws IOException {
 
-    return new ClassifierFloatMobileNet(activity, device, numThreads);
+    return new ClassifierFloatMobileNet(activity, device, numThreads, model);
   }
 
   /** An immutable result returned by a Classifier describing what was recognized. */
@@ -177,8 +177,8 @@ public abstract class Classifier {
   }
 
   /** Initializes a {@code Classifier}. */
-  protected Classifier(Activity activity, Device device, int numThreads) throws IOException {
-    tfliteModel = FileUtil.loadMappedFile(activity, getModelPath());
+  protected Classifier(Activity activity, Device device, int numThreads, String modelPath) throws IOException {
+    tfliteModel = FileUtil.loadMappedFile(activity, modelPath);
     switch (device) {
       case GPU:
         // ** Create a GPU delegate instance and add it to the interpreter options
