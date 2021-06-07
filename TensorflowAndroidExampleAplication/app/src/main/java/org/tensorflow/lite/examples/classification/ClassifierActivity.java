@@ -36,8 +36,9 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
   private static final float TEXT_SIZE_DIP = 10;
   private Bitmap rgbFrameBitmap = null;
   private long lastProcessingTimeMs;
+  private long startTime;
   private Integer sensorOrientation;
-  private Classifier classifier, classifier2;
+  private Classifier classifier, classifier2, classifier3, classifier4;
   private BorderedText borderedText;
   /** Input image size of the model along x axis. */
   private int imageSizeX;
@@ -88,10 +89,10 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
           @Override
           public void run() {
             if (classifier != null) {
-              final long startTime = SystemClock.uptimeMillis();
+              startTime = SystemClock.uptimeMillis();
               final List<Classifier.Recognition> results =
                   classifier.recognizeImage(rgbFrameBitmap, sensorOrientation);
-              lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
+              //lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
               LOGGER.v("Detect: %s", results);
 
               runOnUiThread(
@@ -103,29 +104,69 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
                       showCropInfo(imageSizeX + "x" + imageSizeY);
                       showCameraResolution(cropSize + "x" + cropSize);
                       showRotationInfo(String.valueOf(sensorOrientation));
-                      showInference(lastProcessingTimeMs + "ms");
+                      //showInference(lastProcessingTimeMs + "ms");
                     }
                   });
             }
             if (classifier2 != null) {
-              final long startTime = SystemClock.uptimeMillis();
+              //final long startTime = SystemClock.uptimeMillis();
               final List<Classifier.Recognition> results2 =
                   classifier2.recognizeImage(rgbFrameBitmap, sensorOrientation);
-              lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
+              //lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
               LOGGER.v("Detect: %s", results2);
 
               runOnUiThread(
                   new Runnable() {
                     @Override
                     public void run() {
-                      showSecondResultsInBottomSheet(results2);
-                      showFrameInfo(previewWidth + "x" + previewHeight);
+                      showOtherResultsInBottomSheet(results2, 2);
+                      /**showFrameInfo(previewWidth + "x" + previewHeight);
                       showCropInfo(imageSizeX + "x" + imageSizeY);
                       showCameraResolution(cropSize + "x" + cropSize);
                       showRotationInfo(String.valueOf(sensorOrientation));
-                      showInference(lastProcessingTimeMs + "ms");
+                      showInference(lastProcessingTimeMs + "ms");**/
                     }
                   });
+            }
+            if (classifier3 != null) {
+              //final long startTime = SystemClock.uptimeMillis();
+              final List<Classifier.Recognition> results3 =
+                      classifier2.recognizeImage(rgbFrameBitmap, sensorOrientation);
+              //lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
+              LOGGER.v("Detect: %s", results3);
+
+              runOnUiThread(
+                      new Runnable() {
+                        @Override
+                        public void run() {
+                          showOtherResultsInBottomSheet(results3, 3;
+                          /**showFrameInfo(previewWidth + "x" + previewHeight);
+                          showCropInfo(imageSizeX + "x" + imageSizeY);
+                          showCameraResolution(cropSize + "x" + cropSize);
+                          showRotationInfo(String.valueOf(sensorOrientation));
+                          showInference(lastProcessingTimeMs + "ms");**/
+                        }
+                      });
+            }
+            if (classifier4 != null) {
+              //final long startTime = SystemClock.uptimeMillis();
+              final List<Classifier.Recognition> results4 =
+                      classifier4.recognizeImage(rgbFrameBitmap, sensorOrientation);
+              lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
+              LOGGER.v("Detect: %s", results4);
+
+              runOnUiThread(
+                      new Runnable() {
+                        @Override
+                        public void run() {
+                          showOtherResultsInBottomSheet(results4, 4);
+                          /**showFrameInfo(previewWidth + "x" + previewHeight);
+                          showCropInfo(imageSizeX + "x" + imageSizeY);
+                          showCameraResolution(cropSize + "x" + cropSize);
+                          showRotationInfo(String.valueOf(sensorOrientation));**/
+                          showInference(lastProcessingTimeMs + "ms");
+                        }
+                      });
             }
             readyForNextImage();
           }
@@ -150,12 +191,18 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
       classifier = null;
       classifier2.close();
       classifier2 = null;
+      classifier3.close();
+      classifier3 = null;
+      classifier4.close();
+      classifier4 = null;
     }
     try {
       LOGGER.d(
           "Creating classifier (device=%s, numThreads=%d)", device, numThreads);
       classifier = Classifier.create(this, device, numThreads, "model.tflite");
       classifier2 = Classifier.create(this, device, numThreads, "1000R_0Gmodel.tflite");
+      classifier3 = Classifier.create(this, device, numThreads, "1000R_0Gmodel.tflite");
+      classifier4 = Classifier.create(this, device, numThreads, "1000R_0Gmodel.tflite");
     } catch (IOException e) {
       LOGGER.e(e, "Failed to create classifier.");
     }
