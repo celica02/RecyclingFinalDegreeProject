@@ -20,21 +20,17 @@ La aplicación está constantemente interpretando lo que recibe desde la cámara, a
 
 El desarrollo se ha centrado en dispositivos con sistema operativo Android puesto que el acceso a las otras opciones posibles, iOS y Raspberry, resultaba inviable. %Asimismo, se destacarán características sobre el desarrollo para estas otras plataformas.
 
-%-------------------------------------------------------------------
-\section{Tensorflow Lite}
-%-------------------------------------------------------------------
-\label{cap5:sec:tensorflow-lite}
-Como se presentó en la sección~\ref{cap4:sec:tensorflow}, para el desarrollo del proyecto se han empleado las herramientas que brinda TensorFlow~Lite, framework desarrollado por Google para aprendizaje profundo en dispositivos móviles. Además de facilitar el entrenamiento de redes neuronales como se explicó en el capítulo anterior, también simplifica la importación de los modelos generados y su uso en distintas plataformas.
-Los modelos de TensorFlow~Lite pueden manejarse desde dispositivos Android, iOS y Raspberry, y para el desarrollo de una aplicación para cada una de estas opciones pueden utilizarse Android~Studio, Swift y Objective-C; y Python, respectivamente.
 
-Para el correcto funcionamiento, en Andorid, de la aplicación con el modelo entrenado son necesarias dos librerías.
-La primera es la librería de tareas de TensorFlow~Lite, que cuenta con un conjunto de bibliotecas específicas de tareas potentes y fáciles de usar por los desarrolladores para crear experiencias de aprendizaje automático. Esta funciona varias plataformas y es compatible con Java y C++.
-La segunda librería necesaria es la de compatibilidad, esta facilita la integración de modelos en la aplicación. Proporciona API de alto nivel que ayuda a transformar los datos de entrada en el formato requerido por el modelo, además de interpretar su salida.
 
 %-------------------------------------------------------------------
 \section{Identificación de objetos}
 %-------------------------------------------------------------------
 \label{cap5:sec:identificacion-objetos}
+\todo{añadir: Para el correcto funcionamiento, en Andorid, de la aplicación con el modelo entrenado son necesarias dos librerías.
+La primera es la librería de tareas de TensorFlow~Lite, que cuenta con un conjunto de bibliotecas específicas de tareas potentes y fáciles de usar por los desarrolladores para crear experiencias de aprendizaje automático. Esta funciona varias plataformas y es compatible con Java y C++.
+La segunda librería necesaria es la de compatibilidad, esta facilita la integración de modelos en la aplicación. Proporciona API de alto nivel que ayuda a transformar los datos de entrada en el formato requerido por el modelo, además de interpretar su salida.}
+
+
 La aplicación desarrollada está basada en el ejemplo que proporciona TensorFlow~Lite sobre reconocimiento de flores\footnote{\url{https://codelabs.developers.google.com/codelabs/recognize-flowers-with-tensorflow-on-android/?hl=es-419\#0}}. El funcionamiento es similar pero se ha adaptado de identificar flores a diferenciar distintos materiales. Como se comentó en la sección~\ref{cap4:sec:entrenamiento}, cuando se explicaba el entrenamiento de la red neuronal, como prototipado se ha trabajado simplemente con tres materiales (metal, vidrio y plástico). Para el correcto funcionamiento de la aplicación en Android es importante que haya al menos tres objetivos a identificar; esto es debido a que la librería de TensorFlow~Lite está planteada de tal forma que muestra las tres opciones sobre las que tiene más confianza de qué se trata. Si se utilizan menos de tres no funciona.
  
 Para utilizar TensorFlow~Lite en primer lugar se han de incluir las librerías para poder utilizar sus funcionalidades. Una vez hecho esto se importa el intérprete, este carga y ejecuta el modelo dándole una serie de datos de entrada. Tras ejecutarlo escribe los resultados por pantalla. 

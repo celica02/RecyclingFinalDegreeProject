@@ -25,32 +25,6 @@ Como conjunto de datos para el entrenamiento de la red para este proyecto se uti
 
 El desarrollo, a nivel de programación, de la red neuronal se lleva a cabo partiendo de los ejemplos disponibles de TensorFlow~Lite, para facilitar la realización de la lógica necesaria para generar y entrenar la red neuronal.
 
-%-------------------------------------------------------------------
-\section{TensorFlow y TensorFlow Lite}
-%-------------------------------------------------------------------
-\label{cap4:sec:tensorflow}
-
-El equipo de Google~Brain comenzó a investigar en 2011 el uso de redes neuronales a gran escala para utilizarlo en los productos de la empresa. Como resultado desarrollaron DistBelief, su primer sistema de entrenamiento e inferencia escalable. A partir de este, basándose en la experiencia y en un entendimiento más completo de las necesidades y requerimientos del sistema ideal, desarrollaron TensorFlow\footnote{\url{https://www.tensorflow.org/}}. Este utiliza modelos de flujo de datos y los \textit{mapea} en una gran variedad de diferentes plataformas, desde dispositivos móviles, como máquinas sencillas de una o varias GPUs, hasta sistemas a gran escala de cientos de máquinas especializadas con miles de GPUs. 
-La API de TensorFlow y las implementaciones de referencia fueron lanzadas como un paquete de código abierto bajo una licencia de Apache~2.0 en noviembre de 2015; \citep*{tensorflow2015whitepaper}.
-
-
-Como el nombre de TesorFlow indica, las operaciones son llevadas a cabo por redes neuronales en \textit{arrays} multidimensionales de datos, mejor conocidos como tensores.
-Puesto que la estructura son grafos de flujo de datos, en estos, los nodos corresponden a las operaciones matemáticas, como sumas, multiplicaciones, factorización y demás; en cambio, los bordes corresponden a los tensores. \citep*{Karim2018}.
-
-Como se ha comentado, TensorFlow fue desarrollado para ser ejecutado en sistemas muy diversos, incluidos dispositivos móviles. Este fue llamado TensorFlow~Mobile y permitió a los desarrolladores para móvil crear aplicaciones interactivas sin los retrasos que generaban los cálculos computacionales de aprendizaje automático. 
-
-A pesar de las optimizaciones para mejorar la actuación de los modelos y que el mínimo \textit{hardware} requerido era bastante accesible; seguía existiendo cuello de botella en la velocidad de cálculo computacional por la baja latencia de los dispositivos móviles. Por ejemplo, un dispositivo móvil cuyo \textit{hardware} era capaz de ejecutar 10~GFLOPS\footnote{\textit{Giga floating point operations per second}, proveniente de FLOPS, operaciones de coma flotante por segundo. } estaba limitado a ejecutar un modelo de 5~GFLOPS  a 2~4FPS\footnote{\textit{frames} por segundo, del inglés \textit{frames per second}.}, lo que provocaba que las aplicaciones no funcionaran como era esperado \citep*{Alsing2018}.
-
-TensorFlow~Lite es la evolución de TensorFlow~Mobile, algunas de las optimizaciones que incluye son el uso de \textit{frameworks} como la API de redes neuronales de Android y redes neuronales optimizadas para móvil como MobileNets \citep*{howard2017mobilenets} y SqueezeNet\citep*{iandola2016squeezenet}.
-
-TensorFlow~Lite permite ejecutar modelos de aprendizaje profundo en dispositivos móviles. Estos son entrenados en una computadora y posteriormente trasladados al dispositivo sin necesidad de utilizar un servidor. Utiliza MobileNet, la cual está diseñada y optimizada para imágenes en móviles, incluyendo detección y clasificación de objetos, detección de caras y reconocimiento de lugares.
-Los modelos de TensorFlow~Lite generados en el entrenamiento tienen como extensión de archivo \textit{.tflite} el cual tiene formato FlatBuffer.
-Tensorflow~Lite no se limita a los modelos que han sido directamente creados con esta extensión, sino que en la documentación de TensorFlow se encuentra un conversor que toma un modelo en otro formato y lo convierte a \textit{.tflite}\footnote{\url{https://www.tensorflow.org/lite/convert?hl=es-419}}.
-
-
-Fue el framework elegido puesto que cumplía con todas las necesidades que requería el proyecto para el entrenamiento de la red neuronal. Con una amplia documentación y numerosos ejemplos de uso facilitando el trabajo. Además, otro factor importante es el fácil traspaso del resultado a una aplicación móvil sobre la que se hablará en profundidad en el capítulo~\ref{cap5}, y el uso del modelo en ella sin necesidad de servidores intermedios como se contará. Asimismo la agilidad del trabajo al tratarse de plataformas en las que se tiene experiencia. 
-\todo{Volver sobre este párrafo}
-
 
 %-------------------------------------------------------------------
 \section{Entrenamiento}
