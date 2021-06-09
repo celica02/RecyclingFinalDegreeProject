@@ -8,8 +8,7 @@
 \label{cap3}
 
 \begin{resumen}
-Para evitar tener que hacer o descargar miles de fotos para ser utilizadas para el entrenamiento de la red neuronal se tomó la decisión de crear un generador de imágenes a partir de 
-modelos 3D.
+Para dotar a la aplicación de las capacidades de reconocimiento de imágenes es necesario pasar por un proceso previo de entrenamiento con cientos o miles de de ellas correctamente etiquetadas. La obtención de un conjunto de entrenamiento con las características requeridas es una tarea complicada. En este capítulo se describe una opción alternativa que permite generar esas imágenes de forma sintética a partir de modelos tridimensionales. 
 \end{resumen}
 
 %Para dotar a la aplicación d las capacidades de reconocimiento de imágenes es necesario pasar por un proceso previo de entrenamiento con cientos o miles de imágenes correctamente etiquetadas. La disponibilidad de un conjunto de entrenamiento es crítica, pero difícil. En este capítulo se describe una opción alternativa a través de la que esas imágenes son generadas de forma sintética.
@@ -18,18 +17,37 @@ modelos 3D.
 %-------------------------------------------------------------------
 \label{cap3:sec:introduccion}
 
-Como el objetivo del proyecto es reconocer e identificar distintos deshechos, su material principal y cómo se deben reciclar adecuadamente, es necesario llevar a cabo el entrenamiento de una red neuronal para conseguirlo. Para dicho entrenamiento son necesarias cientos de fotografías para cada material diferente que se quiera introducir. 
+El objetivo del proyecto es reconocer e identificar distintos desechos y su material principal, e indicar cómo deben reciclarse adecuadamente. Para ello, se utilizan técnicas de visión artificial, lo que conlleva el entrenamiento de una red neuronal. 
+Para la identificación hay que usar redes supervisadas. Eso significa que se requieren fotos correctamente etiquetadas, indicando lo que contienen, para que el sistema aprenda a reconocerlas. Ese entrenamiento es crítico para que todo funcione, y para ello se necesita un gran número de imágenes
 
 Conseguir tantas imágenes, distintas y claras, supone un trabajo costoso y lento; sin tener en cuenta el almacenaje de estas. 
-Contamos con varias opciones para conseguir las imágenes. Una de ellas, y quizá la más obvia, es descargándolas de la red. Esta opción cuenta con un par de problemas a tener en cuenta. El primero es lo tedioso que resulta este procedimiento; buscar, seleccionar y descargar una a una cientos de imágenes resulta muy lento. El otro problema, es que además hay que tener en cuenta los derechos de autor y uso de cada una de ellas.
+Contamos con varias opciones para conseguir las imágenes. Una de ellas, y quizá la más obvia, es descargarlas de la red. Esta opción dista de ser la ideal debido a lo tedioso que resulta este procedimiento; buscar, seleccionar y descargar una a una miles de imágenes que cuenten con una buena resolución, es un proceso muy lento.
 
-Otra forma es la de llevar a cabo las fotografías personalmente. En base a esta opción, surgió la idea de llevar a cabo un vídeo de objetos de ese material. A partir de este vídeo se planteó que se podrían procesar y separar los frames, usándolos después como imágenes para el entrenamiento. Para esta opción también se encuentran varios problemas. Una posibilidad para hacerlo sería grabar todos los objetos a la vez, pero esto podría tener como resultado que no hubiera contenido suficiente para el entrenamiento o que los objetos no aparecieran suficientemente claros. Otra manera de llevarlo a cabo es grabando los distintos objetos individualmente; en este caso habría que supervisar el descarte de los frames intermedios, aquellos que tendrían lugar en la transición entre un objeto y el siguiente. 
+Otra forma es realizar las fotografías personalmente. Esta cuenta con varios problemas, el primero es que se necesita tener acceso a los objetos, y cuando se necesita hacer miles de imágenes distintas el número de objetos a fotografía es muy alto. 
 
-Para estas opciones comentadas encontramos un problema importante, y es que habría que poseer todo aquello con lo que se quiere entrenar; o, en su defecto, hacer las capturas en un establecimiento en el que encontrar estos objetos. Pero en este caso hay que tener en cuenta la legislación para llevar esto a cabo. 
-Además, con estas opciones, existe el riesgo de perder imágenes y, en el caso de que ocurriera, sería necesario volver a pasar por todo el proceso para volver a tener suficiente material.
-Para evitar todos estos inconvenientes se plantea la posibilidad de llevar a cabo una aplicación con la que automatizar este proceso. 
+Una posible solución para este problema es acudir a establecimientos donde los vendan y llevar a cabo allí las fotos. Uno de los inconvenientes es que obtener las imágenes llevaría una cantidad de tiempo excesiva. Una alternativa puede ser la grabación de vídeos, utilizando los \textit{frames} como imágenes de entrenamiento. Esta opción es más dinámica frente a las fotografías, pero por otro lado todos los \textit{frames} obtenidos tendrían que ser revisados con atención. Esto es necesario por si aparecen otros objetos además del deseado, ya que se deberían separar para el correcto etiquetado; o, incluso, si ni siquiera aparece.
+\todo{revisar lo de los objetos ya usados}
 
-Actualmente se va viendo una gran mejoría en los gráficos de contenidos digitales audiovisuales, ya sean películas, videojuegos, videoclips, anuncios, etc. Esta mejora llega hasta tal punto que a veces puede resultar difícil distinguir entre realidad y CGI\footnote{\textit{Computer-generated imagery}}. Teniendo esto en cuenta y las oportunidades que aporta la automatización, no se ha querido desaprovechar la oportunidad de enfocarlo desde un punto más cercano a este. Esta es la opción que se eligió finalmente para realizar las imágenes de entrenamiento de la red neuronal. De esta forma el objetivo final de este apartado consiste en llevar a cabo una aplicación en la que se vayan cargando distintos modelos de objetos y residuos a los que se les harán numerosas capturas, en cada una aparecerán en distintas posiciones y rotaciones. Finalmente estas imágenes generadas serán posteriormente utilizadas para el entrenamiento. Gracias a esta aplicación se contará con el número de capturas que se quieran de cada objeto y material, pudiendo aumentar esta cantidad siempre que se desee o necesite.
+En ambas opciones se presentan varios inconvenientes. Los más importantes son, que al realizarse en un establecimiento, existe el riesgo de violar la protección de datos de los clientes y los trabajadores de alrededor, además de que no esté permitido realizar fotografías ni grabaciones dentro del comercio. Otro factor menos significativo es que al tratarse de una aplicación de reciclaje sería preferible que se trate de objetos ya usados, como una lata abierta, una botella vacía o un papel arrugado.
+
+Los avances en aprendizaje automático durante los últimos años han permitido que se convierta en un campo más accesible para interesados con diferentes niveles de conocimiento. Esto ha provocado un gran aumento de materiales disponibles de manera libre.
+
+Una posibilidad que se presenta es utilizar \textit{datasets} de libre uso como COCO (Common Objects in Context)~\cite{cocodataset2015}. Aunque este resulta no ser tampoco la opción perfecta, es un acercamiento a una posible solución. Estos \textit{datasets} tan amplios cuentan con tal diversidad de objetivos para identificar que llegan a tener decenas de miles de imágenes. Para poder utilizarlo en este proyecto sería necesario examinarlo entero y seleccionar y separar aquellas que se pudieran utilizar. Esto, como en los casos anteriores, es una tarea sumamente lenta sin ninguna garantía de obtener imágenes suficientes.
+
+Igual que existen \textit{datasets} tan amplios, también los hay pequeños y enfocados a la detección de uno o pocos objetos. A pesar de la limitación presente al tener que encontrar \textit{datasets} específicos para cada objeto que se quiera identificar, resulta la opción más accesible entre las mencionadas. 
+
+
+Otro ámbito en el que se ha conseguido una gran mejoría en las últimas décadas es en los gráficos de contenidos digitales audiovisuales, ya sean películas, videojuegos, videoclips, anuncios, etc. Esta mejora llega hasta tal punto que a veces puede resultar difícil distinguir entre realidad y CGI (\textit{Computer-generated imagery}). Teniendo en cuenta esto, las dificultades mencionadas en la obtención de imágenes y las oportunidades que ofrece la automatización, no se ha querido desaprovechar la posibilidad de enfocarlo desde un punto más cercano a este. 
+
+Debido a que las cámaras virtuales y las reales son sensores diferentes entrenando solamente con datos sintéticos la red sufre un desplome en la precisión, así que el uso de las imágenes generadas únicamente tampoco es una opción aceptable. Además, puesto que está demostrado que el uso de datos reales y sintéticos, combinados, mejora el rendimiento de la red frente al uso de datos reales únicamente~\cite{synthia2016}\footnote{the use of the combined data significantly boosts the performance obtained when using the real-world data alone} se considera que la mejor opción es utilizar los \textit{datasets} de menor tamaño en conjunto con imágenes generadas.
+
+%Una industria que destaca por el realismo de sus productos es la de los videojuegos
+
+
+\todo{mencionar aquí los proyectos que han usado videojuegos o motores o que los mencionan. Enlazarlo con lo de los gráficos de contenidos digitales audiovisuales diciendo que es buena idea..}
+
+%Esta es la opción que se eligió finalmente para realizar las imágenes de entrenamiento de la red neuronal. De esta forma el objetivo final de este apartado consiste en llevar a cabo una aplicación en la que se vayan cargando modelos tridimensionales de objetos y residuos diferente. Se les harán numerosas capturas con posiciones y rotaciones distintas y finalmente estas imágenes generadas serán posteriormente utilizadas para el entrenamiento. Gracias a esta aplicación se contará con el número de capturas que se quieran de cada objeto y material, pudiendo aumentar esta cantidad siempre que se desee o necesite.
+
 
 
 
@@ -38,94 +56,46 @@ Actualmente se va viendo una gran mejoría en los gráficos de contenidos digitale
 %-------------------------------------------------------------------
 \label{cap3:sec:aplicacion}
 
-Los objetivos de la aplicación de generación de imágenes fueron sufriendo cambios durante el desarrollo debido a las limitaciones y problemas que se fueron encontrando. 
-En esta sección del capítulo se va a hablar desde cómo se planteó la aplicación en un principio, hasta cuál fue el resultado; pasando por todas las decisiones que se tuvieron que ir tomando.
-%-------------------------------------------------------------------
-\subsection{Idea}
-%-------------------------------------------------------------------
-\label{cap3:ssec:idea}
+La aplicación de generación de imágenes ha sido desarrollada utilizando el motor de videojuegos Unity. Las características principales de la aplicación son la carga de modelos tridimensionales y la toma de capturas. La aplicación cuenta con un Game Manager que se encarga de la gestión del trascurso de la aplicación y de las variables principales (rutas de directorios, cantidad de imágenes a generar o la extensión de las capturas generadas). Toma este nombre ya que es el que se suele dar en los juegos al gestor global, y se ha mantenido por inercia de uso de Unity.
 
-Inicialmente se quiso que este apartado del trabajo no solo fuera útil para este proyecto, sino que también pudiera ser distribuido y utilizado por distintos usuarios. Esto se traduce a que se quería llevar a cabo una aplicación para PC con la cual se pudieran generar imágenes a partir de modelos tridimensionales. Estos modelos podrían ser los que la propia aplicación ofreciera, aquellos que se han utilizado en este proyecto, o bien podrían ser unos modelos 3D propios que el usuario tuviera y sobre los que quisiera crear un dataset de imágenes.
-Esto permitiría generar más variedad de imágenes y materiales para entrenar la red neuronal, escalando y ampliando la aplicación de identificación de objetos 
-\todo{referenciar capítulo 5 AplicacionIdentificación} 
-haciéndola así más completa.  
-Además, así no se limitaba la aplicación, y todo el trabajo que conlleva, a tener una única finalidad y unas pocas interacciones con él; sino que permitiría ser usado para este proyecto y a la vez para muchos otros, facilitando así el desarrollo de estos.
+Al importar los modelos es necesario crear un objeto reutilizable de Unity para trabajar con ellos de manera más sencilla, denominados \textit{prefabs}. Estos se separan y guardan en carpetas según el material al que pertenecen (metal, plástico, vidrio); lo que facilitará posteriormente el guardado de las capturas generadas.
 
-Desafortunadamente esta idea tuvo que ser descartada debido a las dificultades que se sufrieron con la importación de los modelos.
-\todo{referenciar subsecciones futuras}
-Tras invertir tiempo investigando sobre cómo importar modelos desde ejecución, los resultados dejaron mucho que desear. No sólo fue la ausencia de información sobre este tema, sino además la complicación de introducir modelos al propio editor de Unity lo que provocó la decisión de abandonar este objetivo. 
+Durante el tiempo de vida de la aplicación se accede a cada una de estas carpetas, de las que se cargan, uno a uno, los \textit{prefabs} contenidos en ellas.
+En cada frame se toma una captura de la escena, en ella se presenta uno de los modelos, colocado con una posición y rotación aleatorios, diferente en cada captura. De esta forma, a partir de un mismo objeto se obtienen imágenes muy distintas, permitiendo capturarlos desde diversos ángulos y distancias
+Para que la posición aleatoria generada no quede fuera del campo de visión de la cámara, se establecen unos valores máximos y mínimos para cada eje de coordenadas. Aún así, para prevenir posibles errores, antes de hacer la captura se comprueba que el modelo se encuentra dentro del campo de visión.
 
-La introducción de modelos 3D es algo que no suele utilizarse en videojuegos y Unity no cuenta con una manera fácil de llevarlo a cabo. Además de este problema, otro factor importante para el fracaso de esta idea fueron los numerosos problemas que surgieron al introducir modelos simplemente al editor de Unity. Viendo que esto ya consumía mucho tiempo y esfuerzo, se decidió descartar la aplicación para más usuarios en la que poder introducir nuevos modelos.
+Para generar más diversidad en las imágenes el fondo de estas también es generado de manera aleatoria. 
+Con el fin de hacerlo más completo se mezclan varias texturas. Lo componen dos planos superpuestos, separados levemente para que no se combinen, a los que se les asigna una textura aleatoria. Uno de ellos siempre está visible, mientras que el otro sólo se muestra a veces, en esas ocasiones se le asigna una posición y rotación aleatorias (figura~\ref{fig:fondos}).
 
-%-------------------------------------------------------------------
-\subsection{Planteamiento}
-%-------------------------------------------------------------------
-\label{cap3:ssec:planteamiento}
+\begin{figure}
+	\centering
+	\subfloat[Captura con un plano de fondo.]{
+		{{\includegraphics[width=0.5\textwidth]{Imagenes/unfondo.png}}}
+		\label{fig:fondos:unplano}}
+	\qquad
+	\subfloat[Captura con dos planos de fondo.]{
+		{{\includegraphics[width=0.5\textwidth]{Imagenes/dosfondos.png}}}
+		\label{fig:fondos:dosplanos}}
+	\caption{Capturas de ejemplo de los fondos.}
+    \label{fig:fondos}
+\end{figure}
 
-Existe un paquete para Unity llamado Perception\cite{perception2021} el cual genera datos etiquetados a partir de modelos 3D. Esto resulta de lo más interesante debido a la similitud que tiene con este apartado del proyecto. Unity Perception proporciona herramientas para generar datasets de gran tamaño utilizables en el  entrenamiento y la validación en proyectos de visión computacional.
+Una vez establecido el objeto y el fondo se toma la captura. Estas, igual que los modelos, se guardan separadas en carpetas según el material. Esto significa que las capturas de un objeto de metal se guardan en una carpeta llamada metal. Como con los modelos, todas las carpetas de los distintos materiales se almacenan en una carpeta raíz.  
 
-Para investigar y aprender sobre esta herramienta se ha elegido tomar el proyecto SynthDet~~\cite{synthdet2020} como referencia. SynthDet es un proyecto de detección de objetos orientado a los productos más habituales de los supermercados. Para ello, también se basan en entrenar un modelo de detección de objetos a partir de un dataset sintético. La idea, el proceso y las conclusiones están publicadas en el blog oficial de Unity divididas en tres partes \footnote{\url{https://blogs.unity3d.com/2020/05/01/synthetic-data-simulating-myriad-possibilities-to-train-robust-machine-learning-models/}}\footnote{\url{https://blogs.unity3d.com/2020/06/10/use-unitys-computer-vision-tools-to-generate-and-analyze-synthetic-data-at-scale-to-train-your-ml-models/}}\footnote{\url{https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-computer-vision-tools/}}.
-
-A pesar de todos los factores similares que cuenta este proyecto con SynthDet finalmente se decidió seguir otro camino y no utilizar Perception.
-Aunque Perception ofrece una forma de generar imágenes ya desarrollada, y que para muchos proyectos resulta muy útil, se le han encontrado ciertas pegas por las que se ha decidido finalmente prescindir de dicho paquete y desarrollar la aplicación personalmente.
-
-El primer punto, y el más decisivo, es que Perception nos brinda la oportunidad de generar las imágenes para la aplicación de identificación de objetos; en cambio, para el desarrollo de la aplicación de generación de imágenes no se ha encontrado manera viable para llevarlo a cabo. Las pegas surgen con cómo se podría incorporar este paquete a una aplicación propia sin perder funcionalidades. Debido a lo complejo que es este paquete sería necesario estudiar y comprender toda la lógica que lo constituye hasta el más bajo nivel. Por ello, aunque desarrollar una aplicación propia tendría como resultado algo más sencillo, se decidió que merecía la pena ya que se reduce el riesgo de no poder terminarla, como podría ocurrir de otra forma debido a la complejidad de Perception. Además, así se tendría conocimiento y control sobre todas las características de la aplicación.
-
-Un último factor que se tuvo en cuenta fue que ya se había decidido y desarrollado parte de la aplicación móvil de identificación de objetos previamente. Como se explicará en el capítulo 
-\todo{referencia capítulo de la identificación}
-, esta aplicación se ha desarrollado basándose en el ejemplo disponible de TensorFlow Lite sobre clasificación de imágenes; por lo tanto la aplicación se centra e identifica un único objeto, dando así la mayor información sobre este. Perception por el contrario está planteado para generar datasets en los que cada imagen cuenta con varios objetos a identificar en ella. 
-
-Con todo lo mencionado anteriormente se tomó la decisión de desarrollar una aplicación sencilla que generara imágenes de un único objeto en cada una, que pudiera ser publicada y que los usuarios pudieran crear sus datasets introduciendo nuevos modelos y materiales, ampliando así los objetivos reconocibles por la aplicación.
-
-%-------------------------------------------------------------------
-\subsection{Desarrollo}
-%-------------------------------------------------------------------
-\label{cap3:ssec:desarrollo}
-
-Como se ha comentado en la subsección anterior, finalmente se decidió llevar a cabo la aplicación desde cero. 
-
-Para empezar, se desarrolló un Game Manager encargado de la dinámica de la aplicación. Esta es la entidad que maneja la carga de objetos, la separación por materiales, el final de la aplicación y que tiene las rutas a los archivos necesarios. 
+Puesto que las imágenes generadas van a ser utilizadas para el entrenamiento de una red neuronal supervisada, todas ellas deben de estar correctamente etiquetadas. Como van a entrenarse utilizando TensorFlow Lite, sobre lo que se hablará en capítulos posteriores (\ref{cap4} y \ref{cap5}), el etiquetado se realiza de manera muy sencilla. Debido a que el objetivo de la aplicación no es identificar todos los objetos presentes en una imagen, sino identificar únicamente el material del objeto principal, no es necesario tener diversos objetos en una imagen y delimitar cada uno con su etiqueta correspondiente. En este caso, el etiquetado se hace por jerarquía de carpetas. Esto quiere decir que hay una carpeta raíz que contiene distintas subcarpetas, una para cada tipo de material identificable por la red; y dentro de cada una de estas carpetas se almacenan todas las imágenes correspondientes.
+Para que cada captura tenga un nombre único, se guardan usando el nombre del modelo añadiéndole la hora, minutos, segundos y milisegundos del momento en que ha sido tomada. Pueden exportarse en dos formato PNG o formato JPG, mediante la configuración del Game Manager. PNG es un formato sin pérdida que permite imágenes sin fondo. Puesto que esa propiedad no es necesaria en este proyecto, y que los resultados son similares con ambos formatos, es preferible el uso de JPG debido a que los archivos ocupan menos espacio. Esto es importante ya que se necesita un gran número de imágenes para el entrenamiento de la red neuronal y así no se ocupa tanto espacio en la máquina.
 
 
-Al iniciar la aplicación el GM guarda todas las rutas de los recursos y crea la carpeta donde se guardarán las capturas tomadas por la aplicación. Una vez haya hecho esto recorre las carpetas de los distintos tipos de materiales. Son recorridas en orden alfabético. Cada vez que se de paso a un nuevo material se creará, si no existe, una subcarpeta nueva con el nombre del material en la carpeta destino para las imágenes generadas. 
-Aparte del GM hay otras entidades encargadas del resto de características de la aplicación. 
 
-Para utilizar los modelos en la aplicación cada uno de ellos tendrá un ``prefab'' que será instanciado en la escena. Los ``prefabs'' son objetos reutilizables, y creados con una serie de características dentro de la vista proyecto, que serán instanciados en la aplicación cada vez que se estime oportuno y tantas veces como sea necesario\footnote{Esto es una cita pero no las entiendo muy bien así que por ahora lo pongo así: \url{https://academiaandroid.com/que-son-los-prefab-en-unity-3d/}}.
- 
-La entidad encargada de los modelos es la que carga e instancia los prefabs de estos. Cuando se llama al método de cargar un nuevo material desde el GM, esta entidad accede a la subcarpeta dentro de ``Prefabs'' del material correspondiente, este se indica como un parámetro del método. Si la carpeta de ese material existe, se cargan en un array todos los recursos en ella casteándolos a GameObjects.
-Además, lleva la cuenta de los objetos instanciados y cuántos quedan de ese tipo. Si alguno de los objetos no se ha cargado correctamente lo salta y pasa al siguiente.
-Cada vez que sea necesario un nuevo objeto esta entidad lo instancia y le añade el componente para la gestión de su posición. 
 
-El objeto instanciado cambia de posición y rotación a unas aleatorias en cada frame, para que sean distintas en cada captura. Para la posición se establecen unos límites entre los que se genera un valor aleatorio para cada eje. Para el eje vertical, el eje Y, se establece un valor propio en negativo para el mínimo y positivo para el máximo. Para el eje de la Z, la profundidad, se establece de manera similar, en este caso no se utiliza el mismo valor en simetría respecto al eje de coordenadas, sino que se tiene un valor máximo establecido por parámetro y el mínimo estará posicionado a dos unidades respecto a la cámara. Por último, la posición en el eje X, en horizontal, se genera también de manera aleatoria, pero el rango en vez de ser a partir de un valor pasado por parámetro en este caso se utiliza el generado para la posición en el eje Z; puesto en positivo y negativo. 
 
-Se decidió generar la posición en el eje X de esta manera puesto que según cuál sea la distancia del modelo respecto a la cámara, el rango en el eje X en el que es visible es directamente proporcional. De esta manera no se limita la posición a unos valores cerrados, sino que permite la posibilidad de generar muchas más posiciones viables. En el eje Y no se decidió realizar de esta misma manera ya que se observó, tras hacer numerosas pruebas, que este rango estuviera relacionado con la posición Z traía más problemas que ventajas. En la mayoría de los casos el rango acababa siendo demasiado amplio y se decidió que no merecía la pena ralentizar la aplicación con una operación cuando al final no generaba buenos resultados.
 
-Una vez se ha generado la nueva posición aleatoria se comprueba que está dentro del campo de visualización de la cámara, en el caso de que no sea así se vuelve a generar una nueva posición aleatoria. Cuando la posición sea adecuada, entonces se establece la rotación aleatoria.
+%El objeto instanciado cambia de posición y rotación a unas aleatorias en cada frame, para que sean distintas en cada captura. Para la posición se establecen unos límites entre los que se genera un valor aleatorio para cada eje. Para el eje vertical, el eje Y, se establece un valor propio en negativo para el mínimo y positivo para el máximo. Para el eje de la Z, la profundidad, se establece de manera similar, en este caso no se utiliza el mismo valor en simetría respecto al eje de coordenadas, sino que se tiene un valor máximo establecido por parámetro y el mínimo estará posicionado a dos unidades respecto a la cámara. Por último, la posición en el eje X, en horizontal, se genera también de manera aleatoria, pero el rango en vez de ser a partir de un valor pasado por parámetro en este caso se utiliza el generado para la posición en el eje Z; puesto en positivo y negativo. 
 
-A pesar de que toda esta parte no supuso mucho problema de desarrollar, sí hubo que revisarla poco después. Las pruebas que se iban realizando según se iban añadiendo y mejorando las distintas funcionalidades indicaban que todo funcionaba correctamente y no parecía haber ningún problema; pero esto no era del todo correcto. Estas pruebas iniciales solamente se estaban haciendo desde el editor y, un poco más adelante, al generar la primera build de la aplicación, se descubrió que nada de lo desarrollado funcionaba. A pesar de lo desesperanzador que resulta esto, afortunadamente fue en un momento muy temprano del desarrollo y se pudo solucionar sin provocar grandes retrasos. 
+%Se decidió generar la posición en el eje X de esta manera puesto que según cuál sea la distancia del modelo respecto a la cámara, el rango en el eje X en el que es visible es directamente proporcional. De esta manera no se limita la posición a unos valores cerrados, sino que permite la posibilidad de generar muchas más posiciones viables. En el eje Y no se decidió realizar de esta misma manera ya que se observó, tras hacer numerosas pruebas, que este rango estuviera relacionado con la posición Z traía más problemas que ventajas. En la mayoría de los casos el rango acababa siendo demasiado amplio y se decidió que no merecía la pena ralentizar la aplicación con una operación cuando al final no generaba buenos resultados.
 
-Para identificar dónde estaba el error se probaron las distintas partes ya desarrolladas de la aplicación de manera independiente, con este proceso se encontró que era la carga de objetos lo que traía problemas y no actuaba como se esperaba. Tras investigar sobre el asunto se descubrió que en la build sólo se cargan los recursos que se encuentran en la carpeta ``Resources''\footnote{\url{https://docs.unity3d.com/Manual/LoadingResourcesatRuntime.html}}. Una vez identificado el origen del problema este se solucionó sin grandes esfuerzos, simplemente cambiando de lugar la carpeta contenedora de los prefabs quedó solventado.
+%Investigando al respecto se vio que esta clase suele generar problemas habitualmente, aunque no hay nada respaldado por Unity. En vista que lo que proporcionaba Unity no iba a ser útil se buscaron otras optativas decidiendo, finalmente, crear una clase propia para la captura de imágenes siguiendo un tutorial bien explicado\footnote{\url{https://www.youtube.com/watch?v=lT-SRLKUe5k}}. Las capturas se irán guardando en la carpeta destino dentro de una subcarpeta nombrada como el material correspondiente.
 
-Llegado este punto ya solo quedaba generar las imágenes y Unity cuenta con una clase enfocada a esto, la clase ``ScreenCapture''\footnote{\url{https://docs.unity3d.com/ScriptReference/ScreenCapture.html}}. A pesar de lo esperanzador y sencillo que se presentaba esta parte acabó no siendo así. Utilizando la clase que ofrece Unity tan solo había que añadir una mera línea de código. Aprendiendo de los errores pasados, y tratando de reducir los futuros, este cambio se probó inmediatamente, descubriendo que desde el editor no había ningún problema pero al generar el ejecutable no se obtenía el resultado esperado. 
-
-Investigando al respecto se vio que esta clase suele generar problemas habitualmente, aunque no hay nada respaldado por Unity. En vista que lo que proporcionaba Unity no iba a ser útil se buscaron otras optativas decidiendo, finalmente, crear una clase propia para la captura de imágenes siguiendo un tutorial bien explicado\footnote{\url{https://www.youtube.com/watch?v=lT-SRLKUe5k}}. Las capturas se irán guardando en la carpeta destino dentro de una subcarpeta nombrada como el material correspondiente.
-
-De cada modelo se generan tantas imágenes como se le haya indicado al GameManager, y se genera una cada frame. Una vez se hayan capturado todos los modelos de todos los materiales, tantas veces como se haya establecido; la aplicación termina y se cierra, tanto desde el editor como el ejecutable. 
-
-Llegados a este punto del desarrollo se decidió que era momento de ampliar la cantidad de modelos y materiales para asegurarse del correcto funcionamiento y poder empezar a realizar pruebas útiles para la red neuronal. Esta parte se esperaba que, a pesar de ser lenta por el tiempo que hay que dedicarle, fuera sencilla. La parte más larga se suponía que sería la búsqueda de modelos tridimensionales útiles y semirrealistas; por otro lado la carga de los modelos en Unity se esperaba que fuera sencilla, ya que ya se había realizado en proyectos anteriores. Desafortunadamente, esto no fue del todo así; debido a que Unity está en constante crecimiento y actualización, la forma de introducir nuevos modelos 3D con sus materiales y texturas correspondientes ha sufrido cambios y ya no resulta tan sencillo como antaño. Pero la dificultad de introducir estos recursos no sólo viene de parte de Unity, la exportación de los modelos es otro factor importante; si esto no se ha llevado a cabo adecuadamente también genera problemas.
-En muchos casos el modelo sí se importaba adecuadamente pero ni las texturas ni los materiales se cargaban correctamente con el modelo, lo que lo hacía inservible.
-
-Debido a todos estos problemas, la cantidad de modelos encontrados frente a los que podían realmente utilizarse era muy pequeña, para poder continuar con el desarrollo se decidió hacer pruebas simplemente con los tres tipos de materiales que se habían probado antes de llevar a cabo esta aplicación. Sobre esto se hablará en más profundidad en el capítulo 4
-\todo{añadir referencia al capítulo del entrenamiento}
-. Los tres materiales seleccionados fueron plástico, vidrio y metal. 
-
-Viendo las dificultades que se encontraron con la importación de los modelos se decidió prescindir de la funcionalidad para que los usuarios introdujeran sus modelos. 
-A pesar de esta decisión, se exploró cómo se podría desarrollar esto como trabajo futuro, como resultado se encontró que Unity no proporciona ningún soporte para llevarlo a cabo, pero hay desarrolladores que hay experimentado y probado formas de realizarlo \footnote{\url{https://forum.unity.com/threads/load-3d-model-at-runtime.122720/}}\footnote{\url{https://theslidefactory.com/loading-3d-models-from-the-web-at-runtime-in-unity/}}. 
-Una de las páginas que se referenciaban para desarrollar esta funcionalidad con .fbx fue la documentación de Autodesk \footnote{\url{http://docs.autodesk.com/FBX/2013/ENU/FBX-SDK-Documentation/}}.
-Otras opciones que existen son dos paquetes, de pago, disponibles para Unity que lleven a cabo esta funcionalidad: ObjReader\footnote{\url{https://starscenesoftware.com/objreader.html\#ObjReader}} (sólo para archivos .obj) y TriLib2\footnote{\url{https://assetstore.unity.com/packages/tools/modeling/trilib-2-model-loading-package-157548\#description}}.
- 
- Con esta decisión tomada ya sólo quedaba un último  detalle por desarrollar: el fondo de las imágenes.
- Para el fondo se eligieron un número amplio de imágenes para que así hubiera suficiente diversidad. Se compone de tres planos de los cuales para cada captura se muestran entre uno y tres de ellos. Se les asigna una rotación, en los ejes X e Y, y una imagen a cada uno. Todo esto es establecido de manera aleatoria. Tras asignar todas estas variantes, se realiza la captura.
 
 %-------------------------------------------------------------------
 \subsection{Modelos 3D}
@@ -138,15 +108,12 @@ Como se ha comentado, para generar imágenes sintéticas mediante esta aplicación,
 
 FBX es un formato de archivo propiedad de Autodesk, permite que estos recursos tridimensionales tengan la mínima pérdida de datos entre los distintos softwares de edición 3D\footnote{\url{https://www.autodesk.com/products/fbx/overview\#intro}}. Se decidió utilizar este formato ya que es uno de los más extendidos, se encuentran bastantes recursos sin problema y su carga en Unity suele ser sencilla. Además, ha sido un formato utilizado para modelos de proyectos anteriores por lo que trabajar con ello generaba más tranquilidad que con algo desconocido.
 
-Como se comentó previamente, parecía que la carga de los modelos en Unity sería un mero trámite sin mucha complicación, pero finalmente no fue así. Se llegó a la conclusión de que el problema a veces era que la carga de los materiales y texturas no se hacía correctamente o bien que el modelo no estaba bien exportado y fallaba al importarlo en Unity. Se hicieron numerosas pruebas tratando de abrirlos desde distintos editores para intentar comprender qué ocurría con las texturas. Durante esta exploración se encontró que algunos de estos modelos incluso presentaban problemas mayores. Un ejemplo fue el modelo de una botella de plástico cuyas caras internas se renderizaran al revés, en vez de ver las caras externas
+Se llegó a la conclusión de que el problema a veces era que la carga de los materiales y texturas no se hacía correctamente o bien que el modelo no estaba bien exportado y fallaba al importarlo en Unity. Se hicieron numerosas pruebas tratando de abrirlos desde distintos editores para intentar comprender qué ocurría con las texturas. Durante esta exploración se encontró que algunos de estos modelos incluso presentaban problemas mayores. Un ejemplo fue el modelo de una botella de plástico cuyas caras internas se renderizaran al revés, en vez de ver las caras externas
 \todo{poner imágenes}. 
 
-Con algunos modelos la decepción venía en el último momento, después de conseguir que se importaran correctamente con sus materiales y texturas, el resultado de esto era muy distinto a lo que se esperaba, teniendo que ser desechado
-\todo{añadir imágenes. Lata cocacola polaca}.
 
-Puesto que se habían conseguido muchos modelos pero muy pocos funcionaban directamente en Unity, se estudió si había alguna manera de salvar y utilizar estos modelos. En la mayoría de los casos no pudo ser, pero afortunadamente hubo unos pocos que con los que sí. Estos modelos se importaron primero en Blender, ya que es la única herramienta de modelado 3D con la que se tiene experiencia, y se volvieron a exportar los modelos a FBX pero cambiando la configuración. En algunos casos se aprovechó que el mismo recurso estaba en varios formatos y se partió de otro que no fuera FBX. 
+ Estos modelos se importaron primero en Blender,  y se volvieron a exportar los modelos a FBX pero cambiando la configuración. En algunos casos se aprovechó que el mismo recurso estaba en varios formatos y se partió de otro que no fuera FBX. 
 
-Como resultado final no se tiene una gran base de datos de modelos ni se ha podido generar un dataset amplio como se esperaba para el entrenamiento de la red neuronal. Pero lo conseguido permite generar lo suficiente como para probar y estudiar los errores y mejoras del proyecto.
 
 %-------------------------------------------------------------------
 \subsection{Capturas}

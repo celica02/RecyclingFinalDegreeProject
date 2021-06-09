@@ -9,13 +9,17 @@ public class BackgroundManager : MonoBehaviour
     public GameObject[] planes;
     bool[] planesUsed;
     int nShowingPlanes;
+    float z = 9;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
         planes = GameObject.FindGameObjectsWithTag("Background");
-        planes[0].transform.position = new Vector3(0, 0, 6);
+        for (int i = 0; i < planes.Length; i++)
+        {
+            planes[i].transform.position = new Vector3(0, 0, z - 0.1f*i);
+        }
         planes[0].transform.rotation = Quaternion.Euler(-90, 0, 0);
     }
 
@@ -30,9 +34,9 @@ public class BackgroundManager : MonoBehaviour
     public void Update()
     {
         //How many planes will be shown for the background.
-        nShowingPlanes = Random.Range(1, planes.Length);
+        nShowingPlanes = Random.Range(1, planes.Length + 1);
 
-        for (int i = 0; i < planes.Length - 1; i++)
+        for (int i = 0; i < planes.Length; i++)
         {
             if (i < nShowingPlanes)
             {
@@ -40,7 +44,7 @@ public class BackgroundManager : MonoBehaviour
                 //Random position and rotation for the planes except the furthest
                 if (i > 0)
                 {
-                    planes[i].transform.position = new Vector3(Random.Range(-2.2F, 2.2F), Random.Range(-1.57F, 1.57F), planes[i-1].transform.position.z -1);
+                    planes[i].transform.position = new Vector3(Random.Range(-2.2F, 2.2F), Random.Range(-1.57F, 1.57F), planes[i].transform.position.z);
                     planes[i].transform.rotation = Quaternion.Euler(Random.Range(0, 360), 90, -90);
                 }
                 planes[i].GetComponent<MeshRenderer>().material = BackgroundsLoader.GetRandomMaterial();
