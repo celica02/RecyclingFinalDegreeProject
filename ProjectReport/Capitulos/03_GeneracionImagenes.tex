@@ -26,7 +26,6 @@ Contamos con varias opciones para conseguir las imágenes. Una de ellas, y quizá 
 Otra forma es realizar las fotografías personalmente. Esta cuenta con varios problemas, el primero es que se necesita tener acceso a los objetos, y cuando se necesita hacer miles de imágenes distintas el número de objetos a fotografía es muy alto. 
 
 Una posible solución para este problema es acudir a establecimientos donde los vendan y llevar a cabo allí las fotos. Uno de los inconvenientes es que obtener las imágenes llevaría una cantidad de tiempo excesiva. Una alternativa puede ser la grabación de vídeos, utilizando los \textit{frames} como imágenes de entrenamiento. Esta opción es más dinámica frente a las fotografías, pero por otro lado todos los \textit{frames} obtenidos tendrían que ser revisados con atención. Esto es necesario por si aparecen otros objetos además del deseado, ya que se deberían separar para el correcto etiquetado; o, incluso, si ni siquiera aparece.
-\todo{revisar lo de los objetos ya usados}
 
 En ambas opciones se presentan varios inconvenientes. Los más importantes son, que al realizarse en un establecimiento, existe el riesgo de violar la protección de datos de los clientes y los trabajadores de alrededor, además de que no esté permitido realizar fotografías ni grabaciones dentro del comercio. Otro factor menos significativo es que al tratarse de una aplicación de reciclaje sería preferible que se trate de objetos ya usados, como una lata abierta, una botella vacía o un papel arrugado.
 
@@ -39,12 +38,12 @@ Igual que existen \textit{datasets} tan amplios, también los hay pequeños y enfo
 
 Otro ámbito en el que se ha conseguido una gran mejoría en las últimas décadas es en los gráficos de contenidos digitales audiovisuales, ya sean películas, videojuegos, videoclips, anuncios, etc. Esta mejora llega hasta tal punto que a veces puede resultar difícil distinguir entre realidad y CGI (\textit{Computer-generated imagery}). Teniendo en cuenta esto, las dificultades mencionadas en la obtención de imágenes y las oportunidades que ofrece la automatización, no se ha querido desaprovechar la posibilidad de enfocarlo desde un punto más cercano a este. 
 
-Debido a que las cámaras virtuales y las reales son sensores diferentes entrenando solamente con datos sintéticos la red sufre un desplome en la precisión, así que el uso de las imágenes generadas únicamente tampoco es una opción aceptable. Además, puesto que está demostrado que el uso de datos reales y sintéticos, combinados, mejora el rendimiento de la red frente al uso de datos reales únicamente~\cite{synthia2016}\footnote{the use of the combined data significantly boosts the performance obtained when using the real-world data alone} se considera que la mejor opción es utilizar los \textit{datasets} de menor tamaño en conjunto con imágenes generadas.
+Debido a que las cámaras virtuales y las reales son sensores diferentes entrenando solamente con datos sintéticos la red sufre un desplome en la precisión, así que el uso de las imágenes generadas únicamente tampoco es una opción aceptable. Además, puesto que está demostrado que el uso de datos reales y sintéticos, combinados, mejora el rendimiento de la red frente al uso de datos reales únicamente~\cite{synthia2016} se considera que la mejor opción es utilizar los \textit{datasets} de menor tamaño en conjunto con imágenes generadas.
 
 %Una industria que destaca por el realismo de sus productos es la de los videojuegos
 
 
-\todo{mencionar aquí los proyectos que han usado videojuegos o motores o que los mencionan. Enlazarlo con lo de los gráficos de contenidos digitales audiovisuales diciendo que es buena idea..}
+%\todo{mencionar aquí los proyectos que han usado videojuegos o motores o que los mencionan. Enlazarlo con lo de los gráficos de contenidos digitales audiovisuales diciendo que es buena idea..}
 
 %Esta es la opción que se eligió finalmente para realizar las imágenes de entrenamiento de la red neuronal. De esta forma el objetivo final de este apartado consiste en llevar a cabo una aplicación en la que se vayan cargando modelos tridimensionales de objetos y residuos diferente. Se les harán numerosas capturas con posiciones y rotaciones distintas y finalmente estas imágenes generadas serán posteriormente utilizadas para el entrenamiento. Gracias a esta aplicación se contará con el número de capturas que se quieran de cada objeto y material, pudiendo aumentar esta cantidad siempre que se desee o necesite.
 
@@ -56,39 +55,38 @@ Debido a que las cámaras virtuales y las reales son sensores diferentes entrenan
 %-------------------------------------------------------------------
 \label{cap3:sec:aplicacion}
 
-La aplicación de generación de imágenes ha sido desarrollada utilizando el motor de videojuegos Unity. Las características principales de la aplicación son la carga de modelos tridimensionales y la toma de capturas. La aplicación cuenta con un Game Manager que se encarga de la gestión del trascurso de la aplicación y de las variables principales (rutas de directorios, cantidad de imágenes a generar o la extensión de las capturas generadas). Toma este nombre ya que es el que se suele dar en los juegos al gestor global, y se ha mantenido por inercia de uso de Unity.
+La aplicación de generación de imágenes ha sido desarrollada utilizando el motor de videojuegos Unity. Sus características principales, de la aplicación, son la carga de modelos tridimensionales y la toma de capturas. La aplicación cuenta con un Game Manager que se encarga de la gestión del trascurso de la aplicación y de las variables principales (rutas de directorios, cantidad de imágenes a generar o su extensión). Toma este nombre ya que es el que se suele dar en los juegos al gestor global, y se ha mantenido por inercia de uso de Unity.
 
-Al importar los modelos es necesario crear un objeto reutilizable de Unity para trabajar con ellos de manera más sencilla, denominados \textit{prefabs}. Estos se separan y guardan en carpetas según el material al que pertenecen (metal, plástico, vidrio); lo que facilitará posteriormente el guardado de las capturas generadas.
+Al importar los modelos, es necesario crear un objeto reutilizable de Unity para trabajar con ellos de manera  sencilla, denominados \textit{prefabs}. Estos se separan y guardan en carpetas según el material al que pertenecen (metal, plástico, vidrio); lo que facilitará posteriormente el guardado de las capturas generadas.
 
-Durante el tiempo de vida de la aplicación se accede a cada una de estas carpetas, de las que se cargan, uno a uno, los \textit{prefabs} contenidos en ellas.
-En cada frame se toma una captura de la escena, en ella se presenta uno de los modelos, colocado con una posición y rotación aleatorios, diferente en cada captura. De esta forma, a partir de un mismo objeto se obtienen imágenes muy distintas, permitiendo capturarlos desde diversos ángulos y distancias
+Durante el tiempo de vida de la aplicación se accede a cada una de estas carpetas para cargar, uno a uno, los \textit{prefabs} contenidos en ellas.
+En cada frame se toma una captura de la escena, en ella se presenta uno de los modelos frente al fondo.
+El modelo es colocado con una posición y rotación aleatorios diferentes en cada captura. De esta forma, a partir de un mismo objeto se obtienen imágenes muy distintas, ya que son capturados desde diversos ángulos y distancias.
 Para que la posición aleatoria generada no quede fuera del campo de visión de la cámara, se establecen unos valores máximos y mínimos para cada eje de coordenadas. Aún así, para prevenir posibles errores, antes de hacer la captura se comprueba que el modelo se encuentra dentro del campo de visión.
 
-Para generar más diversidad en las imágenes el fondo de estas también es generado de manera aleatoria. 
-Con el fin de hacerlo más completo se mezclan varias texturas. Lo componen dos planos superpuestos, separados levemente para que no se combinen, a los que se les asigna una textura aleatoria. Uno de ellos siempre está visible, mientras que el otro sólo se muestra a veces, en esas ocasiones se le asigna una posición y rotación aleatorias (figura~\ref{fig:fondos}).
+Para generar más diversidad en las imágenes cada una cuenta con un fondo generado de manera aleatoria. Este se compone de dos planos superpuestos, separados levemente para que no se combinen, a los que se les asigna una textura de manera aleatoria. Uno de ellos siempre está visible, mientras que el otro sólo se muestra a veces, configurado con posición y rotación aleatorias (figura~\ref{fig:fondos}).
 
 \begin{figure}
 	\centering
 	\subfloat[Captura con un plano de fondo.]{
-		{{\includegraphics[width=0.5\textwidth]{Imagenes/unfondo.png}}}
+		{{\includegraphics[width=0.6\textwidth]{Imagenes/unfondo.png}}}
 		\label{fig:fondos:unplano}}
 	\qquad
 	\subfloat[Captura con dos planos de fondo.]{
-		{{\includegraphics[width=0.5\textwidth]{Imagenes/dosfondos.png}}}
+		{{\includegraphics[width=0.6\textwidth]{Imagenes/dosfondos.png}}}
 		\label{fig:fondos:dosplanos}}
 	\caption{Capturas de ejemplo de los fondos.}
     \label{fig:fondos}
 \end{figure}
 
-Una vez establecido el objeto y el fondo se toma la captura. Estas, igual que los modelos, se guardan separadas en carpetas según el material. Esto significa que las capturas de un objeto de metal se guardan en una carpeta llamada metal. Como con los modelos, todas las carpetas de los distintos materiales se almacenan en una carpeta raíz.  
+Una vez establecido el objeto y el fondo, se toma la captura. Estas, igual que los modelos, se guardan separadas en carpetas según el material. Esto significa que las capturas de un objeto de metal se guardan en una carpeta llamada metal. Como con los modelos, todas las carpetas de los distintos materiales se almacenan en una carpeta raíz.  
 
-Puesto que las imágenes generadas van a ser utilizadas para el entrenamiento de una red neuronal supervisada, todas ellas deben de estar correctamente etiquetadas. Como van a entrenarse utilizando TensorFlow Lite, sobre lo que se hablará en capítulos posteriores (\ref{cap4} y \ref{cap5}), el etiquetado se realiza de manera muy sencilla. Debido a que el objetivo de la aplicación no es identificar todos los objetos presentes en una imagen, sino identificar únicamente el material del objeto principal, no es necesario tener diversos objetos en una imagen y delimitar cada uno con su etiqueta correspondiente. En este caso, el etiquetado se hace por jerarquía de carpetas. Esto quiere decir que hay una carpeta raíz que contiene distintas subcarpetas, una para cada tipo de material identificable por la red; y dentro de cada una de estas carpetas se almacenan todas las imágenes correspondientes.
-Para que cada captura tenga un nombre único, se guardan usando el nombre del modelo añadiéndole la hora, minutos, segundos y milisegundos del momento en que ha sido tomada. Pueden exportarse en dos formato PNG o formato JPG, mediante la configuración del Game Manager. PNG es un formato sin pérdida que permite imágenes sin fondo. Puesto que esa propiedad no es necesaria en este proyecto, y que los resultados son similares con ambos formatos, es preferible el uso de JPG debido a que los archivos ocupan menos espacio. Esto es importante ya que se necesita un gran número de imágenes para el entrenamiento de la red neuronal y así no se ocupa tanto espacio en la máquina.
+Puesto que las imágenes generadas van a ser utilizadas para el entrenamiento de una red neuronal supervisada, todas ellas deben de estar correctamente etiquetadas. Como van a entrenarse utilizando TensorFlow Lite, sobre lo que se hablará en el capítulo~\ref{cap4}), el etiquetado se realiza de manera muy sencilla. 
 
+Debido a que el objetivo de la aplicación no es identificar todos los objetos presentes en una imagen, sino identificar únicamente el material del objeto principal, no es necesario tener diversos objetos en cada imagen y delimitar cada uno de ellos con su etiqueta correspondiente. En este caso, el etiquetado se hace por jerarquía de carpetas. Esto quiere decir que hay una carpeta raíz que contiene distintas subcarpetas, una para cada tipo de material identificable por la red; y dentro de cada una de estas carpetas se almacenan todas las imágenes correspondientes. Para el entrenamiento de la red simplemente hay que indicar la ruta de la carpeta raíz y espera que dentro de esta estén las carpetas que serán las etiquetas y en su interior las imágenes de entrenamiento.
 
-
-
-
+Un último punto importante es la unicidad de las capturas. Para ello se guardan usando el nombre del modelo añadiéndole la hora, minutos, segundos y milisegundos del momento en que ha sido tomada. 
+Las capturas pueden exportarse en tanto en formato PNG como JPG, mediante la configuración del Game Manager. PNG es un formato sin pérdida que permite imágenes sin fondo. Puesto que esa propiedad no es necesaria en este proyecto, y que los resultados son similares con ambos formatos, es preferible el uso de JPG debido a que los archivos ocupan menos espacio. Esto es importante ya que se necesita un gran número de imágenes para el entrenamiento de la red neuronal y así no se ocupa tanto espacio en la máquina.
 
 %El objeto instanciado cambia de posición y rotación a unas aleatorias en cada frame, para que sean distintas en cada captura. Para la posición se establecen unos límites entre los que se genera un valor aleatorio para cada eje. Para el eje vertical, el eje Y, se establece un valor propio en negativo para el mínimo y positivo para el máximo. Para el eje de la Z, la profundidad, se establece de manera similar, en este caso no se utiliza el mismo valor en simetría respecto al eje de coordenadas, sino que se tiene un valor máximo establecido por parámetro y el mínimo estará posicionado a dos unidades respecto a la cámara. Por último, la posición en el eje X, en horizontal, se genera también de manera aleatoria, pero el rango en vez de ser a partir de un valor pasado por parámetro en este caso se utiliza el generado para la posición en el eje Z; puesto en positivo y negativo. 
 
@@ -100,39 +98,44 @@ Para que cada captura tenga un nombre único, se guardan usando el nombre del mod
 %-------------------------------------------------------------------
 \subsection{Modelos 3D}
 %-------------------------------------------------------------------
-\label{cap3:ssec:modelos3d}
-\todo{teniendo en cuenta que podrían existir complicaciones con la obtención de los modelos se consiguieron datasets de imágenes de objetos para poder hacer pruebas de prototipado. Teniendo en cuenta los materiales que se pudieron obtener (plástico, vidrio y latas) se continuó en esa línea en la obtención de los modelos para tener un dataset pequeño, y poco variado, pero completo con el que poder hacer pruebas sin problema. Como se comentará en el capítulo 5 \todo{referencia a capitulo 5} para el correcto funcionamiento de la aplicación son necesarios al menos tres objetivos a identificar diferentes. }
-Esta sección está orientada a explicar el proceso de obtención y uso de los modelos tridimensionales.
-
-Como se ha comentado, para generar imágenes sintéticas mediante esta aplicación, se parte de modelos tridimensionales. Para este proyecto todos los modelos seleccionados y utilizados son de libre uso conseguidos desde varias páginas dedicadas a esto, principalmente CGTrader\footnote{\url{https://www.cgtrader.com/}}, Free3D\footnote{\url{https://free3d.com/es/}} y la propia Asset Store de Unity\footnote{\url{https://assetstore.unity.com/}}. En esta última opción no se encontraron demasiados recursos para el desarrollo, pero fueron los que se utilizaron en el inicio del proceso; posteriormente la cantidad de modelos se fue aumentado visitando las páginas mencionadas. El formato principal de que se ha tratado de conseguir para los modelos es FBX. 
-
-FBX es un formato de archivo propiedad de Autodesk, permite que estos recursos tridimensionales tengan la mínima pérdida de datos entre los distintos softwares de edición 3D\footnote{\url{https://www.autodesk.com/products/fbx/overview\#intro}}. Se decidió utilizar este formato ya que es uno de los más extendidos, se encuentran bastantes recursos sin problema y su carga en Unity suele ser sencilla. Además, ha sido un formato utilizado para modelos de proyectos anteriores por lo que trabajar con ello generaba más tranquilidad que con algo desconocido.
-
-Se llegó a la conclusión de que el problema a veces era que la carga de los materiales y texturas no se hacía correctamente o bien que el modelo no estaba bien exportado y fallaba al importarlo en Unity. Se hicieron numerosas pruebas tratando de abrirlos desde distintos editores para intentar comprender qué ocurría con las texturas. Durante esta exploración se encontró que algunos de estos modelos incluso presentaban problemas mayores. Un ejemplo fue el modelo de una botella de plástico cuyas caras internas se renderizaran al revés, en vez de ver las caras externas
-\todo{poner imágenes}. 
+\label{cap3:sec:modelos3d}
 
 
- Estos modelos se importaron primero en Blender,  y se volvieron a exportar los modelos a FBX pero cambiando la configuración. En algunos casos se aprovechó que el mismo recurso estaba en varios formatos y se partió de otro que no fuera FBX. 
+Como se ha comentado, para generar las imágenes sintéticas se parte de modelos tridimensionales. Todos los modelos seleccionados y utilizados en este proyecto son de libre uso, conseguidos desde varias páginas dedicadas a esto (CGTrader\footnote{\url{https://www.cgtrader.com/}}, Free3D\footnote{\url{https://free3d.com/es/}}, TurboSquid\footnote{\url{https://www.turbosquid.com/}}, 3DModelHeaven\footnote{\url{https://3dmodelhaven.com/}} y Unity Asset Store\footnote{\url{https://assetstore.unity.com/}}). El formato con el que se ha trabajado es FBX, es el más extendido debido a su interoperabilidad entre aplicaciones de creación de contenido digital. Permite que los recursos tridimensionales tengan la mínima pérdida de datos entre los distintos \textit{softwares} de edición 3D.
+
+Existen varias dificultades principales con la obtención de modelos tridimensionales. En primer lugar está el realismo del modelo. Puesto que las capturas son para el entrenamiento de una red que se va a usar sobre objetos reales, es importante que los modelos utilizados sean lo más fieles posible al objeto real que representan. Los modelos tridimensionales de este tipo conllevan un gran esfuerzo y trabajo por parte de un profesional que los cree. Por lo tanto, es comprensible que sea complicado encontrar este tipo de modelos de manera libre y gratuita. De todas formas, aceptando el uso de modelos que distan un poco más de la realidad se obtienen buenos resultados igualmente.
+El segundo inconveniente surge al realizar la importación de los modelos en Unity, donde salen a relucir fallos de los modelos en cuanto a geometría, texturas y materiales. Esto, en algunos casos, termina provocando la inutilidad de los modelos, lo cual provoca que sea necesario su sustitución. 
+
+En los modelos en los que más problema se encuentra son todos aquellos que presentan transparencias, como el vidrio o algunos plásticos. Al ser modelos que no requieren texturas, se dificulta su importación en Unity, ya que el material tiene que configurarse desde cero. Esto provoca que la cantidad de modelos encontrados, útiles se vea mermada considerablemente. Dejando como único material con suficientes recursos el metal
+
+\begin{figure}
+	\centering
+	\subfloat[Imagen de referencia del modelo.]{
+		{{\includegraphics[width=0.5\textwidth]{Imagenes/botellaOnline.jpg}}}
+		\label{fig:modelo:online}}
+	\qquad
+	\subfloat[Modelo al ser cargado.]{
+		{{\includegraphics[width=0.5\textwidth]{Imagenes/botellaBlender.png}}}
+		\label{fig:modelo:editor}}
+	\caption{Imágenes de ejemplo de un modelo con transparencia online y en el editor.}
+    \label{fig:modelo}
+\end{figure}
+
+Un último factor, es la extensión de los modelos. Aunque generalmente se encuentran en formato FBX, u OBJ en su defecto, hay muchos modelos que mantienen la extensión del \textit{software} utilizado para crearlos, y por lo tanto no pueden utilizarse fuera de este.
 
 
 %-------------------------------------------------------------------
-\subsection{Capturas}
+\subsection{\textit{Dataset}}
 %-------------------------------------------------------------------
-\label{cap3:ssec:capturas}
+\label{cap3:sec:dataset}
 
-\todo{cómo se nombran las capturas y que habría que revisar para los objetos grandes y pequeños.}
+Al final del proceso explicado durante el presente capítulo, se recogieron los siguientes conjuntos de imágenes:
 
-Como se explicó en el apartado del desarrollo, para realizar capturas se programó un script que generara las imágenes a partir de la cámara de la escena de Unity. 
+De imágenes reales se obtuvieron varios datasets desde la página Kaggle. Se cuenta con tres materiales diferentes, plástico, vidrio y metal; de los cuales se cuenta con al rededor de mil imágenes para cada uno.
 
-Para llevarlo a cabo se utilizó como referencia un tutorial de Code Monkey \footnote{\url{https://www.youtube.com/watch?v=lT-SRLKUe5k}}. Para generar las imágenes se tienen dos métodos principales. El primero establece que se quiere guardar una captura, el tamaño de esta, el directorio donde se guardará y si es en formato PNG o JPG.  
+Para generar las imágenes sintéticas sólo se cuentan con suficientes modelos de objetos de metal. Así que las imágenes generadas a partir de ellos se mezclan con las reales de este material en el entrenamiento de la red. Aunque se sabe que esto mejora el rendimiento~\cite{synthia2016}, se desconoce en qué proporciones se obtiene el mejor resultado. Tanto las pruebas de rendimiento, como el entrenamiento de la red, se explican en el capítulo~\ref{cap4:sec:entrenamiento}.
 
-El otro método, se encarga de la lógica de generar la imagen, para ello se ha utilizado el método de MonoBehaviour ``OnPostRender()''\footnote{\url{https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnPostRender.html}}. Este método se llama siempre después de que la cámara renderice la escena y ejecuta el código que se haya introducido. Para asegurarse de que no generaba imágenes en frames que no se requería, el código de este método se regula mediante un booleano. Todas las variables que este método necesita son asignadas en el método mencionado anteriormente; con esa información se permite que el código de generar capturas se ejecute y como resultado guarde la captura del tamaño y formato establecido, en el directorio indicado. 
 
-Para no perder información, el tamaño de las capturas es el mismo que la renderización de la cámara. Como se comentó previamente, las imágenes generadas se guardan dentro de una misma carpeta pero separadas en subdirectorios según a qué material corresponde el objeto de la imagen. 
-
-Unity permite guardar las imágenes en dos formatos distintos, JPG\footnote{JPG: \url{https://docs.unity3d.com/ScriptReference/ImageConversion.EncodeToJPG.html}} y PNG \footnote{PNG: \url{https://docs.unity3d.com/ScriptReference/ImageConversion.EncodeToPNG.html}}; para este proyecto se decidió usar PNG. Esta elección se tomó por querer evitar la pérdida de información y que fueran lo mejor posible para el entrenamiento. Posteriormente se llegó a la conclusión de que con el formato JPG los resultados habrían sido similares pero ocupando menos espacio en el disco. En cualquier caso, el cambio de formato se hace de manera muy sencilla, es una casilla que se activa y desactiva en los componentes del GameManager desde el editor de Unity. 
-
-También, en los componentes del GameManager, se puede elegir la cantidad de imágenes que se quieren tomar de cada objeto. Este valor está puesto por defecto a 10 pero puede ampliarse y reducirse todo lo que se desee, siempre y cuando el valor se un número positivo y entero.
 
 
 %-------------------------------------------------------------------
