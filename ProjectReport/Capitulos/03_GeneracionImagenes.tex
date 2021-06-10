@@ -11,6 +11,9 @@
 Para dotar a la aplicación de las capacidades de reconocimiento de imágenes es necesario pasar por un proceso previo de entrenamiento con cientos o miles de de ellas correctamente etiquetadas. La obtención de un conjunto de entrenamiento con las características requeridas es una tarea complicada. En este capítulo se describe una opción alternativa que permite generar esas imágenes de forma sintética a partir de modelos tridimensionales. 
 \end{resumen}
 
+\todo{Faltaría decir que como es complicada la obtención de datasets muy específicos suficientemente grandes, mediante esta aplicación se facilita completarlos para el entrenamiento}
+\todo{aunque se tienen suficientes imágenes en el dataset se realizan pruebas para ver qué porcentaje sería el mejor en futuros casos para los que no se cuente con tantas imágenes reales.}
+
 %Para dotar a la aplicación d las capacidades de reconocimiento de imágenes es necesario pasar por un proceso previo de entrenamiento con cientos o miles de imágenes correctamente etiquetadas. La disponibilidad de un conjunto de entrenamiento es crítica, pero difícil. En este capítulo se describe una opción alternativa a través de la que esas imágenes son generadas de forma sintética.
 %-------------------------------------------------------------------
 \section{Introducción}
@@ -128,10 +131,10 @@ Un último factor, es la extensión de los modelos. Aunque generalmente se encuent
 \subsection{\textit{Dataset}}
 %-------------------------------------------------------------------
 \label{cap3:sec:dataset}
-
+\todo{separación imágenes entrenamiento y test}
 Al final del proceso explicado durante el presente capítulo, se recogieron los siguientes conjuntos de imágenes:
 
-De imágenes reales se obtuvieron varios datasets desde la página Kaggle. Se cuenta con tres materiales diferentes, plástico, vidrio y metal; de los cuales se cuenta con al rededor de mil imágenes para cada uno.
+De imágenes reales se obtuvieron varios datasets desde la página Kaggle\footnote{\url{https://www.kaggle.com/}}. . Se cuenta con tres materiales diferentes, plástico, vidrio y metal; de los cuales se cuenta con al rededor de mil imágenes para cada uno.
 
 Para generar las imágenes sintéticas sólo se cuentan con suficientes modelos de objetos de metal. Así que las imágenes generadas a partir de ellos se mezclan con las reales de este material en el entrenamiento de la red. Aunque se sabe que esto mejora el rendimiento~\cite{synthia2016}, se desconoce en qué proporciones se obtiene el mejor resultado. Tanto las pruebas de rendimiento, como el entrenamiento de la red, se explican en el capítulo~\ref{cap4:sec:entrenamiento}.
 
