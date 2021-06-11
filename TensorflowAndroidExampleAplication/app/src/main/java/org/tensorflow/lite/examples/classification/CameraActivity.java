@@ -83,6 +83,7 @@ public abstract class CameraActivity extends AppCompatActivity
   protected TextView recognitionTextView,
           recognition1TextView,
           recognition2TextView,
+
           recognitionValueTextView,
           recognitionValueTextView2,
           recognitionValueTextView3,
@@ -91,6 +92,7 @@ public abstract class CameraActivity extends AppCompatActivity
           recognition1ValueTextView2,
           recognition1ValueTextView3,
           recognition1ValueTextView4,
+
           recognition2ValueTextView,
           recognition2ValueTextView2,
           recognition2ValueTextView3,

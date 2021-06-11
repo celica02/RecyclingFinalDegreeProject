@@ -218,7 +218,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/detected_item2_value4"
+                android:id="@+id/detected_item2_value3"
                 android:layout_width="127dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -228,7 +228,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/detected_item2_value3"
+                android:id="@+id/detected_item2_value4"
                 android:layout_width="127dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
