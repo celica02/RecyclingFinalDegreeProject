@@ -51,7 +51,7 @@ public class ClassifierFloatMobileNet extends Classifier {
 
   @Override
   protected String getModelPath() {
-    return "model.tflite";
+    return "300R_700Gmodel.tflite";
   }
 
   @Override

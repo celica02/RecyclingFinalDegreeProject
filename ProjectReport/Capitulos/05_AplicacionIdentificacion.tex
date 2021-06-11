@@ -5,7 +5,7 @@
 %---------------------------------------------------------------------
 
 \chapter{Aplicación de identificación de objetos}
-\label{cap5}
+\label{cap5:app}
 \begin{resumen}
 En este capítulo se trata el desarrollo de la aplicación móvil y se estudia su funcionamiento. Esta aplicación tiene como objetivo ayudar a los usuarios a cómo reciclar los objetos a los que se apunte con la cámara. Para eso, tiene que ser capaz de reconocerlos basándose en modelos entrenados previamente. Además, se pone a prueba su funcionamiento y se comparan los resultados con los de distintos modelos. La aplicación es para dispositivos con sistema operativo Android y está llevada a cabo en Android~Studio con Java y la librería de TensorFlow~Lite para introducir la identificación. 
 
@@ -25,13 +25,11 @@ La aplicación está constantemente interpretando lo que recibe desde la cámara, a
 \section{Identificación de objetos}
 %-------------------------------------------------------------------
 \label{cap5:sec:identificacion-objetos}
-\todo{añadir: Para el correcto funcionamiento, en Andorid, de la aplicación con el modelo entrenado son necesarias dos librerías.
-La primera es la librería de tareas de TensorFlow~Lite, que cuenta con un conjunto de bibliotecas específicas de tareas potentes y fáciles de usar por los desarrolladores para crear experiencias de aprendizaje automático. Esta funciona varias plataformas y es compatible con Java y C++.
-La segunda librería necesaria es la de compatibilidad, esta facilita la integración de modelos en la aplicación. Proporciona API de alto nivel que ayuda a transformar los datos de entrada en el formato requerido por el modelo, además de interpretar su salida.}
+%\todo{añadir: Para el correcto funcionamiento, en Andorid, de la aplicación con el modelo entrenado son necesarias dos librerías. La primera es la librería de tareas de TensorFlow~Lite, que cuenta con un conjunto de bibliotecas específicas de tareas potentes y fáciles de usar por los desarrolladores para crear experiencias de aprendizaje automático. Esta funciona varias plataformas y es compatible con Java y C++. La segunda librería necesaria es la de compatibilidad, esta facilita la integración de modelos en la aplicación. Proporciona API de alto nivel que ayuda a transformar los datos de entrada en el formato requerido por el modelo, además de interpretar su salida.}
 
 
 Para realizar la identificación se ha incorporado TensorFlow~Lite y sus librerías al proyecto en Android Studio. Esto permite importar un intérprete, el cual carga el modelo y permite ejecutarlo ofreciéndole una serie de datos de entrada, finalmente, tras ejecutarlo, se muestran por pantalla los resultados obtenidos.
-El trabajo se ha basado en las guías y recomendaciones que ofrece TensorFlow~Lite en sus ejemplos como ayuda para incorporar y utilizar el modelo de la red neuronal entrenado previamente (capítulo~\ref{cap4}).
+El trabajo se ha basado en las guías y recomendaciones que ofrece TensorFlow~Lite en sus ejemplos como ayuda para incorporar y utilizar el modelo de la red neuronal entrenado previamente (capítulo~\ref{cap4:train}).
 
 Durante el flujo de la aplicación se hace uso de la cámara del dispositivo, leyendo \textit{frames} desde esta y los convirtiéndolos a imágenes. Estos son los datos que se utilizan como entrada para la identificación. Dichos datos se reciben en formato \textit{bitmap}, matrices donde cada casilla tiene asignado un color y que en conjunto forman una imagen. 
 Ese \textit{bitmap} es convertido a \textit{byte~buffer}, denominado \textit{IMG data}, haciéndolo legible para la identificación. Además, utilizar \textit{byte~buffers} como entrada permite que la API de Java sea más rápida\footnote{\url{https://www.tensorflow.org/lite/performance/best_practices?authuser=1}}. Estos datos se cargan en el intérprete de TensorFlow~Lite y finalmente se obtienen los valores de resultado. Estos valores obtenidos son índices respecto a las etiquetas más la probabilidad de que esa imagen corresponda a dicha etiqueta. Este resultado se devuelve en un array, correspondiendo cada posición a cada una de las etiquetas disponibles. Finalmente, se seleccionan las tres etiquetas con mayor probabilidad y son mostradas por la interfaz.
@@ -45,13 +43,13 @@ Además de estas características, cuenta con dos opciones configurables por el us
 
 \begin{figure}
 	\centering
-	\subfloat[]
-		{{\includegraphics[width=0.3\textwidth]{Imagenes/lata0}}}
+	\subfloat[Interfaz de la aplicación]
+		{{\includegraphics[width=0.3\textwidth]{Imagenes/appInterfaz}}}
 	\qquad
-	\subfloat[]
-		{{\includegraphics[width=0.3\textwidth]{Imagenes/lata1000}}}
+	\subfloat[Interfaz con el panel desplegado]
+		{{\includegraphics[width=0.3\textwidth]{Imagenes/appInterfazDesplegada}}}
 
-	\caption{Aplicación de identificación desarrollada}
+	\caption{Interfaz de la aplicación de identificación}
     \label{fig:app}
 \end{figure}
 
@@ -78,8 +76,6 @@ Como se trata de casos de prueba, se prescinde de la información sobre en qué co
 
 El objeto de estudio principal han sido los objetos metálicos, ya que son aquellos que han sido entrenados con imágenes generadas. Sin embargo, también se ha probado sobre objetos de los otros materiales para comprobar el rendimiento respecto a estos.
 
-En la figura~\ref{fig:latas} se pueden observar los resultados respecto a distintos objetos metálicos. Casi todos los modelos detectan con un nivel alto de confianza que en los tres casos se trata de objetos metálicos. A excepción del modelo entrenado por completo con imágenes sintéticas, el cual los identifica como vidrio. Un caso destacable es el de la lata de conservas con el modelo completamente formado por imágenes reales, el cual la identifica mayoritariamente como vidrio, pero no llega a superar el 50\%. Este resultado se explica con la ausencia de imágenes de objetos de este tipo que contaba dicho \textit{dataset}, lo cual significa que el entrenamiento con las imágenes sintéticas está aportando información útil, e incluso mejorando, la identificación.
-
 \begin{figure}
 	\centering
 	\subfloat[Lata de conservas]
@@ -94,33 +90,62 @@ En la figura~\ref{fig:latas} se pueden observar los resultados respecto a distin
 	\caption{Comparación con distintos objetos metálicos}
     \label{fig:latas}
 \end{figure}
-
-Una observación importante que se descubre, es la dificultad, en todas las opciones, para distinguir los objetos de vidrio respecto a los de plástico. Para tres objetos de vidrio diferentes todas los identifican como plástico con más de un 60\% de confianza. Esto no genera mucha preocupación puesto que como seres humanos a veces también es costoso diferenciar plástico translúcido de vidrio a simple vista.
-
+En la figura~\ref{fig:latas} se pueden observar los resultados respecto a distintos objetos metálicos. Casi todos los modelos detectan con un nivel alto de confianza que en los tres casos se trata de objetos metálicos. A excepción del modelo entrenado por completo con imágenes sintéticas, el cual los identifica como vidrio. Un caso destacable es el de la lata de conservas con el modelo completamente formado por imágenes reales, el cual aunque la identifica mayoritariamente como metal, el porcentaje no llega a superar el 50\%. Este resultado se explica con la ausencia de imágenes de objetos de este tipo que contaba dicho \textit{dataset}, lo cual significa que el entrenamiento con las imágenes sintéticas está aportando información útil e incluso mejorando la identificación.
 
 
 
-Un problema importante que se ha observado es la variabilidad del resultado dependiendo de la iluminación. Como se puede observar en la figura~\ref{fig:botellas} para el mismo objeto y con el mismo modelo, en este caso el generado a partir de solamente imágenes reales, se obtienen resultados diferentes al cambiarlo de posición.
+Por otro lado, los ejemplos de vidrio resultan tener resultados sumamente positivos, los cuales se muestran en la figura~\ref{fig:vidrio}. Destaca frente al resto de objetos la identificación de una botella de vino, donde todos los modelos, sin excepción, la identifican correctamente con más de un 95\% de seguridad. En cambio con la taza de cristal los porcentajes disminuyen considerablemente, este resultado es esperado debido a lo complicado que puede resultar en ocasiones distinguir objetos de vidrio y plástico si son translúcidos.
+
+
+
+
+Por último como pruebas de materiales de plástico se han tomado tres objetos. Dos de ellos (figura~\ref{fig:plastico}) se aprecia el correcto funcionamiento detectando adecuadamente el material. En cambio, en el tercero (figura~\ref{fig:botellaPlastico}), los porcentajes cambian drásticamente constantemente alternando entre vidrio y plástico, como puede verse en la figura. Esto se achaca a lo mencionado anteriormente de la dificultad de diferenciar el material en objetos translúcidos.
+
+
+
+Con todos los resultados obtenidos de las pruebas de la red neuronal (capítulo~\ref{cap4:train}) y los realizados con objetos reales, se puede afirmar que la aplicación funciona adecuadamente. No obstante, aunque no se obtienen unos porcentajes de rendimiento como los de la sección~\ref{cap4:sec:resultados}, se considera que los resultados han sido positivos. 
+
+Por último, el tiempo de inferencia de la aplicación es de unos 200ms, aproximadamente 700ms en la de \textit{test}, utilizando la CPU del dispositivo. En cambio, si se realiza con la GPU estos valores se reducen a al rededor de la mitad.
 
 \begin{figure}
 	\centering
-	\subfloat[100\% imágenes reales]
-		{{\includegraphics[width=0.3\textwidth]{Imagenes/BotellaLata}}}
+	\subfloat[Botella de vino]
+		{{\includegraphics[width=0.4\textwidth]{Imagenes/appBotellaVino}}}
 	\qquad
-	\subfloat[100\% imágenes reales]
-		{{\includegraphics[width=0.3\textwidth]{Imagenes/BotellaPlastico}}}
+	\subfloat[Taza de cristal]
+		{{\includegraphics[width=0.4\textwidth]{Imagenes/appVasoCristal}}}
 
-	\caption{Comparación con una botella de agua.}
-    \label{fig:botellas}
+	\caption{Comparación con distintos objetos de vidrio}
+    \label{fig:vidrio}
 \end{figure}
 
-\figura{latacacao.jpg}{width=0.3\textwidth}{fig:latacacao}{Resultados del modelo 70-30 con una lata de bálsamo labial.}
-%Para comprobar el correcto funcionamiento de la aplicación con los resultados del entrenamiento de la red se han hecho pruebas con tres de los resultados. para ello se han seleccionado los dos modelos extremos (todas las imágenes sintéticas o reales, respectivamente) y dos modelos intermedios de 70\% de imágenes generadas o sintéticas, respectivamente; para comparar el funcionamiento de la aplicación en los distintos casos.
 
 
-%Una vez desarrollada la aplicación de identificación de objetos se probaron cuatro de los modelos entrenados para corroborar el correcto o mal funcionamiento, respectivamente, de cada uno. Para ello se eligieron  los modelos extremos con todas las imágenes reales o todas las imágenes sintéticas; el modelo intermedio, dividido en mitad y mitad; y el modelo con mejor precisión, repartido en 70\% imágenes reales y 30\% generadas.
+\begin{figure}
+	\centering
+	\subfloat[Bote de limpieza de plástico]
+		{{\includegraphics[width=0.4\textwidth]{Imagenes/appDetergente}}}
+	\qquad
+	\subfloat[Botella de plástico de refresco]
+		{{\includegraphics[width=0.4\textwidth]{Imagenes/appBotellaCola}}}
+
+	\caption{Comparación con distintos objetos de plástico}
+    \label{fig:plastico}
+\end{figure}
 
 
+
+\begin{figure}
+	\centering
+	\subfloat[]
+		{{\includegraphics[width=0.4\textwidth]{Imagenes/appBotellaPlastico1}}}
+	\qquad
+	\subfloat[]
+		{{\includegraphics[width=0.4\textwidth]{Imagenes/appBotellaPlastico2}}}
+
+	\caption{Comparación de la misma botella de plástico con segundos de diferencia}
+    \label{fig:botellaPlastico}
+\end{figure}
 %-------------------------------------------------------------------
 %\section*{\NotasBibliograficas}
 %-------------------------------------------------------------------
