@@ -4,6 +4,7 @@
 %
 %---------------------------------------------------------------------
 \chapter{Entrenamiento}
+\label{cap4}
 
 \begin{resumen}
 Utilizando los conjuntos de imágenes reales y sintéticas obtenidos, se procede al entrenamiento necesario para dotar a la aplicación de las capacidad de reconocimiento de imágenes. Para elegir la mejor relación proporcional entre reales y sintéticas se realizan una serie de ensayos, cuyos resultados se comparan y estudian para seleccionar la mejor relación entre facilidad de obtención del \textit{dataset} y rendimiento de la red.
@@ -17,9 +18,6 @@ Utilizando los conjuntos de imágenes reales y sintéticas obtenidos, se procede a
 %-------------------------------------------------------------------
 \label{cap4:sec:entrenamiento}
 
-\todo{While thousands of poses are required for pose estimation,
-\cite{lepetit2008}, much
-less poses are necessary for object detection}
 
 La fase de entrenamiento del proyecto está basada en las recomendaciones para generar modelos de TensorFlow~Lite, ya que el modelo que se va a utilizar para la identificación es el de este formato.
 Para llevar a cabo el entrenamiento de la red neuronal se ha realizado un \textit{script} que se encarga de la lógica de esto. Este \textit{script} está basado en uno de los ejemplos de Tensorflow~Lite y puede usarse desde Colaboratory\footnote{\url{https://colab.research.google.com/notebooks/intro.ipynb?utm_source=scs-index}}, plataforma de Google que permite ejecutar y programar en Python desde el navegador. El ejemplo elegido como referencia consiste en identificación de flores\footnote{\url{https://colab.research.google.com/drive/1sqBewUnvdATOO-yblj55EBFb2sM24XHR?hl=es-419}}, se ha seleccionado este debido a su similitud con el proyecto respecto a la identificación del objeto principal en un imagen. 
