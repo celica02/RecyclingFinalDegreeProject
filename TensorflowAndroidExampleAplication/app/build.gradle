@@ -2,8 +2,12 @@ apply plugin: 'com.android.application'
 
 project.ext.ASSET_DIR = projectDir.toString() + '/src/main/assets'
 
-assert file(project.ext.ASSET_DIR + "/model.tflite").exists()
 assert file(project.ext.ASSET_DIR + "/1000R_0Gmodel.tflite").exists()
+assert file(project.ext.ASSET_DIR + "/700R_300Gmodel.tflite").exists()
+assert file(project.ext.ASSET_DIR + "/300R_700Gmodel.tflite").exists()
+assert file(project.ext.ASSET_DIR + "/0R_1000Gmodel.tflite").exists()
+
+
 assert file(project.ext.ASSET_DIR + "/labels.txt").exists()
 
 android {

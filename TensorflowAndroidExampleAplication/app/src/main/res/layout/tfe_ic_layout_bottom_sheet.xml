@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -30,23 +31,74 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Materiales"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="  " />
+
+            <TextView
+                android:id="@+id/modelo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="100R - 0G"
+                android:textAlignment="textEnd"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/modelo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="70R - 30G"
+                android:textAlignment="textEnd"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/modelo3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="30R - 70G"
+                android:textAlignment="textEnd"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/modelo4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0R - 100G"
+                android:textAlignment="textEnd"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/detected_item"
-                android:layout_width="wrap_content"
+                android:layout_width="58dp"
                 android:layout_height="wrap_content"
+                android:text="Metal"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/detected_item_value"
-                android:layout_width="196dp"
+                android:layout_width="76dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:textColor="@color/tfe_color_primary"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/detected_item_value2"
@@ -55,7 +107,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@color/tfe_color_primary"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/detected_item_value3"
@@ -64,7 +116,8 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@color/tfe_color_primary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/detected_item_value4"
@@ -73,7 +126,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@color/tfe_color_primary"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -85,18 +138,19 @@
 
             <TextView
                 android:id="@+id/detected_item1"
-                android:layout_width="wrap_content"
+                android:layout_width="58dp"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:text="Vidrio"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/detected_item1_value"
-                android:layout_width="195dp"
+                android:layout_width="77dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/detected_item1_value2"
@@ -105,7 +159,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/detected_item1_value3"
@@ -114,7 +168,8 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/detected_item1_value4"
@@ -123,7 +178,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -135,18 +190,19 @@
 
             <TextView
                 android:id="@+id/detected_item2"
-                android:layout_width="wrap_content"
+                android:layout_width="58dp"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:text="Plástico"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/detected_item2_value"
-                android:layout_width="195dp"
+                android:layout_width="76dp"
                 android:layout_height="match_parent"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/detected_item2_value2"
@@ -155,7 +211,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/detected_item2_value4"
@@ -164,7 +220,8 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/detected_item2_value3"
@@ -173,7 +230,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

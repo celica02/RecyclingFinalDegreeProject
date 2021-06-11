@@ -99,7 +99,8 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
                   new Runnable() {
                     @Override
                     public void run() {
-                      showResultsInBottomSheet(results);
+                      showOtherResultsInBottomSheet(results, 1);
+                      //showResultsInBottomSheet(results);
                       showFrameInfo(previewWidth + "x" + previewHeight);
                       showCropInfo(imageSizeX + "x" + imageSizeY);
                       showCameraResolution(cropSize + "x" + cropSize);
@@ -139,7 +140,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
                       new Runnable() {
                         @Override
                         public void run() {
-                          showOtherResultsInBottomSheet(results3, 3;
+                          showOtherResultsInBottomSheet(results3, 3);
                           /**showFrameInfo(previewWidth + "x" + previewHeight);
                           showCropInfo(imageSizeX + "x" + imageSizeY);
                           showCameraResolution(cropSize + "x" + cropSize);
@@ -199,11 +200,12 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
     try {
       LOGGER.d(
           "Creating classifier (device=%s, numThreads=%d)", device, numThreads);
-      classifier = Classifier.create(this, device, numThreads, "model.tflite");
-      classifier2 = Classifier.create(this, device, numThreads, "1000R_0Gmodel.tflite");
-      classifier3 = Classifier.create(this, device, numThreads, "1000R_0Gmodel.tflite");
-      classifier4 = Classifier.create(this, device, numThreads, "1000R_0Gmodel.tflite");
-    } catch (IOException e) {
+      classifier = Classifier.create(this, device, numThreads, "1000R_0Gmodel.tflite");
+      classifier2 = Classifier.create(this, device, numThreads, "700R_300Gmodel.tflite");
+      classifier3 = Classifier.create(this, device, numThreads, "300R_700Gmodel.tflite");
+      classifier4 = Classifier.create(this, device, numThreads, "0R_1000Gmodel.tflite");
+    }
+    catch (IOException e) {
       LOGGER.e(e, "Failed to create classifier.");
     }
 

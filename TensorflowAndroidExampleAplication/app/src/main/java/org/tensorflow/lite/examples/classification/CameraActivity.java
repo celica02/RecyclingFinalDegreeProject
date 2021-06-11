@@ -578,7 +578,7 @@ public abstract class CameraActivity extends AppCompatActivity
   }
 
   @UiThread
-  protected void showOtherResultsInBottomSheet(List<Recognition> results, int i) {
+  protected void showOtherResultsInBottomSheet(List<Recognition> results, int id) {
     if (results != null && results.size() >= 3) {
       for (int i = 0; i < 3; ++i) {
         Recognition recognition = results.get(i);
@@ -586,9 +586,13 @@ public abstract class CameraActivity extends AppCompatActivity
           if (recognition.getTitle() != null) {
 
             //If it's the first tag
-            if (recognition.getTitle().equals(recognitionTextView.getText())) {
+            if (recognition.getTitle().equals("Metal")) {
               if (recognition.getConfidence() != null)
-                switch (i) {
+                switch (id) {
+                  case 1:
+                    recognitionValueTextView.setText(
+                            String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+                    break;
                   case 2:
                     recognitionValueTextView2.setText(
                             String.format("%.2f", (100 * recognition.getConfidence())) + "%");
@@ -605,9 +609,13 @@ public abstract class CameraActivity extends AppCompatActivity
                 }
             }
             //If it's the second tag
-            else if (recognition.getTitle().equals(recognition1TextView.getText())) {
+            else if (recognition.getTitle().equals("Vidrio")) {
               if (recognition.getConfidence() != null)
-                switch (i) {
+                switch (id) {
+                  case 1:
+                    recognition1ValueTextView.setText(
+                            String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+                    break;
                   case 2:
                     recognition1ValueTextView2.setText(
                             String.format("%.2f", (100 * recognition.getConfidence())) + "%");
@@ -625,9 +633,13 @@ public abstract class CameraActivity extends AppCompatActivity
             }
 
             //If it's the third tag
-            else if (recognition.getTitle().equals(recognition2TextView.getText())) {
+            else if (recognition.getTitle().equals("Plastico")) {
               if (recognition.getConfidence() != null)
-                switch (i) {
+                switch (id) {
+                  case 1:
+                    recognition2ValueTextView.setText(
+                            String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+                    break;
                   case 2:
                     recognition2ValueTextView2.setText(
                             String.format("%.2f", (100 * recognition.getConfidence())) + "%");
