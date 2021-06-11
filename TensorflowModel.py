@@ -22,10 +22,10 @@ import matplotlib.pyplot as plt
 
 #../Recursos/Images/ParaRedNeuronal/Train/
 
-train_data = ImageClassifierDataLoader.from_folder('../Recursos/Images/ParaRedNeuronal/Train/')
+train_data = ImageClassifierDataLoader.from_folder('../Recursos/Images/ParaRedNeuronalB/Train/')
 print('Imágenes de entrenamiento cargadas')
 
-test_data = ImageClassifierDataLoader.from_folder('../Recursos/Images/ParaRedNeuronal/Test/')
+test_data = ImageClassifierDataLoader.from_folder('../Recursos/Images/ParaRedNeuronalB/Test/')
 #train_data, test_data = data.split(0.9)
 print('Imágenes de test cargadas')
 

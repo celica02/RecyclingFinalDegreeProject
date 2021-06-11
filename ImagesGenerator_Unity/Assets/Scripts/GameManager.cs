@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         backgrounds = GameObject.FindGameObjectsWithTag("Background");
 
         //Get the path of the Game data folder
-        imagesPath = "../"/*Application.dataPath */+ "ImagesCreated/testBG";
+        imagesPath = "../"/*Application.dataPath */+ "ImagesCreated/";
         if (!System.IO.Directory.Exists(imagesPath))
             System.IO.Directory.CreateDirectory(imagesPath);
 
