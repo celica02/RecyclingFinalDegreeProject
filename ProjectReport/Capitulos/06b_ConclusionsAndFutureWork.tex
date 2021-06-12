@@ -1,0 +1,118 @@
+%---------------------------------------------------------------------
+%
+%                          Capítulo 6b - Inglés
+%
+%---------------------------------------------------------------------
+
+\chapter{Conclusions and future work}
+
+
+
+%-------------------------------------------------------------------
+\section{Summary}
+%-------------------------------------------------------------------
+\label{cap6b:sec:summary}
+
+
+The result of the project is the prototype of a recycling help application for Android devices. It shows what is pointed at with the device's camera, identifying and offering information about the material of the object, as well as indicating the proper way to dispose it.
+As has been commented throughout the document, it's necessary to use artificial vision techniques, which currently involve the generation of a model trained by a neural network. This implies the need to establish several subgoals.
+
+
+The first sub-objective proposed is to obtain a wide, clear and varied dataset with images of all the materials that will be available. In order to facilitate the obtaining of the datasets, an application for generating synthetic images from three-dimensional models has been developed. To do so, it has been used Unity, a multiplatform video game engine created by Unity Technologies.
+The application flow consists of loading the different 3D models available, separated by material in the resources, and taking numerous captures of each one. In each capture, both the position and rotation of the object, as well as the background, are established randomly. This is required in order to compile a high diversity in the images. Due to the inconveniences that arose during the obtaining of the models, the final dataset was composed of three different materials (metal, glass and plastic), in which real images are mixed with synthetic images for metal material.
+
+Once the dataset was generated, it was proceed to the second subgoal. This is divided into two different steps. The first one, is the the neural network training and the trained model generation using the previously obtained dataset. The result of the training will be later incorporated into Android Studio to be used in the final mobile application.
+For this section, it has been used a TensorFlow Lite library, which allows transfer training using the EfficentNet network and provides tools to perform easily and intuitively the model training.
+
+The second step, was to carried out several tests and comparisons in order to find the ratio between synthetic and real images that offer the best balance between the ease of obtaining the dataset and the accuracy of the trained model. The conclusion of the tests was that from 30\% onward of real images, the precision barely changes staying above 90\% confidence. Which means that the accuracy of the model when all the images are real and when only 30\% of these are used in one of the materials, is really similar. With this results it was decided to use the model which metal material data was composed of 70\% generated images and 30\% real images with a 93\% of accuracy.
+
+
+Lastly, the development of the Android application takes place, using the Andorid Studio tool and TensorFlow Lite's libraries. The application receives images of the framse captured by the camera and, consulting the imported model, tries to identify the object that appears in the image. As a result, it orders the available labels depending the confidence for each material. This way it's  informing the user about the material of the object, the container where to dispose it and the confidence of the identified materials.
+
+
+In order to test its performance, several tests were carried out on real world objects. To do so some changes were made to the application leading the creation of a sencond one, cosidered the test application. Using this application the performance of four models is compared simultaneously. With the data obtained from this tests it was corroborated the correct performance of the trained model selected .
+
+
+
+%-------------------------------------------------------------------
+\section{Conclusions}
+%-------------------------------------------------------------------
+\label{cap6b:sec:conclusions}
+
+During the development, various difficulties and conclusions that affected it were observed, which should be taken into account in possible future extensions or in the development of similar and related projects.
+
+It was experieced the real difficulty of obtaining large datasets of specific objects not may resources are available. This has caused limiting ourselves to have just three materials. A solution to this problem can be the use of synthetic images to complete the dataset.
+This work has shown that, at least in the proposed context, this option has highly positive results, because even though an important part of the dataset was formed by synthetic images, the accuracy was barely affected. After conducting tests in a real environment the correct performance of the application is corroborated as a result of accurate identification with positive confidence.
+For this reason, the image generator application is considered a useful tool to many out-of-the-box projects in the field of image and object recognition.
+
+
+However, in order for this application to be useful, it's necessary that getting synthetic images is easier than getting photographs since there is still some difficulty generating the dataset. This is caused by the obtain of three-dimensional models whose is important to have a high level of realism in textures and materials. This is because the way the light falls and reflects on them can be unrealistic and cause problems in the training of the neural network, making the problem of generating datasets not solved in your whole.
+
+
+La iluminación es otro punto decisivo, a pesar de las facilidades que ofrece Unity para crear distintos tipos de iluminación, si no se tiene suficientes conocimientos y experiencia, el resultado puede terminar siendo pobre y, de nuevo, poco realista. Esto es un problema ya que la aplicación va a utilizarse sobre objetos reales y si no hay un equilibrio entre lo que se utiliza para el entrenamiento y el uso final, la precisión de la aplicación queda notablemente disminuida. Esto pudo observarse en los entrenamientos en los que el \textit{dataset} contaba con más de un 80\% de imágenes sintéticas, al ocupar estas la mayor parte del entrenamiento y diferir cómo se ve en la realidad, los resultados fueron peores en comparación con el resto de proporciones.
+
+En vista de los resultados obtenidos durante el trabajo, y con el apoyo de otros proyectos donde se ha trabajado con \textit{datasets} sintéticos, se puede afirmar que si se va a utilizar un \textit{dataset} compuesto por imágenes sintéticas es necesario que estas se encuentren entremezcladas con reales para un correcto funcionamiento. Esto se debe a que las cámaras virtuales y las reales son sensores diferentes.
+
+Por último, una última observación a tener en cuenta, es que al llevar a cabo el entrenamiento respecto a tres materiales solamente, y donde las imágenes de sólo uno de ellos se mezclan con sintéticas, se observa que esto afecta no solamente al material que tiene las imágenes generadas, sino que también influye a los demás, generando errores en la identificación de objetos compuestos de materiales sobre los que se ha entrenado por completo con imágenes reales.
+
+
+
+
+%-------------------------------------------------------------------
+\section{Trabajo futuro}
+%-------------------------------------------------------------------
+\label{cap6:sec:trabajo-futuro}
+
+%\todo{Añadir "Domain Adaptation" -> On the other hand, it is known that classifiers trained only with virtual images may require domain adaptation to work on real images [42~\cite{pedestrian2014}, 44, 37~\cite{sun2014virtual}, 25~\cite{adaptationsyteticdata2015}]; however, it has been shown that this is just because virtual and real world cameras are different sensors, i.e. domain adaptation is also often required when training images and testing images come from different real-world camera sensors [42, 41].\cite{synthia2016}}}
+
+
+
+El proyecto cuenta con diversos puntos ampliables. El primero es la obtención de un \textit{dataset} más amplio, añadiendo más variedad de materiales y objetos identificables. Esto puede hacerse a partir de imágenes reales únicamente, o bien mezclándolas con imágenes sintéticas. Para esta segunda opción, es necesario conseguir o generar modelos tridimensionales de todos los materiales y objetos que se quieran incorporar, los cuales deben tener una calidad bastante elevada. Otro factor ampliable, para permitir mayor diversidad en las imágenes generadas, es la extensión del número de imágenes disponibles para el fondo. 
+
+Con el objetivo de generar imágenes más realistas, sería necesario revisar la iluminación presente en la escena en la que tiene lugar las capturas, acercándolo a cómo se ven los objetos posteriormente en un entorno real.
+Asimismo, es necesario adquirir un \textit{dataset} de imágenes reales de los materiales que se quieran agregar. La cantidad de imágenes de este estaría regido por si se va combinarse con imágenes sintéticas o no.
+
+Una vez obtenido el \textit{dataset}, simplemente es necesario entrenar y generar el modelo para, finalmente, importarlo en la aplicación mediante Android Studio.
+Todos los materiales añadidos además deben relacionarse con el contenedor o lugar de desecho apropiado, que es la información que busca el usuario.
+
+Para mejorar la red y ampliar el \textit{dataset}, podría desarrollarse la opción de que los usuarios puedan enviar sus propias fotografías etiquetadas con el material del que se trate, dando lugar a un \textit{dataset} más completo que se encuentre en continuo crecimiento ofreciendo así un mejor servicio a los usuarios.
+
+Otra mejora adicional interesante, es convertir la generación de imágenes en una aplicación ejecutable independiente de Unity, en la que los usuarios puedan generar \textit{datasets} para sus proyectos a partir de modelos propios suyos que importen en esta, o aprovechar algunos de los que se ofrezcan por defecto, por ejemplo los utilizados en este trabajo. Aunque la importación de modelos en tiempo de ejecución es algo poco extendido en el mundo de los videojuegos, debido a la cantidad y diversidad de usuarios con los que cuenta Unity, esta funcionalidad ha sido ampliamente discutida y explorada. Pueden incluso encontrarse paquetes para llevar esto a cabo, por ejemplo ``TriLib 2 - Model Loading Package'' de Ricardo Reis\footnote{\url{https://assetstore.unity.com/packages/tools/modeling/trilib-2-model-loading-package-157548}}, ``Runtime OBJ Importer'' de Dummiesman\footnote{\url{https://assetstore.unity.com/packages/tools/modeling/runtime-obj-importer-49547}} u ``OBJReader'' de Starscene Software\footnote{\url{https://starscenesoftware.com/objreader.html\#ObjReader}}, así como numerosas discusiones en foros sobre el tema.
+
+
+Respecto a la aplicación de Android también existen varias posibilidades de trabajo futuro. Una de ellas es llevar a cabo una interfaz más personalizada que pueda ofrecer más información sobre los distintos cubos disponibles o el proceso de reciclaje. Otra, es desarrollar la misma aplicación para dispositivos iOS, permitiendo así su acceso a un mayor número de usuarios.
+Además, una ampliación necesaria de la aplicación, es la incorporación de accesibilidad con el objetivo de permitir su uso a todo tipo de público. Dichas mejoras corresponden, entre otras, a la introducción de una opción de voz, personalización del tamaño de la fuente o de los colores y contrastes.
+
+
+
+%\footnote{\url{https://forum.unity.com/threads/load-3d-model-at-runtime.122720/}}\footnote{\url{https://theslidefactory.com/loading-3d-models-from-the-web-at-runtime-in-unity/}}. 
+%Una de las páginas que se referenciaban para desarrollar esta funcionalidad con .fbx fue la documentación de Autodesk \footnote{\url{http://docs.autodesk.com/FBX/2013/ENU/FBX-SDK-Documentation/}}.
+%Otras opciones que existen son dos paquetes, de pago, disponibles para Unity que lleven a cabo esta funcionalidad: ObjReader %(sólo para archivos .obj) y TriLib2\footnote{\url{https://assetstore.unity.com/packages/tools/modeling/trilib-2-model-loading-package-157548\#description}}.
+%-------------------------------------------------------------------
+%\section*{\NotasBibliograficas}
+%-------------------------------------------------------------------
+%\TocNotasBibliograficas
+
+%Citamos algo para que aparezca en la bibliografía\ldots
+%\citep{ldesc2e}
+
+%\medskip
+
+%Y también ponemos el acrónimo \ac{CVS} para que no cruja.
+
+%Ten en cuenta que si no quieres acrónimos (o no quieres que te falle la compilación en ``release'' mientras no tengas ninguno) basta con que no definas la constante \verb+\acronimosEnRelease+ (en \texttt{config.tex}).
+
+
+%-------------------------------------------------------------------
+%\section*{\ProximoCapitulo}
+%-------------------------------------------------------------------
+%\TocProximoCapitulo
+
+
+% Variable local para emacs, para  que encuentre el fichero maestro de
+% compilación y funcionen mejor algunas teclas rápidas de AucTeX
+%%%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../Tesis.tex"
+%%% End:
