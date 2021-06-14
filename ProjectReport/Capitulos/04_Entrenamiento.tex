@@ -7,7 +7,7 @@
 \label{cap4:train}
 
 \begin{resumen}
-Utilizando los conjuntos de imágenes reales y sintéticas obtenidos, se procede al entrenamiento necesario para dotar a la aplicación de las capacidad de reconocimiento de imágenes. Para elegir la mejor relación proporcional entre reales y sintéticas se realizan una serie de ensayos, cuyos resultados se comparan y estudian para seleccionar la mejor relación entre facilidad de obtención del \textit{dataset} y rendimiento de la red.
+Utilizando los conjuntos de imágenes reales y sintéticas obtenidos, se procede al entrenamiento necesario para dotar a la aplicación de la capacidad de reconocimiento de imágenes. Para elegir la mejor relación proporcional entre reales y sintéticas se realizan una serie de ensayos, cuyos resultados se comparan y estudian para seleccionar la mejor relación entre facilidad de obtención del \textit{dataset} y rendimiento de la red.
 
 %En este capítulo se explican las características de la red neuronal, necesaria para llevar a cabo la identificación de objetos. Tensorflow~Lite ha sido el framework seleccionado y a partir del cual se ha desarrollado el script de entrenamiento. Para elegir la mejor relación entre imágenes sintéticas y reales que utilizar para la aplicación, se ha realizado una investigación probando con diversas proporciones y comparando los resultados.
 
@@ -28,7 +28,7 @@ La cuestión que quedó abierta es si el uso de imágenes sintéticas empeora, y en 
  
 Esta investigación se ha llevado a cabo con el \textit{dataset} obtenido para el prototipado (explicado en la sección~\ref{cap3:sec:dataset}) de la aplicación. Esto significa que sólo uno de los tres materiales (metal) cuenta con imágenes sintéticas y reales mezcladas. En cambio, los dos materiales restantes (vidrio y plástico) están formados por completo por imágenes reales.
 
-Para la realización del experimento se va a entrenar la red un total de once veces, en las que se va a ir aumentando paulatinamente la cantidad de imágenes sintéticas en el metal. El primer entrenamiento se realiza con un \textit{dataset} compuesto íntegramente por imágenes reales. En el siguiente se empiezan a añadir imágenes sintéticas, cuyo porcentaje se incrementará en un 10\% por cada entrenamiento. Es decir, el \textit{dataset} contará con 0\% de imágenes sintéticas la primera vez que sea entrenado, en el segundo  tendrá un 10\%, un 20\% en el tercero y así sucesivamente hasta que esté compuesto al 100\% por imágenes sintéticas. Para cada uno de los casos se verá su rendimiento y se comparará con el de los demás para seleccionar el más adecuado para su uso.
+Para la realización del experimento se va a entrenar la red un total de once veces, en las que se va a ir aumentando paulatinamente la cantidad de imágenes sintéticas en el metal. El primer entrenamiento se realiza con un \textit{dataset} compuesto íntegramente por imágenes reales. En el siguiente se empiezan a añadir imágenes sintéticas, sustituyendo a las reales, cuyo porcentaje se incrementará en un 10\% por cada entrenamiento. Es decir, el \textit{dataset} contará con 0\% de imágenes sintéticas en el primero entrenamiento, en el segundo tendrá un 10\%, un 20\% en el tercero y así sucesivamente hasta que esté compuesto al 100\% por imágenes sintéticas. El total de las imágenes siempre será el mismo (1000), pero se irán sustituyendo imágenes reales por sintéticas. Para cada uno de los casos se verá su rendimiento y se comparará con el de los demás para seleccionar el más adecuado para su uso.
 
 En aprendizaje máquina supervisado, los \textit{datasets} se dividen en dos partes, una para entrenamiento y otra para \textit{test}, que será lo que indique la exactitud resultante del entrenamiento. Esta separación se puede hacer cargando todo el \textit{dataset} y después dividirlo mediante código, o bien las imágenes se pueden separar en carpetas y cargar cada una como datos de entrenamiento o \textit{test} respectivamente. 
 
@@ -37,11 +37,14 @@ Eso significa que los porcentajes indicados previamente para la parte de entrena
 
 \begin{table}[t]
 	\begin{center}
-		\begin{tabular}{| c | c | c |}
-			Materiales & Imágenes reales entrenamiento & Imágenes reales test\\ \hline
+		\begin{tabular}{ c  c  c }
+			\toprule
+			Materiales & Imágenes reales entrenamiento & Imágenes reales test\\
+			\midrule
 			Plástico & 1958 & 214\\
 			Vidrio & 811 & 106 \\
-			Metal & 1103 & 100\\ \hline
+			Metal & 1103 & 100\\
+			\bottomrule
 		\end{tabular}
 		\caption{Imágenes disponibles por material separadas en entrenamiento y \textit{test}}
 		\label{tab:imagenes-train-test}
@@ -60,7 +63,6 @@ Al tratarse de una red con aprendizaje supervisado los datos deben ir correctame
 \section{Entrenamiento}
 %-------------------------------------------------------------------
 \label{cap4:sec:entrenamiento}
-Ya se ha contado qué se va a hacer en el capítulo. Ahora viene el como. Párrafos que tienes ya escritos en el punto 4.1. Código de ejemplo de las flores, épocas, lotes, fichero .tflite, ...
 La fase de entrenamiento del proyecto está basada en las recomendaciones para generar modelos de TensorFlow~Lite, ya que el modelo que se va a utilizar para la identificación es el de este formato.
 Para llevar a cabo el entrenamiento de la red neuronal se ha realizado un \textit{script} que se encarga de la lógica de este. Dicho \textit{script} está basado en uno de los ejemplos de Tensorflow~Lite y puede usarse desde Colaboratory\footnote{\url{https://colab.research.google.com/notebooks/intro.ipynb}}, plataforma de Google que permite programar y ejecutar en Python desde el navegador. El ejemplo elegido como referencia es un programa de identificación de flores\footnote{\url{https://colab.research.google.com/drive/1sqBewUnvdATOO-yblj55EBFb2sM24XHR?hl=es-419}}. Se ha seleccionado este debido a su similitud con el proyecto respecto a la identificación del objeto principal en un imagen. 
 
@@ -76,10 +78,10 @@ Para generar el modelo usando las imágenes obtenidas se utiliza la biblioteca Mo
 
 %\figura{Estructuracarpetas3.pdf}{width=1\textwidth}{fig:CarpetasSepar}{Organización de las carpetas con las imágenes separadas.}
 
-El entrenamiento se divide en varios episodios. Estos corresponden al número de veces que el algoritmo recorre todos los datos. En cada episodio los datos se dividen en lotes, y en cada lote se recoge una pequeña parte de los datos. Cada lote se recorre en una iteración, por lo que cada episodio tiene las iteraciones necesarias para recorrer al completo el conjunto de datos. Esto significa que el número de iteraciones de cada episodio corresponde al resultado de dividir la cantidad de datos entre el tamaño de lote~\citep{warden2019tinyml}. Por ejemplo, en los entrenamiento se tiene un total de 3769 imágenes (1000 para metal, 811 para vidrio y 1958 para plástico) y un tamaño de lote de 32, por lo tanto en episodio hay 117 iteraciones.
+El entrenamiento se divide en varios episodios. Estos corresponden al número de veces que el algoritmo recorre todos los datos. En cada episodio los datos se dividen en lotes, y en cada lote se recoge una pequeña parte de los datos. Cada lote se recorre en una iteración, por lo que cada episodio tiene las iteraciones necesarias para recorrer al completo el conjunto de datos. Esto significa que el número de iteraciones de cada episodio corresponde al resultado de dividir la cantidad de datos entre el tamaño de lote~\citep{warden2019tinyml}. Por ejemplo, en los entrenamientos se tiene un total de 3769 imágenes (1000 para metal, 811 para vidrio y 1958 para plástico) y un tamaño de lote de 32, para procesar todos los lotes, en cada episodio se necesitan 117 iteraciones.
 %Para estos valores se han mantenido los de por defecto de TensorFlow ya que se ha considerado que eran adecuados; siendo el número de episodios 5 y el tamaño de lote 32.
 
-Una vez finaliza el entrenamiento y el \textit{test} de la red se genera un archivo con extensión \textit{.tflite}, además de un documento de texto plano con las etiquetas de los distintos materiales. Una vez se haya comparado el rendimiento de los once modelos entrenados, el documento de las etiquetas y el archivo \textit{.tflite} correspondientes al modelo seleccionado se trasladan a la aplicación móvil para ser utilizados.
+Una vez que finaliza el entrenamiento y el \textit{test} de la red, se genera un archivo con extensión \textit{.tflite}, además de un documento de texto plano con las etiquetas de los distintos materiales. Como se ha comentado, este proceso se repite once veces, cada una con un \textit{dataset} con distintos porcentajes de imágenes reales y sintéticas. En la sección siguiente se analiza toda la información recopilada para seleccionar el mejor de los modelos, que será en última instancia utilizado en la aplicación móvil de ayuda al reciclaje descrita en el capítulo~\ref{cap5:app}.
 
 %-------------------------------------------------------------------
 \section{Resultados}
@@ -89,7 +91,7 @@ Una vez finaliza el entrenamiento y el \textit{test} de la red se genera un arch
 %\todo{On the other hand, it is known that classifiers trained only with virtual images may require domain adaptation to work on real images [42, 44, 37, 25, 45]; however, it has been shown that this is just because virtual and real world cameras are different sensors, i.e. domain adaptation is also often required when training images and testing images come from different real-world camera sensors [42, 41].\cite{synthia2016}}
 %\todo{the use of the combined data significantly boosts the performance obtained when using the real-world data alone. \cite{synthia2016}}
 %\todo{¿meter la pérdida, \textit{loss}?}
-Como último punto, queda concluir con qué porcentaje de imágenes sintéticas se obtiene el mejor resultado en exactitud 
+Como último punto, queda determinar con qué porcentaje de imágenes sintéticas se obtiene el mejor resultado. 
  
 %Esta investigación se ha llevado a cabo con el \textit{dataset} obtenido para el prototipado (explicado en la sección~\ref{cap3:sec:dataset}) de la aplicación. Esto supone que sólo uno de los tres materiales (metal) cuenta con imágenes sintéticas y reales mezcladas. En cambio, los dos materiales restantes (vidrio y plástico) están formados por completo por imágenes reales.
 
@@ -98,17 +100,19 @@ Como último punto, queda concluir con qué porcentaje de imágenes sintéticas se o
 \figura{Test.pdf}{width=1\textwidth}{fig:TestRN}{Variación de la exactitud de la red neuronal durante el \textit{test}}
 \figura{Final.pdf}{width=1\textwidth}{fig:PrecisionRN}{Variación de la exactitud final de la red neuronal según la proporción de imágenes reales y sintéticas}
 
-La figura~\ref{fig:VarRN} corresponde al crecimiento de la exactitud de la red durante el entrenamiento. La exactitud es el porcentaje de aciertos de la red respecto a los resultados reales. Se encuentra representado para los distintas combinaciones de imágenes generadas y reales. Al ser la exactitud durante el entrenamiento esta se calcula usando directamente las mismas imágenes del \textit{dataset} de entrenamiento, no las de test. En este proceso se le está enseñando a la red a categorizar las imágenes, el valor de la exactitud en este caso se obtiene según si la red sabe categorizar las mismas imágenes sobre las que se le está entrenando. Que en todos los casos crezca de manera similar en todos los casos significa que está aprendiendo bien para las imágenes que se le están proporcionando. Es decir, en el caso extremo donde todas las imágenes son de objetos metálicos, la red las está categorizando correctamente como metal. No obstante, si atendemos a los resultados de las figuras~\ref{fig:TestRN} y~\ref{fig:PrecisionRN}, al probar el modelo entrenado sobre imágenes reales la exactitud se desploma, significando que no identifica adecuadamente los objetos metálicos reales.
-Como se ha comentado, durante el entrenamiento se aprecia cómo la exactitud de todos los \textit{datasets} tiene un valor superior al 90\% en casi todos los casos a partir del segundo episodio. Aunque dicho valor se acaba acercando al 100\% en ningún momento llega alcanzarlo, lo que evidencia que no hay sobreajuste. De lo contrario, significaría que los modelos han sido sobreentrenados y por lo tanto que conocen el resultado deseado.
+La figura~\ref{fig:VarRN} muestra el crecimiento de la exactitud (en inglés \textit{accuracy}) de la red durante el entrenamiento. La exactitud (o tasa de éxito) es el porcentaje de aciertos de la red respecto a los resultados reales. Se encuentra representado para los distintas combinaciones de imágenes generadas y reales. Al ser la exactitud durante el entrenamiento, esta se calcula usando directamente las mismas imágenes del \textit{dataset} de entrenamiento, no las de \textit{test}. En este proceso se le está enseñando a la red a categorizar las imágenes, así que el valor de la exactitud se obtiene a partir de si clasifica correctamente las mismas imágenes sobre las que se le está entrenando. Que la tasa de éxito crezca de manera similar para todos los \textit{datasets} significa que están aprendiendo bien para las imágenes que se les están proporcionando. Es decir, en el caso extremo donde todas las imágenes de los objetos metálicos son sintéticas, la red las está categorizando correctamente como metal. 
+%No obstante, si atendemos a los resultados de las figuras~\ref{fig:TestRN} y~\ref{fig:PrecisionRN}, al probar el modelo entrenado sobre imágenes reales la exactitud se desploma, significando que no identifica adecuadamente los objetos metálicos reales.
+Para todos los \textit{datasets}, a partir del segundo episodio, se obtiene una tasa de éxito superior al 90\%. Puesto que dicho valor no llega a alcanzar el 100\%, se considera que no hay sobreajuste. Si fuera así significaría que los modelos han sido sobreentrenados y por lo tanto que conocen el resultado deseado.
 
 
-En la figura~\ref{fig:TestRN}, por el contrario, se observa cómo varía la exactitud al probarse el modelo con los datos de \textit{test}, aquí se sacan las primeras conclusiones sobre la red. Se observa que la mayoría de las opciones se mantienen casi todo el proceso en una precisión mayor del 90\%. Los casos en los que se puede contemplar una caída de la exactitud, son aquellos que cuentan con mayor porcentaje de imágenes sintéticas para el entrenamiento. Esto se debe a que al haber visto muy pocas imágenes reales de este material durante el entrenamiento ahora en el \textit{test} no las identifica como metal provocando que la exactitud decrezca notablemente.
+En la figura~\ref{fig:TestRN}, por el contrario, se observa cómo varía la exactitud al probarse el modelo con los datos de \textit{test}, aquí se sacan las primeras conclusiones sobre la red. Similar a como se realizó el entrenamiento, para el test los datos también se dividen el lotes. En cada iteración la red se prueba sobre cada lote de imágenes y la tasa de acierto se va actualizando según los resultados obtenidos.
+Se observa que la mayoría de las opciones se mantienen casi todo el proceso en una precisión mayor del 90\%. Los casos en los que se puede contemplar una caída de la exactitud, son aquellos que cuentan con mayor porcentaje de imágenes sintéticas para el entrenamiento. Esto se debe a que al haber visto muy pocas imágenes reales de este material durante el entrenamiento ahora en el \textit{test} no las identifica como metal, provocando que la tasa de aciertos decrezca notablemente.
 
 
 
 La figura~\ref{fig:PrecisionRN} muestra el valor final de la exactitud en los distintos casos. A partir de esta última figura pueden sacarse las conclusiones de con qué porcentaje se obtendrían los mejores resultados. 
 
-Los dos \textit{datasets} que cuentan con la mayor cantidad de imágenes sintéticas (90\% y 100\%) serían los menos recomendados para utilizar debido a su baja exactitud. En cambio, entre el 0\% y el 70\% de imágenes generadas, se observa que la exactitud siempre está por encima del 90\%, aunque nunca  llega a superar el 95\%. 
+Los dos \textit{datasets} que cuentan con la mayor cantidad de imágenes sintéticas (90\% y 100\%) serían los menos recomendables para utilizar debido a su baja exactitud. En cambio, entre el 0\% y el 70\% de imágenes generadas, se observa que la exactitud siempre está por encima del 90\%, aunque nunca  llega a superar el 95\%. 
 
 
 %Entrenando la red únicamente con los materiales de vidrio y plástico, cuyas imágenes son todas reales, se obtiene un 96\% de precisión.
