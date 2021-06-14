@@ -15,8 +15,8 @@ assert tf.__version__.startswith('2')
 
 from tensorflow_examples.lite.model_maker.core.data_util.image_dataloader import ImageClassifierDataLoader
 from tensorflow_examples.lite.model_maker.core.task import image_classifier
-from tensorflow_examples.lite.model_maker.core.task.model_spec import mobilenet_v2_spec
-from tensorflow_examples.lite.model_maker.core.task.model_spec import ImageModelSpec
+#from tensorflow_examples.lite.model_maker.core.task.model_spec import mobilenet_v2_spec
+#from tensorflow_examples.lite.model_maker.core.task.model_spec import ImageModelSpec
 
 import matplotlib.pyplot as plt
 

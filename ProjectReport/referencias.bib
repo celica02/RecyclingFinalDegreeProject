@@ -9,7 +9,7 @@
 }
 
 @article{Emergencia2019,
-	author={Alfonso, C and 
+	author={Alfonso, C. and 
 			Est\'{e}vez Est\'{e}vez, R and
 			Lobo, J. M. and
 			Lozano Di\'{e}guez, B. and
@@ -19,7 +19,8 @@
 	year = 2016,
 	month = {Diciembre},
 	title={Emergencia clim\'{a}tica en {Espa\~{n}a}},
-	organization = {Observatorio Sostenibilidad}
+	note = {Disponible en: \url{https://www.observatoriosostenibilidad.com/2019/11/29/emergencia-climatica-en-espana/}},
+	publisher = {Observatorio Sostenibilidad}
 }
 %	author={Carlos Alfonso and 
 %			Ra\'{u}l Est\'{e}vez Est\'{e}vez and
@@ -43,16 +44,25 @@
 @Book{Karim2018,
     author = {Rezaul Karim},
     title = {TensorFlow: Powerful Predictive Analytics with TensorFlow},
-    publisher = {Packt Publishing, Limited},
+    publisher = {Packt Publishing},
+    month = {Marzo},
     year = {2018},
-    ISBN={1789136911}
+    ISBN={9781789136913},
+    edition = 3,
+    address = {Birmingham}
 }
 %Página 9, párrafo 2
+
+
+%Cite this chapter as:
+%Wang SC. (2003) Artificial Neural Network. In: Interdisciplinary Computing in Java Programming. The Springer International Series in Engineering and Computer Science, vol 743. Springer, Boston, MA. https://doi.org/10.1007/978-1-4615-0377-4_5
 @Inbook{Wang2003,
-    author={Wang, Sun-Chong},
+    author={Wang, Sun Chong},
     title={Artificial Neural Network},
     bookTitle={Interdisciplinary Computing in Java Programming},
     year={2003},
+    series = {The Springer International Series in Engineering and Computer Science},
+    volume = 743,
     publisher={Springer US},
     address={Boston, MA},
     abstract={Inspired by the sophisticated functionality of human brains where hundreds of billions    of interconnected neurons process information in parallel, researchers have successfully tried demonstrating certain levels of intelligence on silicon. Examples include language translation and pattern recognition software. While simulation of human consciousness and emotion is still in the realm of science fiction, we, in this chapter, consider artificial neural networks as universal function approximators. Especially, we introduce neural networks which are suited for time series forecasts.},
@@ -77,9 +87,9 @@
 }
 
 @misc{tensorflow2015whitepaper,
-title={ {TensorFlow}: Large-Scale Machine Learning on Heterogeneous Systems},
+title={ {T}ensor{F}low: {L}arge-{S}cale {M}achine {L}earning on {H}eterogeneous {S}ystems},
 url={https://www.tensorflow.org/},
-note={Software available from tensorflow.org},
+note={\textit{Software} disponible en \url{https://www.tensorflow.org/}},
 author={
     Mart\'{\i}n~Abadi and
     Ashish~Agarwal and
@@ -900,5 +910,31 @@ A lo largo del trabajo se proporcionar{\'a}n ejemplos y c{\'o}digo para saber c{
       year={2015},
       eprint={1405.0312},
       archivePrefix={arXiv},
+
       primaryClass={cs.CV}
+}
+
+@misc{tan2020efficientnet,
+      title={EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks}, 
+      author={Mingxing Tan and Quoc V. Le},
+      year={2020},
+      eprint={1905.11946},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+
+@misc{he2015resnet,
+      title={Deep Residual Learning for Image Recognition}, 
+      author={Kaiming He and Xiangyu Zhang and Shaoqing Ren and Jian Sun},
+      year={2015},
+      eprint={1512.03385},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+
+@article{liu2020tflcompare,
+  title={Higher accuracy on vision models with EfficientNet-Lite},
+  author={Liu, R},
+  journal={TensorFlow Blog.[online] Available at: https://blog. tensorflow. org/2020/03/higher-accuracy-on-visionmodels-with-efficientnet-lite. html [Accessed 30 Apr. 2020]},
+  year={2020}
 }

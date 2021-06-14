@@ -4,15 +4,15 @@
 %
 %---------------------------------------------------------------------
 
-\chapter{Generación de imágenes}
-\label{cap3}
+\chapter{Aplicación de generación de imágenes}
+\label{cap3:app-generacion-imagenes}
 
 \begin{resumen}
-Para dotar a la aplicación de las capacidades de reconocimiento de imágenes es necesario pasar por un proceso previo de entrenamiento con cientos o miles de de ellas correctamente etiquetadas. La obtención de un conjunto de entrenamiento con las características requeridas es una tarea complicada. En este capítulo se describe una opción alternativa que permite generar esas imágenes de forma sintética a partir de modelos tridimensionales. 
+Para dotar a la aplicación de las capacidades de reconocimiento de imágenes, es necesario pasar por un proceso previo de entrenamiento con cientos o miles de de ellas correctamente etiquetadas. La obtención de un conjunto de entrenamiento con las características requeridas es una tarea complicada. En este capítulo se describe y desarrolla una opción alternativa que permite generar esas imágenes de forma sintética a partir de modelos tridimensionales. 
 \end{resumen}
 
-\todo{Faltaría decir que como es complicada la obtención de datasets muy específicos suficientemente grandes, mediante esta aplicación se facilita completarlos para el entrenamiento}
-\todo{aunque se tienen suficientes imágenes en el dataset se realizan pruebas para ver qué porcentaje sería el mejor en futuros casos para los que no se cuente con tantas imágenes reales.}
+%\todo{Faltaría decir que como es complicada la obtención de datasets muy específicos suficientemente grandes, mediante esta aplicación se facilita completarlos para el entrenamiento}
+%\todo{aunque se tienen suficientes imágenes en el dataset se realizan pruebas para ver qué porcentaje sería el mejor en futuros casos para los que no se cuente con tantas imágenes reales.}
 
 %Para dotar a la aplicación d las capacidades de reconocimiento de imágenes es necesario pasar por un proceso previo de entrenamiento con cientos o miles de imágenes correctamente etiquetadas. La disponibilidad de un conjunto de entrenamiento es crítica, pero difícil. En este capítulo se describe una opción alternativa a través de la que esas imágenes son generadas de forma sintética.
 %-------------------------------------------------------------------
@@ -21,27 +21,30 @@ Para dotar a la aplicación de las capacidades de reconocimiento de imágenes es n
 \label{cap3:sec:introduccion}
 
 El objetivo del proyecto es reconocer e identificar distintos desechos y su material principal, e indicar cómo deben reciclarse adecuadamente. Para ello, se utilizan técnicas de visión artificial, lo que conlleva el entrenamiento de una red neuronal. 
-Para la identificación hay que usar redes supervisadas. Eso significa que se requieren fotos correctamente etiquetadas, indicando lo que contienen, para que el sistema aprenda a reconocerlas. Ese entrenamiento es crítico para que todo funcione, y para ello se necesita un gran número de imágenes
+Eso significa que se requieren fotos correctamente etiquetadas, indicando lo que contienen, para que el sistema aprenda a reconocerlas. Ese entrenamiento es crítico para que todo funcione, y para ello se necesita un gran número de imágenes.
 
 Conseguir tantas imágenes, distintas y claras, supone un trabajo costoso y lento; sin tener en cuenta el almacenaje de estas. 
-Contamos con varias opciones para conseguir las imágenes. Una de ellas, y quizá la más obvia, es descargarlas de la red. Esta opción dista de ser la ideal debido a lo tedioso que resulta este procedimiento; buscar, seleccionar y descargar una a una miles de imágenes que cuenten con una buena resolución, es un proceso muy lento.
+Contamos con varias opciones para conseguir las imágenes. Una de ellas, y quizá la más obvia, es descargarlas de la red. Esta opción dista de ser la ideal debido a lo tedioso que resulta este procedimiento; buscar, seleccionar y descargar una a una miles de imágenes que cuenten con una buena resolución es un proceso muy lento.
 
-Otra forma es realizar las fotografías personalmente. Esta cuenta con varios problemas, el primero es que se necesita tener acceso a los objetos, y cuando se necesita hacer miles de imágenes distintas el número de objetos a fotografía es muy alto. 
+Otra forma es realizar las fotografías personalmente o llevar a cabo un vídeo y utilizar los \textit{frames} como imágenes de entrenamiento. El principal problema de estas opciones es que no sólo se necesitan muchas imágenes, sino también mucha variedad. Para que la red aprenda a reconocer un determinado tipo de objeto, por ejemplo botellas, se necesitan fotografías de muchas botellas distintas, lo que supone un coste de adquisición que puede ser significativo. Una opción sería ir al establecimiento y realizar las fotos o el vídeo allí sin comprarlas. Si se realizan en un establecimiento existe el riesgo de violar la protección de datos de los clientes y los trabajadores de alrededor, además de que no esté permitido realizar fotografías ni grabaciones dentro del comercio. Otro factor menos significativo es que al tratarse de una aplicación de reciclaje sería preferible que se trate de objetos ya usados, como una lata abierta, una botella vacía o un papel arrugado.
 
-Una posible solución para este problema es acudir a establecimientos donde los vendan y llevar a cabo allí las fotos. Uno de los inconvenientes es que obtener las imágenes llevaría una cantidad de tiempo excesiva. Una alternativa puede ser la grabación de vídeos, utilizando los \textit{frames} como imágenes de entrenamiento. Esta opción es más dinámica frente a las fotografías, pero por otro lado todos los \textit{frames} obtenidos tendrían que ser revisados con atención. Esto es necesario por si aparecen otros objetos además del deseado, ya que se deberían separar para el correcto etiquetado; o, incluso, si ni siquiera aparece.
-
-En ambas opciones se presentan varios inconvenientes. Los más importantes son, que al realizarse en un establecimiento, existe el riesgo de violar la protección de datos de los clientes y los trabajadores de alrededor, además de que no esté permitido realizar fotografías ni grabaciones dentro del comercio. Otro factor menos significativo es que al tratarse de una aplicación de reciclaje sería preferible que se trate de objetos ya usados, como una lata abierta, una botella vacía o un papel arrugado.
-
-Los avances en aprendizaje automático durante los últimos años han permitido que se convierta en un campo más accesible para interesados con diferentes niveles de conocimiento. Esto ha provocado un gran aumento de materiales disponibles de manera libre.
+Hay una opción adicional para evitar el laborioso proceso de conseguir imágenes etiquetadas: aprovechar trabajos ya realizado. En particular, los avances en aprendizaje automático durante los últimos años han permitido que se convierta en un campo más accesible para interesados con diferentes niveles de conocimiento. Esto ha provocado un gran aumento de los materiales disponibles de manera libre de este campo.
 
 Una posibilidad que se presenta es utilizar \textit{datasets} de libre uso como COCO (Common Objects in Context)~\cite{cocodataset2015}. Aunque este resulta no ser tampoco la opción perfecta, es un acercamiento a una posible solución. Estos \textit{datasets} tan amplios cuentan con tal diversidad de objetivos para identificar que llegan a tener decenas de miles de imágenes. Para poder utilizarlo en este proyecto sería necesario examinarlo entero y seleccionar y separar aquellas que se pudieran utilizar. Esto, como en los casos anteriores, es una tarea sumamente lenta sin ninguna garantía de obtener imágenes suficientes.
 
 Igual que existen \textit{datasets} tan amplios, también los hay pequeños y enfocados a la detección de uno o pocos objetos. A pesar de la limitación presente al tener que encontrar \textit{datasets} específicos para cada objeto que se quiera identificar, resulta la opción más accesible entre las mencionadas. 
 
+\medskip
+Otro ámbito en el que se ha conseguido una gran mejoría en las últimas décadas es en los gráficos de contenidos digitales audiovisuales, ya sean películas, videojuegos, videoclips, anuncios, etc. Esta mejora llega hasta tal punto que a veces puede resultar difícil distinguir entre realidad y CGI (\textit{Computer-generated imagery}). Teniendo en cuenta esto, las dificultades mencionadas en la obtención de imágenes y las oportunidades que ofrece la automatización, no se ha querido desaprovechar la posibilidad de explorar sus posibilidades. 
 
-Otro ámbito en el que se ha conseguido una gran mejoría en las últimas décadas es en los gráficos de contenidos digitales audiovisuales, ya sean películas, videojuegos, videoclips, anuncios, etc. Esta mejora llega hasta tal punto que a veces puede resultar difícil distinguir entre realidad y CGI (\textit{Computer-generated imagery}). Teniendo en cuenta esto, las dificultades mencionadas en la obtención de imágenes y las oportunidades que ofrece la automatización, no se ha querido desaprovechar la posibilidad de enfocarlo desde un punto más cercano a este. 
 
-Debido a que las cámaras virtuales y las reales son sensores diferentes entrenando solamente con datos sintéticos la red sufre un desplome en la precisión, así que el uso de las imágenes generadas únicamente tampoco es una opción aceptable. Además, puesto que está demostrado que el uso de datos reales y sintéticos, combinados, mejora el rendimiento de la red frente al uso de datos reales únicamente~\cite{synthia2016} se considera que la mejor opción es utilizar los \textit{datasets} de menor tamaño en conjunto con imágenes generadas.
+
+En la sección~\ref{cap2:sec:generacion} se describieron algunos trabajos existentes en los que se han usado imágenes sintéticas para entrenar redes neuronales. Para este trabajo de fin de grado se propuso comprobar y comparar su eficacia entrenando la red neuronal con distintos porcentajes de imágenes reales y sintéticas. En un extremo, un dataset para entrenamiento puede estar compuesto únicamente por fotografías etiquetadas de objetos reales. Como se ha comentado, conseguirlas puede resultar muy costoso. La ventaja es que el entrenamiento debería conseguir resultados sumamente satisfactorios, asumiendo la obtención de un \textit{dataset} suficientemente bueno.
+
+En el otro extremo está el entrenamiento a partir únicamente de imágenes sintéticas. El coste de adquisición debería ser, en principio, mucho menor. El riesgo que se corre es que el resultado también lo sea si la calidad de las imágenes resulta ser pobre. Para conseguir un entrenamiento adecuado, las imágenes deben tener una calidad aceptable, lo que incrementa la dificultad de encontrar modelos 3D adecuados, o, en su defecto, el coste de generarlos.
+
+La pregunta que se plantea es si existe un punto medio idóneo, en el que se mezclen ambos extremos. En lugar de utilizar un \textit{dataset} grande de fotografías a objetos físicos, o de imágenes sintéticas realistas, se plantea si es viable utilizar un \textit{dataset} reducido de fotos reales enriquecido con imágenes sintéticas de calidad intermedia. Para obtener una respuesta, es necesario realizar en primer lugar una aplicación para generar las imágenes sintéticas, tal y como se describe a continuación. Su uso y el análisis de los resultados se detallará en el capítulo~\ref{cap4:train}.
+%Debido a que las cámaras virtuales y las reales son sensores diferentes entrenando solamente con datos sintéticos la red sufre un desplome en la precisión, así que el uso de las imágenes generadas únicamente tampoco es una opción aceptable. Además, puesto que está demostrado que el uso de datos reales y sintéticos, combinados, mejora el rendimiento de la red frente al uso de datos reales únicamente~\cite{synthia2016} se considera que la mejor opción es utilizar los \textit{datasets} de menor tamaño en conjunto con imágenes generadas.
 
 %Una industria que destaca por el realismo de sus productos es la de los videojuegos
 
@@ -58,38 +61,38 @@ Debido a que las cámaras virtuales y las reales son sensores diferentes entrenan
 %-------------------------------------------------------------------
 \label{cap3:sec:aplicacion}
 
-La aplicación de generación de imágenes ha sido desarrollada utilizando el motor de videojuegos Unity. Sus características principales, de la aplicación, son la carga de modelos tridimensionales y la toma de capturas. La aplicación cuenta con un Game Manager que se encarga de la gestión del trascurso de la aplicación y de las variables principales (rutas de directorios, cantidad de imágenes a generar o su extensión). Toma este nombre ya que es el que se suele dar en los juegos al gestor global, y se ha mantenido por inercia de uso de Unity.
+La aplicación de generación de imágenes ha sido desarrollada utilizando el motor de videojuegos Unity. Las características principales de la aplicación son la carga de modelos tridimensionales y la toma de capturas. La aplicación cuenta con un Game Manager que se encarga de la gestión del ciclo de vida de la aplicación y las variables principales (rutas de directorios, cantidad de imágenes a generar o su extensión). Toma este nombre ya que es el que suele darse en los juegos al gestor global, y se ha mantenido por inercia de uso de Unity.
 
-Al importar los modelos, es necesario crear un objeto reutilizable de Unity para trabajar con ellos de manera  sencilla, denominados \textit{prefabs}. Estos se separan y guardan en carpetas según el material al que pertenecen (metal, plástico, vidrio); lo que facilitará posteriormente el guardado de las capturas generadas.
+
+Al importar los modelos en el motor, es necesario crear, para cada uno de ellos, un objeto reutilizable que facilite trabajar con él de forma sencilla. En Unity esto se consigue a través de los denominados \textit{prefabs}. En el proyecto, los \textit{prefabs} creados se han organizado en distintas carpetas según el material al que pertenecen (metal, plástico, vidrio) lo que facilitará posteriormente el guardado de las capturas generadas.
 
 Durante el tiempo de vida de la aplicación se accede a cada una de estas carpetas para cargar, uno a uno, los \textit{prefabs} contenidos en ellas.
-En cada frame se toma una captura de la escena, en ella se presenta uno de los modelos frente al fondo.
+En cada frame se toma una captura de la escena, en la que se ha instanciado el \textit{prefab} con el modelo correspondiente.
 El modelo es colocado con una posición y rotación aleatorios diferentes en cada captura. De esta forma, a partir de un mismo objeto se obtienen imágenes muy distintas, ya que son capturados desde diversos ángulos y distancias.
 Para que la posición aleatoria generada no quede fuera del campo de visión de la cámara, se establecen unos valores máximos y mínimos para cada eje de coordenadas. Aún así, para prevenir posibles errores, antes de hacer la captura se comprueba que el modelo se encuentra dentro del campo de visión.
 
-Para generar más diversidad en las imágenes cada una cuenta con un fondo generado de manera aleatoria. Este se compone de dos planos superpuestos, separados levemente para que no se combinen, a los que se les asigna una textura de manera aleatoria. Uno de ellos siempre está visible, mientras que el otro sólo se muestra a veces, configurado con posición y rotación aleatorias (figura~\ref{fig:fondos}).
+Para generar más diversidad en las imágenes, cada una cuenta con un fondo generado de manera aleatoria. Este se compone de dos planos superpuestos, separados levemente para que no se combinen, a los que se les asigna una textura de manera aleatoria. Uno de ellos siempre está visible, mientras que el otro sólo se muestra a veces, configurado con posición y rotación aleatorias (figura~\ref{fig:fondos}).
 
 \begin{figure}
 	\centering
-	\subfloat[Captura con un plano de fondo.]{
+	\subfloat[Un plano de fondo]{
 		{{\includegraphics[width=0.6\textwidth]{Imagenes/unfondo.png}}}
 		\label{fig:fondos:unplano}}
 	\qquad
-	\subfloat[Captura con dos planos de fondo.]{
+	\subfloat[Dos planos de fondo]{
 		{{\includegraphics[width=0.6\textwidth]{Imagenes/dosfondos.png}}}
 		\label{fig:fondos:dosplanos}}
-	\caption{Capturas de ejemplo de los fondos.}
+	\caption{Capturas de ejemplo de los fondos}
     \label{fig:fondos}
 \end{figure}
 
-Una vez establecido el objeto y el fondo, se toma la captura. Estas, igual que los modelos, se guardan separadas en carpetas según el material. Esto significa que las capturas de un objeto de metal se guardan en una carpeta llamada metal. Como con los modelos, todas las carpetas de los distintos materiales se almacenan en una carpeta raíz.  
+Una vez establecido el objeto y el fondo, se toma la captura. Estas, igual que los modelos, se guardan separadas en carpetas según el material. Esto significa que, por ejemplo, las capturas de un objeto de metal se guardan en una carpeta llamada \texttt{metal}. Como con los modelos, todas las carpetas de los distintos materiales se almacenan en una carpeta raíz.  
 
-Puesto que las imágenes generadas van a ser utilizadas para el entrenamiento de una red neuronal supervisada, todas ellas deben de estar correctamente etiquetadas. Como van a entrenarse utilizando TensorFlow Lite, sobre lo que se hablará en el capítulo~\ref{cap4}), el etiquetado se realiza de manera muy sencilla. 
-
-Debido a que el objetivo de la aplicación no es identificar todos los objetos presentes en una imagen, sino identificar únicamente el material del objeto principal, no es necesario tener diversos objetos en cada imagen y delimitar cada uno de ellos con su etiqueta correspondiente. En este caso, el etiquetado se hace por jerarquía de carpetas. Esto quiere decir que hay una carpeta raíz que contiene distintas subcarpetas, una para cada tipo de material identificable por la red; y dentro de cada una de estas carpetas se almacenan todas las imágenes correspondientes. Para el entrenamiento de la red simplemente hay que indicar la ruta de la carpeta raíz y espera que dentro de esta estén las carpetas que serán las etiquetas y en su interior las imágenes de entrenamiento.
+Puesto que las imágenes generadas van a ser utilizadas para el entrenamiento de una red neuronal supervisada, todas ellas deben de estar correctamente etiquetadas.
+Debido a que el objetivo de la aplicación no es identificar todos los objetos presentes en una imagen, sino identificar únicamente el material del objeto principal, no es necesario tener diversos objetos en cada imagen y delimitar cada uno de ellos con su etiqueta correspondiente. En este caso, el etiquetado se hace por jerarquía de carpetas. Esto quiere decir que hay una carpeta raíz que contiene distintas subcarpetas, una para cada tipo de material identificable por la red; y dentro de cada una de estas carpetas se almacenan todas las imágenes correspondientes a esa etiqueta. Para el entrenamiento de la red simplemente hay que indicar la ruta de la carpeta raíz y espera que dentro de esta estén las carpetas que serán las etiquetas con las imágenes de entrenamiento en su interior .
 
 Un último punto importante es la unicidad de las capturas. Para ello se guardan usando el nombre del modelo añadiéndole la hora, minutos, segundos y milisegundos del momento en que ha sido tomada. 
-Las capturas pueden exportarse en tanto en formato PNG como JPG, mediante la configuración del Game Manager. PNG es un formato sin pérdida que permite imágenes sin fondo. Puesto que esa propiedad no es necesaria en este proyecto, y que los resultados son similares con ambos formatos, es preferible el uso de JPG debido a que los archivos ocupan menos espacio. Esto es importante ya que se necesita un gran número de imágenes para el entrenamiento de la red neuronal y así no se ocupa tanto espacio en la máquina.
+Las capturas pueden exportarse en tanto en formato PNG como JPG, mediante la configuración del Game Manager. PNG es un formato sin pérdida que permite imágenes con fondo transparente. Puesto que esa propiedad no es necesaria en este proyecto, y que los resultados son similares con ambos formatos, es preferible el uso de JPG debido a que los archivos ocupan menos espacio. Esto es importante ya que se necesita un gran número de imágenes para el entrenamiento de la red neuronal y así no se ocupa tanto espacio en la máquina.
 
 %El objeto instanciado cambia de posición y rotación a unas aleatorias en cada frame, para que sean distintas en cada captura. Para la posición se establecen unos límites entre los que se genera un valor aleatorio para cada eje. Para el eje vertical, el eje Y, se establece un valor propio en negativo para el mínimo y positivo para el máximo. Para el eje de la Z, la profundidad, se establece de manera similar, en este caso no se utiliza el mismo valor en simetría respecto al eje de coordenadas, sino que se tiene un valor máximo establecido por parámetro y el mínimo estará posicionado a dos unidades respecto a la cámara. Por último, la posición en el eje X, en horizontal, se genera también de manera aleatoria, pero el rango en vez de ser a partir de un valor pasado por parámetro en este caso se utiliza el generado para la posición en el eje Z; puesto en positivo y negativo. 
 
@@ -104,23 +107,25 @@ Las capturas pueden exportarse en tanto en formato PNG como JPG, mediante la con
 \label{cap3:sec:modelos3d}
 
 
-Como se ha comentado, para generar las imágenes sintéticas se parte de modelos tridimensionales. Todos los modelos seleccionados y utilizados en este proyecto son de libre uso, conseguidos desde varias páginas dedicadas a esto (CGTrader\footnote{\url{https://www.cgtrader.com/}}, Free3D\footnote{\url{https://free3d.com/es/}}, TurboSquid\footnote{\url{https://www.turbosquid.com/}}, 3DModelHeaven\footnote{\url{https://3dmodelhaven.com/}} y Unity Asset Store\footnote{\url{https://assetstore.unity.com/}}). El formato con el que se ha trabajado es FBX, es el más extendido debido a su interoperabilidad entre aplicaciones de creación de contenido digital. Permite que los recursos tridimensionales tengan la mínima pérdida de datos entre los distintos \textit{softwares} de edición 3D.
+Como se ha comentadoen la sección~\ref{cap2:sec:generacion}, para generar las imágenes sintéticas se parte de modelos tridimensionales. Todos los modelos seleccionados y utilizados en este proyecto son de libre uso, conseguidos desde varias páginas dedicadas a esto (CGTrader\footnote{\url{https://www.cgtrader.com/}}, Free3D\footnote{\url{https://free3d.com/es/}}, TurboSquid\footnote{\url{https://www.turbosquid.com/}}, 3DModelHeaven\footnote{\url{https://3dmodelhaven.com/}} y Unity Asset Store\footnote{\url{https://assetstore.unity.com/}}). El formato con el que se ha trabajado es FBX, el más extendido debido a su interoperabilidad entre aplicaciones de creación de contenido digital. Permite que los recursos tridimensionales tengan la mínima pérdida de datos entre los distintos programas de edición 3D.
 
-Existen varias dificultades principales con la obtención de modelos tridimensionales. En primer lugar está el realismo del modelo. Puesto que las capturas son para el entrenamiento de una red que se va a usar sobre objetos reales, es importante que los modelos utilizados sean lo más fieles posible al objeto real que representan. Los modelos tridimensionales de este tipo conllevan un gran esfuerzo y trabajo por parte de un profesional que los cree. Por lo tanto, es comprensible que sea complicado encontrar este tipo de modelos de manera libre y gratuita. De todas formas, aceptando el uso de modelos que distan un poco más de la realidad se obtienen buenos resultados igualmente.
-El segundo inconveniente surge al realizar la importación de los modelos en Unity, donde salen a relucir fallos de los modelos en cuanto a geometría, texturas y materiales. Esto, en algunos casos, termina provocando la inutilidad de los modelos, lo cual provoca que sea necesario su sustitución. 
+Existen varias dificultades principales con la obtención de modelos tridimensionales. En primer lugar está el realismo del modelo. Puesto que las capturas son para el entrenamiento de una red que se va a usar sobre objetos reales, es importante que los modelos utilizados sean lo más fiel posible al objeto real que representan. La creación de modelos tridimensionales de este tipo conlleva un gran esfuerzo y trabajo por parte de un profesional que los cree. Por lo tanto, es comprensible que sea complicado encontrar este tipo de modelos de manera libre y gratuita. No obstante, la hipótesis planteada es que el uso de modelos de calidad intermedia, pero de bajo costo, se compensa en el entrenamiento al incorporar fotografías reales.
 
-En los modelos en los que más problema se encuentra son todos aquellos que presentan transparencias, como el vidrio o algunos plásticos. Al ser modelos que no requieren texturas, se dificulta su importación en Unity, ya que el material tiene que configurarse desde cero. Esto provoca que la cantidad de modelos encontrados, útiles se vea mermada considerablemente. Dejando como único material con suficientes recursos el metal
+El segundo inconveniente surge al realizar la importación de los modelos en Unity, donde salen a relucir fallos de los modelos en cuanto a geometría, texturas y materiales. Esto, en algunos casos, termina provocando la inutilidad de los modelos, lo cual supone que sea necesario su sustitución. 
+
+Los modelos en los que más problemas se encuentran son aquellos que presentan transparencias, como el vidrio o algunos plásticos. Al ser modelos que no requieren texturas, se dificulta su importación en Unity, ya que el material tiene que configurarse desde cero. La figura~\ref{fig:modelo} muestra un ejemplo, donde la imagen asociada al modelo en la página de descarga es la de la figura~\ref{fig:modelo:online}\footnote{\url{https://acortar.link/G4Gbz}}. Sin embargo, al importar el modelo en Unity la transparencia se pierde y el objeto aparece opaco (figura~\ref{fig:modelo:editor}). Conseguir el mismo tipo de material transparente o translúcido en Unity requiere el ajuste manual mencionado.
+Esto provoca que la cantidad de modelos útiles encontrados se vea mermada considerablemente. El resultado de estas dificultades es que en este trabajo finalmente todos los modelos sintéticos utilizados fueron de objetos metálicos, algo que tendrá implicaciones en las pruebas descritas en el capítulo~\ref{cap4:train}.
 
 \begin{figure}
 	\centering
-	\subfloat[Imagen de referencia del modelo.]{
+	\subfloat[Imagen de referencia del modelo, obtenido desde CGTrader de aseryith]{
 		{{\includegraphics[width=0.5\textwidth]{Imagenes/botellaOnline.jpg}}}
 		\label{fig:modelo:online}}
 	\qquad
 	\subfloat[Modelo al ser cargado.]{
-		{{\includegraphics[width=0.5\textwidth]{Imagenes/botellaBlender.png}}}
+		{{\includegraphics[width=0.5\textwidth]{Imagenes/botellaEditor.png}}}
 		\label{fig:modelo:editor}}
-	\caption{Imágenes de ejemplo de un modelo con transparencia online y en el editor.}
+	\caption{Imágenes de ejemplo de un modelo con transparencia online y en el editor}
     \label{fig:modelo}
 \end{figure}
 
@@ -131,12 +136,23 @@ Un último factor, es la extensión de los modelos. Aunque generalmente se encuent
 \subsection{\textit{Dataset}}
 %-------------------------------------------------------------------
 \label{cap3:sec:dataset}
-\todo{separación imágenes entrenamiento y test}
-Al final del proceso explicado durante el presente capítulo, se recogieron los siguientes conjuntos de imágenes:
 
-De imágenes reales se obtuvieron varios datasets desde la página Kaggle\footnote{\url{https://www.kaggle.com/}}. . Se cuenta con tres materiales diferentes, plástico, vidrio y metal; de los cuales se cuenta con al rededor de mil imágenes para cada uno.
+Al final del proceso explicado durante el presente capítulo se recopilaron varios conjuntos de imágenes. De imágenes reales se obtuvieron varios \textit{datasets} desde la página Kaggle\footnote{\url{https://www.kaggle.com/}}. En particular, se consiguieron \textit{datasets} de tres materiales diferentes (plástico, vidrio y metal) cada uno con aproximadamente 1000 imágenes. El número exacto de imágenes puede consultarse en la tabla~\ref{tab:imagenes}.
 
-Para generar las imágenes sintéticas sólo se cuentan con suficientes modelos de objetos de metal. Así que las imágenes generadas a partir de ellos se mezclan con las reales de este material en el entrenamiento de la red. Aunque se sabe que esto mejora el rendimiento~\cite{synthia2016}, se desconoce en qué proporciones se obtiene el mejor resultado. Tanto las pruebas de rendimiento, como el entrenamiento de la red, se explican en el capítulo~\ref{cap4:sec:entrenamiento}.
+\begin{table}[t]
+	\begin{center}
+		\begin{tabular}{| c | c | c |}
+			Materiales & Imágenes reales & Imágenes sintéticas\\ \hline
+			Plástico & 2072 & No\\
+			Vidrio & 917 & No \\
+			Metal & 1203 & Sí\\ \hline
+		\end{tabular}
+		\caption{Imágenes disponibles por material}
+		\label{tab:imagenes}
+	\end{center}
+\end{table}
+
+Como se ha comentado previamente, para generar las imágenes sintéticas sólo se cuenta con suficientes modelos de objetos de metal, teniendo disponibles en total 40 modelos diferentes. Así que las imágenes generadas a partir de ellos se mezclan con las reales de este material en el entrenamiento de la red. Puesto que se desconoce con qué proporciones se obtiene el mejor resultado se llevarán a cabo pruebas de rendimiento. Tanto estas, como el entrenamiento de la red, se explican en el capítulo~\ref{cap4:train}.
 
 
 
