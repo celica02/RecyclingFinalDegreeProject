@@ -28,10 +28,10 @@ La aplicación está constantemente interpretando lo que recibe desde la cámara, a
 %\todo{añadir: Para el correcto funcionamiento, en Andorid, de la aplicación con el modelo entrenado son necesarias dos librerías. La primera es la librería de tareas de TensorFlow~Lite, que cuenta con un conjunto de bibliotecas específicas de tareas potentes y fáciles de usar por los desarrolladores para crear experiencias de aprendizaje automático. Esta funciona varias plataformas y es compatible con Java y C++. La segunda librería necesaria es la de compatibilidad, esta facilita la integración de modelos en la aplicación. Proporciona API de alto nivel que ayuda a transformar los datos de entrada en el formato requerido por el modelo, además de interpretar su salida.}
 
 
-Para realizar la identificación se ha incorporado TensorFlow~Lite y sus librerías al proyecto en Android Studio. Esto permite importar un intérprete, \todo{destacar esto}el cual carga el modelo seleccionado (el compuesto por un 70\% de imágenes sintéticas para el metal) y permite ejecutarlo ofreciéndole una serie de datos de entrada, finalmente, tras ejecutarlo, se muestran por pantalla los resultados obtenidos.
+Para realizar la identificación se ha incorporado TensorFlow~Lite y sus librerías al proyecto en Android Studio. Esto permite importar un intérprete, el cual carga el modelo seleccionado (el compuesto por un 70\% de imágenes sintéticas para el metal) y permite ejecutarlo ofreciéndole una serie de datos de entrada, finalmente, tras ejecutarlo, se muestran por pantalla los resultados obtenidos.
 El trabajo se ha basado en las guías y recomendaciones que ofrece TensorFlow~Lite en sus ejemplos como ayuda para incorporar y utilizar el modelo de la red neuronal entrenado previamente (capítulo~\ref{cap4:train}).
 
-Durante el flujo de la aplicación se hace uso de la cámara del dispositivo. \todo{destacar esto} Los \textit{frames} desde esta son los datos que se utilizan como entrada para la identificación. Dichos datos se reciben en formato \textit{bitmap}, matrices donde cada casilla tiene asignado un color y que en conjunto forman una imagen. 
+Durante el flujo de la aplicación se hace uso de la cámara del dispositivo. Los \textit{frames} desde esta son los datos que se utilizan como entrada para la identificación. Dichos datos se reciben en formato \textit{bitmap}, matrices donde cada casilla tiene asignado un color y que en conjunto forman una imagen. 
 Ese \textit{bitmap} es convertido a \textit{byte~buffer}, denominado \textit{IMG data}, haciéndolo legible para la identificación. Además, utilizar \textit{byte~buffers} como entrada permite que la API de Java sea más rápida\footnote{\url{https://www.tensorflow.org/lite/performance/best_practices}}. Estos datos se cargan en el intérprete de TensorFlow~Lite y finalmente se obtienen los valores de resultado. Estos valores obtenidos son índices respecto a las etiquetas acompañados de la probabilidad de que esa imagen corresponda a dicha etiqueta. Este resultado se devuelve en un array, correspondiendo cada posición a cada una de las etiquetas disponibles. Finalmente, se seleccionan las tres etiquetas con mayor probabilidad y son mostradas por la interfaz.
 
 La interfaz de la aplicación se divide en dos zonas. En la figura~\ref{fig:app} se muestra la aplicación en funcionamiento, donde pueden apreciarse las distintas características de esta. En la parte central se refleja todo aquello que se recibe a través la cámara del dispositivo y en la parte inferior se sitúa un panel en el que aparecen los resultados de la identificación. Estos se muestran en orden según de qué material se considera que se trata acompañado del contenedor en el que se debe desechar y el porcentaje de confianza de cada elemento.
@@ -64,38 +64,65 @@ Además de estas características, cuenta con dos opciones configurables por el us
 \section{Pruebas}
 %-------------------------------------------------------------------
 \label{cap5:sec:pruebas}
-Con todo lo necesario desarrollado, se llevan a cabo varias pruebas para comprobar el funcionamiento de la aplicación de identificación. Tomando los resultados en el apartado~\ref{cap4:sec:resultados} se decidió que el mejor de los modelos obtenidos era para el que en las latas se habían utilizado un 70\% de imágenes generadas, con un 93\% de precisión. No obstante, se ha querido corroborar su correcto funcionamiento una vez introducido el modelo en la aplicación y utilizándolo sobre objetos nuevos del mundo real. Para ello se ha comparado el rendimiento de este modelo con el de otros tres de los entrenados. Se han seleccionado, como pueden verse resaltados en la figura~\ref{fig:modelosSeleccionados}, los dos modelos extremos, correspondiendo a los compuestos por completo por imágenes sintéticas y por imágenes reales, respectivamente; el modelo con el mejor resultado respecto a precisión y facilidad de obtención del \textit{dataset}, con el 70\% de imágenes generadas; y, por último, el simétrico del anterior, con el 30\% de imágenes sintéticas.
+
+
+
+Como ya se ha comentado, a la vista de os resultados descritos en el apartado~\ref{cap4:sec:resultados}, se decidió que para la aplicación móvil se usaría el modelo para cuyo entrenamiento se habían utilizado un 70\% de imágenes generadas para la categoría ``metal'', el cual con un 93\% de exactitud. No obstante, se ha querido corroborar su correcto funcionamiento una vez introducido el modelo en la aplicación y utilizándolo sobre objetos nuevos del mundo real. Para ello se ha comparado el rendimiento de este modelo con el de otros tres de los entrenados. Se han seleccionado, como pueden verse resaltados en la figura~\ref{fig:modelosSeleccionados}, los dos modelos extremos, correspondiendo a los compuestos por completo por imágenes sintéticas y por imágenes reales, respectivamente; el modelo con el mejor resultado respecto a precisión y facilidad de obtención del \textit{dataset}, con el 70\% de imágenes generadas; y, por último, el simétrico del anterior, con el 30\% de imágenes sintéticas, él cual resultó ser uno de los dos modelos con mayor exactitud en el \textit{test}.
 
 
 \figura{ModelosSeleccionados.pdf}{width=1\textwidth}{fig:modelosSeleccionados}{Variación de la precisión de la red neuronal con los modelos seleccionados destacados}
 
+\begin{figure}
+	\centering
+	\subfloat[Lata de conservas]
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appLataConserva}}}
+	\quad
+	\subfloat[Lata de bebida]
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appLataBebida}}}
+	\quad
+	\subfloat[Lata de encurtidos]
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appLataEncurtido}}}
+
+	\caption{Comparación con distintos objetos metálicos}
+    \label{fig:latas}
+\end{figure}
+
 Para las comparaciones se han cogido diversos objetos y se ha estudiado qué etiqueta cuenta con el mayor valor de confianza para cada uno. También se tiene en cuenta aquellos casos en que las dos primeras etiquetas tienen porcentajes muy similares y por lo tanto van cambiando entre primera y segunda posición.
-Puesto que la aplicación tan sólo utiliza uno de los modelos, se ha desarrollado una versión alterada para la realización de las pruebas. En esta segunda versión, denominada aplicación de \textit{test}, se incorporan los cuatro modelos simultáneamente y para cada objeto identificable se muestran los resultados de todos ellos. Al contrario que con la aplicación original, en esta no se va cambiando la posición del material con mayor confianza, sino que el orden se mantiene estable, generando una tabla en la que puede apreciarse la oscilación de los porcentajes con cada objeto detectado. En dicha tabla las filas indican los tres tipos de materiales. En cambio, cada columna corresponde a cada uno de los modelos, estos se identifican indicando los porcentajes de imágenes generadas y reales usadas en su entrenamiento. Estas se expresan primero con el porcentaje de imágenes reales, acompañado de la letra ``R'' en mayúscula, y después el porcentaje de imágenes generadas, seguido de la letra ``G'', ambos separados por un guión entre medias. Es decir, el modelo con todas las imágenes reales sería representado por ``100R - 0G''. De todas formas, para mayor claridad se ordenan de izquierda a derecha según disminuye la cantidad de imágenes reales.
+Puesto que la aplicación para el usuarion final (sección~\ref{cap5:sec:identificacion-objetos}) tan sólo utiliza uno de los modelos, se ha desarrollado una versión alterada para la realización de las pruebas. En esta segunda versión, denominada aplicación de \textit{test}, se incorporan los cuatro modelos simultáneamente y para cada objeto identificable se muestran los resultados de todos ellos. Al contrario que con la aplicación original, en esta no se va cambiando la posición del material con mayor confianza, sino que el orden se mantiene estable, generando una tabla en la que puede apreciarse la oscilación de los porcentajes con cada objeto detectado. En dicha tabla las filas indican los tres tipos de materiales. En cambio, cada columna se corresponde con cada uno de los modelos. Estos se identifican indicando los porcentajes de imágenes reales y generadas usadas en su entrenamiento, como puede verse en la figura~\ref{fig:latas}.
+
+\begin{figure}
+	\centering
+	\subfloat[Botella de vino]
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appBotellaVino}}}
+	\quad
+	\subfloat[Taza de cristal]
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appVasoCristal}}}
+
+	\caption{Comparación con distintos objetos de vidrio}
+    \label{fig:vidrio}
+\end{figure}
 
 Como se trata de casos de prueba, se prescinde de la información sobre en qué contenedor debe reciclarse cada objeto, dejando así más espacio para los datos de los modelos. Además, para mayor claridad durante el uso de la aplicación de \textit{test}, la columna correspondiente al modelo seleccionado para la aplicación final se le da cierto énfasis para distinguirla del resto.
 
 El objeto de estudio principal han sido los objetos metálicos, ya que son aquellos que han sido entrenados con imágenes generadas. Sin embargo, también se ha probado sobre objetos de los otros materiales para comprobar el rendimiento respecto a estos.
 
-\begin{figure}
-	\centering
-	\subfloat[Lata de conservas]
-		{{\includegraphics[width=0.4\textwidth]{Imagenes/appLataConserva}}}
-	\qquad
-	\subfloat[Lata de bebida]
-		{{\includegraphics[width=0.4\textwidth]{Imagenes/appLataBebida}}}
-	\qquad
-	\subfloat[Lata de encurtidos]
-		{{\includegraphics[width=0.4\textwidth]{Imagenes/appLataEncurtido}}}
 
-	\caption{Comparación con distintos objetos metálicos}
-    \label{fig:latas}
-\end{figure}
-En la figura~\ref{fig:latas} se pueden observar los resultados respecto a distintos objetos metálicos. Casi todos los modelos detectan con un nivel alto de confianza que en los tres casos se trata de objetos metálicos. A excepción del modelo entrenado por completo con imágenes sintéticas, el cual los identifica como vidrio. Un caso destacable es el de la lata de conservas con el modelo completamente formado por imágenes reales, el cual aunque la identifica mayoritariamente como metal, el porcentaje no llega a superar el 50\%. Este resultado se explica con la ausencia de imágenes de objetos de este tipo que contaba dicho \textit{dataset}, lo cual significa que el entrenamiento con las imágenes sintéticas está aportando información útil e incluso mejorando la identificación.
+En la figura~\ref{fig:latas} se pueden observar los resultados respecto a distintos objetos metálicos. Casi todos los modelos detectan con un nivel alto de confianza que en los tres casos se trata de objetos metálicos. La única excepción es el del modelo entrenado por completo con imágenes sintéticas, el cual no de una respuesta determinante entre vidrio y plástico. Un caso destacable es el de la lata de conservas con el modelo completamente formado por imágenes reales, el cual aunque la identifica mayoritariamente como metal, el porcentaje no llega a superar el 50\%. Este resultado se explica con la ausencia de imágenes de objetos de este tipo que contaba dicho \textit{dataset}, lo cual significa que el entrenamiento con las imágenes sintéticas está aportando información útil e incluso mejorando la identificación.
 
 
 
 Por otro lado, los ejemplos de vidrio resultan tener resultados sumamente positivos, los cuales se muestran en la figura~\ref{fig:vidrio}. Destaca frente al resto de objetos la identificación de una botella de vino, donde todos los modelos, sin excepción, la identifican correctamente con más de un 95\% de seguridad. En cambio con la taza de cristal los porcentajes disminuyen considerablemente, este resultado es esperado debido a lo complicado que puede resultar en ocasiones distinguir objetos de vidrio y plástico si son translúcidos.
+\begin{figure}
+	\centering
+	\subfloat[Bote de limpieza de plástico]
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appDetergente}}}
+	\quad
+	\subfloat[Botella de plástico de refresco]
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appBotellaCola}}}
 
+	\caption{Comparación con distintos objetos de plástico}
+    \label{fig:plastico}
+\end{figure}
 
 
 
@@ -105,43 +132,20 @@ Por último como pruebas de materiales de plástico se han tomado tres objetos. Do
 
 Con todos los resultados obtenidos de las pruebas de la red neuronal (capítulo~\ref{cap4:train}) y los realizados con objetos reales, se puede afirmar que la aplicación funciona adecuadamente. No obstante, aunque no se obtienen unos porcentajes de rendimiento como los de la sección~\ref{cap4:sec:resultados}, se considera que los resultados han sido positivos. 
 
-Por último, el tiempo de inferencia de la aplicación es de unos 200ms, aproximadamente 700ms en la de \textit{test}, utilizando la CPU del dispositivo. En cambio, si se realiza con la GPU estos valores se reducen a al rededor de la mitad.
-
-\begin{figure}
-	\centering
-	\subfloat[Botella de vino]
-		{{\includegraphics[width=0.4\textwidth]{Imagenes/appBotellaVino}}}
-	\qquad
-	\subfloat[Taza de cristal]
-		{{\includegraphics[width=0.4\textwidth]{Imagenes/appVasoCristal}}}
-
-	\caption{Comparación con distintos objetos de vidrio}
-    \label{fig:vidrio}
-\end{figure}
+Por último, el tiempo de inferencia de la aplicación es de unos 200ms, aproximadamente 700ms en la de \textit{test} (al tener que ejecutar cuatro modelos), utilizando la CPU del dispositivo. En cambio, si se realiza con la GPU estos valores se reducen a alrededor de la mitad.
 
 
 
-\begin{figure}
-	\centering
-	\subfloat[Bote de limpieza de plástico]
-		{{\includegraphics[width=0.4\textwidth]{Imagenes/appDetergente}}}
-	\qquad
-	\subfloat[Botella de plástico de refresco]
-		{{\includegraphics[width=0.4\textwidth]{Imagenes/appBotellaCola}}}
-
-	\caption{Comparación con distintos objetos de plástico}
-    \label{fig:plastico}
-\end{figure}
 
 
 
 \begin{figure}
 	\centering
 	\subfloat[]
-		{{\includegraphics[width=0.4\textwidth]{Imagenes/appBotellaPlastico1}}}
-	\qquad
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appBotellaPlastico1}}}
+	\quad
 	\subfloat[]
-		{{\includegraphics[width=0.4\textwidth]{Imagenes/appBotellaPlastico2}}}
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appBotellaPlastico2}}}
 
 	\caption{Comparación de la misma botella de plástico con segundos de diferencia}
     \label{fig:botellaPlastico}
