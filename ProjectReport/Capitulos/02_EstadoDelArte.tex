@@ -108,10 +108,9 @@ En la figura~\ref{fig:RN} se muestra la estructura habitual de una red neuronal 
 
 \figura{EsquemaRedNeuronal.pdf}{width=1\textwidth}{fig:RN}{Estructura de una red neuronal artificial.}
 
-Las neuronas reciben varias entradas y las combinan, le aplican la función de activación y el resultado es transmitido a otra neurona. La función de activación en redes neuronales devuelve una salida que es generada por una o varias entradas. Cada capa de la red cuenta con una función de activación. Las neuronas están conectadas entre sí mediante líneas y a cada una de estas conexiones se asocia con un valor numérico llamado peso~\cite{Wang2003, salas2004redes, basogain2008redes}.
-Durante el aprendizaje de la red se modifica el valor de los pesos asociados a las neuronas con el fin de que generar una salida a partir de unos datos de entrada. Se considera que el aprendizaje ha terminado cuando los valores de los pesos permanecen estables.
-
-
+Las neuronas están conectadas entre sí mediante líneas. A cada una de estas conexiones se les asocia un valor numérico llamado peso que indica su relevancia dentro de la red.
+A través de dichas conexiones las neuronas reciben datos de entrada. Estos se multiplican por sus respectivos pesos y se lleva a cabo un sumatorio, el valor obtenido se aplica en la función de activación cuyo resultado es transmitido a otra neurona~\cite{Wang2003, salas2004redes, basogain2008redes}.
+Durante el aprendizaje de la red se modifica el valor de los pesos asociados a las conexiones entre neuronas con el fin de generar una salida a partir de unos datos de entrada. Se considera que el aprendizaje ha terminado cuando los valores de los pesos permanecen estables.
 
 Algunos autores consideran que las redes neuronales artificiales se inspiraron en el trabajo de Ramón y Cajal quien, en 1888, demostró que el sistema nervioso está compuesto por una red de células individuales conectadas entre sí, las neuronas~\cite{lopez2008redes}. Otros nombran a Alan Turing como pionero al estudiar el cerebro como una forma de ver el mundo de la computación. 
 Independientemente, en todos los casos se toma a Warren McCulloch (neurobiólogo) y Walter Pitts (estadístico) como los primeros teóricos que concibieron fundamentos de la computación neuronal en el artículo \textit{``A logical calculus of Ideas Imminent in Nervous Activity''} en 1943~\cite{firstrna1943}. 
@@ -151,7 +150,7 @@ La última red es MobileNet, esta también fue desarrollada por Google. Surgió con
 %-------------------------------------------------------------------
 \label{cap2:sec:tensorflow}
 
-En 2011 el equipo de investigación encargado de la inteligencia artificial de aprendizaje profundo de Google, Google~Brain, comenzó a investigar el uso de redes neuronales a gran escala para utilizarlo en los productos de la empresa. Como resultado desarrollaron DistBelief, un sistema escalable de entrenamiento e inferencia utilizado para GoogleNet~\cite{inceptionnet2015}. 
+En 2011 el equipo de investigación encargado de la inteligencia artificial de aprendizaje profundo de Google, Google~Brain, comenzó a investigar el uso de redes neuronales a gran escala para utilizarlo en los productos de la empresa. Como resultado desarrollaron DistBelief, un sistema escalable de entrenamiento e inferencia utilizado para GoogLeNet~\cite{inceptionnet2015}. 
 A partir de la experiencia obtenida en el desarrollo de DistBelief, y con un entendimiento más completo de las necesidades y requisitos necesarios para generar un sistema mejor, desarrollaron TensorFlow\footnote{\url{https://www.tensorflow.org/}}. 
 
 Este es un entorno de trabajo de código abierto de aprendizaje automático que utiliza grafos de flujo de datos.
@@ -177,7 +176,14 @@ Como resultado del entrenamiento se generan dos archivos en el ordenador. El pri
 \section{Generación sintética de imágenes}
 %-------------------------------------------------------------------
 \label{cap2:sec:generacion}
-Un problema del entrenamiento de redes neuronales es que se requieren muchos datos, y en caso de que la red esté enfocada a la identificación de objetos estos datos de entrenamiento deben de ser imágenes etiquetadas. Para facilitar la obtención de los \textit{dataset} en este trabajo de fin de grado se plantea la posibilidad de utilizar imágenes sintéticas.
+
+\todo{Para llevar a cabo el entrenamiento de las redes neuronales se requiere una gran cantidad datos, y si se trata de redes enfocadas a la identificación de objetos dichos datos deben ser imágenes. El problema no es sólo obtener las imágenes, sino que además deben estar correctamente etiquetadas. Una empresa que se encuentra con este problema es Google, la cual, gracias a su herramienta Google Street View, cuenta con una base de datos de imágenes descomunal pero que se encuentran sin etiquetar. Para llevar a cabo dicha tarea aprovecharon la comprobación "No soy un robot" utilizada en millones de páginas donde se pide a los usuarios que identifiquen cierto elemento dentro de una imagen. Este procedimiento ya lo habían llevado a cabo previamente con el reCAPTCHA donde había que reconocer trozos de texto, los cuales eran posteriormente utilizados en sus sistemas de reconocimiento óptico de caracteres (OCR de sus siglas en inglés).
+
+Sin embargo, el primer paso para llevar a cabo el reconocimiento de objetos es la obtención de datos para entrenar la red neuronal. Para facilitar...
+}
+
+Un problema del entrenamiento de redes neuronales es que se requieren muchos datos, y en caso de que la red esté enfocada a la identificación de objetos estos datos de entrenamiento deben de ser imágenes etiquetadas.
+Para facilitar la obtención de los \textit{dataset} en este trabajo de fin de grado se plantea la posibilidad de utilizar imágenes sintéticas.
 
 Actualmente hay un contacto continuo con los gráficos generados informáticamente. Desde el desarrollo de videojuegos hasta el diseño de un reactor nuclear se apoyan en la informática gráfica. Esto abarca dos grandes campos de aplicación. Por un lado se aplica en el proceso de reconstruir un modelo 2D o 3D a partir de una imagen, esto es denominado procesamiento de la imagen. El proceso contrario es la síntesis de la imagen, consiste en la construcción sintética de imágenes a partir de modelos de dos o tres dimensiones. Dichos modelos pueden haber sido producidos por métodos artificiales o recogidos del mundo real~\cite{lopez1999ig}.
 
