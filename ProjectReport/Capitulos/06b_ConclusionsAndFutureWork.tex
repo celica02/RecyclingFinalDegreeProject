@@ -4,63 +4,65 @@
 %
 %---------------------------------------------------------------------
 
-\chapter{Conclusions and future work}
+\chapter*{Conclusions and future work}
 
 
 
 %-------------------------------------------------------------------
-\section{Summary}
+\section*{Summary}
 %-------------------------------------------------------------------
 \label{cap6b:sec:summary}
 
 
-The result of the project is the prototype of a recycling help application for Android devices. It shows what is pointed at with the device's camera, identifying and offering information about the material of the object, as well as indicating the proper way to dispose it.
-As has been commented throughout the document, it's necessary to use artificial vision techniques, which currently involve the generation of a model trained by a neural network. This implies the need to establish several subgoals.
+The result of the project is the prototype of a recycling-aimed application for Android devices. It shows the object that is pointed at with the device's camera, identifying and offering information about its material, as well as indicating the proper way to dispose it.
+As it has been commented throughout the document, it is necessary to use artificial vision techniques, which currently involve the generation of a model trained by a neural network. This implies the need to establish several subgoals.
 
 
-The first sub-objective proposed is to obtain a wide, clear and varied dataset with images of all the materials that will be available. In order to facilitate the obtaining of the datasets, an application for generating synthetic images from three-dimensional models has been developed. To do so, it has been used Unity, a multiplatform video game engine created by Unity Technologies.
-The application flow consists of loading the different 3D models available, separated by material in the resources, and taking numerous captures of each one. In each capture, both the position and rotation of the object, as well as the background, are established randomly. This is required in order to compile a high diversity in the images. Due to the inconveniences that arose during the obtaining of the models, the final dataset was composed of three different materials (metal, glass and plastic), in which real images are mixed with synthetic images for metal material.
+The first sub-objective proposed was to obtain a wide, clear and varied dataset made of images of all the materials that will be available. In order to facilitate the obtaining of these datasets, an application to generate synthetic images from three-dimensional models has been developed. To do so, Unity, has been used.
+The application flow consists of loading the diverse 3D models available, sorted by material in the resources, and then taking numerous captures of each one. In each capture, both the position and rotation of the object, as well as the background, are established randomly. This is required as a way to compile high diversity in the images. Due to the inconveniences that arose during the obtaining of the models, the final dataset was composed of three different materials (metal, glass and plastic), in which real images are mixed with synthetic images for metal material.
 
-Once the dataset was generated, it was proceed to the second subgoal. This is divided into two different steps. The first one, is the the neural network training and the trained model generation using the previously obtained dataset. The result of the training will be later incorporated into Android Studio to be used in the final mobile application.
-For this section, it has been used a TensorFlow Lite library, which allows transfer training using the EfficentNet network and provides tools to perform easily and intuitively the model training.
+Once the dataset was generated, it was proceed to the second subgoal. This is divided into two different steps. The first one, is the neural network training and the trained model generation using the previously obtained dataset. The result of the training will be later incorporated into Android Studio to be used in the final mobile application.
+For this section, a TensorFlow Lite library has been used, which allows transfer training using the EfficentNet network and provides tools to perform the model training easily and intuitively.
 
-The second step, was to carried out several tests and comparisons in order to find the ratio between synthetic and real images that offer the best balance between the ease of obtaining the dataset and the accuracy of the trained model. The conclusion of the tests was that from 30\% onward of real images, the precision barely changes staying above 90\% confidence. Which means that the accuracy of the model when all the images are real and when only 30\% of these are used in one of the materials, is really similar. With this results it was decided to use the model which metal material data was composed of 70\% generated images and 30\% real images with a 93\% of accuracy.
+The second step, consisted of carrying out several tests and comparisons in order to find the ratio between synthetic and real images which offered the best balance between the ease of obtaining the dataset and the accuracy of the trained model. 
+
+The conclusion of the tests said that from 30\% onward of real images, the precision barely changes staying above 90\% confidence. Which means that the accuracy of the model when all the images are real and when only 30\% of these are used in one of the materials is quite similar. With these results it was decided to use the model in which metal material data was composed of 70\% generated images and 30\% real images with a 93\% of accuracy.
 
 
-Lastly, the development of the Android application takes place, using the Andorid Studio tool and TensorFlow Lite's libraries. The application receives images of the framse captured by the camera and, consulting the imported model, tries to identify the object that appears in the image. As a result, it orders the available labels depending the confidence for each material. This way it's  informing the user about the material of the object, the container where to dispose it and the confidence of the identified materials.
+Lastly, the development of the Android application took place, using the Andorid Studio tool and TensorFlow Lite's libraries. The application receives images of the frames captured by the camera and, consulting the imported model, tries to identify the object that appears in the image. As a result, it sorts the available labels depending on the confidence for each material. This way it is informing the user about the material of the specified object, the container where to dispose it into and the confidence of the identified materials.
 
 
-In order to test its performance, several tests were carried out on real world objects. To do so some changes were made to the application leading the creation of a sencond one, cosidered the test application. Using this application the performance of four models is compared simultaneously. With the data obtained from this tests it was corroborated the correct performance of the trained model selected .
+In order to test its performance, several tests were carried out on real world objects. To do so, some changes were made to the application leading the creation of a second one, considered as the test application. Using this application, the performance of four models is compared simultaneously. With the data obtained from this tests, the correct performance of the trained model seleccted was corroborated.
 
 
 
 %-------------------------------------------------------------------
-\section{Conclusions}
+\section*{Conclusions}
 %-------------------------------------------------------------------
 \label{cap6b:sec:conclusions}
 
 During the development, various difficulties and conclusions that affected it were observed, which should be taken into account in possible future extensions or in the development of similar and related projects.
 
-It was experieced the real difficulty of obtaining large datasets of specific objects not may resources are available. This has caused limiting ourselves to have just three materials. A solution to this problem can be the use of synthetic images to complete the dataset.
-This work has shown that, at least in the proposed context, this option has highly positive results, because even though an important part of the dataset was formed by synthetic images, the accuracy was barely affected. After conducting tests in a real environment,  as a result of the accurate identification with positive confidence obtained the correct performance of the application is corroborated.
+It was a real problem to find large datasets based on some of these specific objects, as not many resources of this kind are available. This has caused limitations, as just having three materials. A solution to this problem can be the use of synthetic images to complete the dataset.
+The work has shown that, at least in the proposed context, this option has highly positive results, because even though an important part of the dataset was formed by synthetic images, the accuracy was barely affected. After conducting tests in a real environment, the correct performance of the application has been corroborated as a result of the accurate identification with positive confidence obtained.
 For this reason, the image generator application is considered a useful support to many out-of-the-box projects in the field of image and object recognition.
 
-However, in order for this application to be used, it's necessary that getting synthetic images is easier than getting real photographs, since there is still some difficulty generating the dataset. This is caused by the difficulty to obtain three-dimensional models with high level of realism in textures and materials. This is importante because otherwise the way the light falls and reflects on them can be unrealistic and cause problems in the training of the neural network. Wich makes the problem of generating datasets not entirely solved.
+However, in order for this application to be used, it is necessary that getting synthetic images is easier than getting real photographs, since there is still some difficulty generating a proper dataset. This is mainly caused by the trouble obtaining three-dimensional models with high level of realism in textures and materials. This is important because, otherwise, the way the light falls and reflects on them can be unrealistic and cause problems in the training of the neural network, which makes the problem of generating datasets not entirely solved.
 
-Lighting is another important element, despite the facilities that Unity offers to create different types of lighting, without enough knowledge and experience the results can end up being poor and unrealistic. This is a problem since the application is going to be used on real objects, and if there is no balance between that and what is used for training, the precision of the application would noticeably decrease. This could be observed when the dataset had more than 80\% of synthetic images, where the training images differ form the object in reality, the results were worse in comparison with the rest of the percentages.
-
-
-With the results obtained during the coursework and the outcome of other synthetic datasets based projects, it can be stated that the correct performance of a synthetic images dataset deppends whether it has been mixed with real images. This happens because virtual and real cameras are different sensors.
+Lighting is another important element. Despite the facilities that Unity offers to create different types of lighting, without enough knowledge and experience the results can end up being poor and unrealistic. This is a problem since the application is going to be used on real objects, and if there is no balance between that and what is used for training, the precision of the application would noticeably decrease. This could be observed when the dataset had more than 80\% of synthetic images, where the training images differed from the real object. The results were worse in comparison with the rest of the percentages.
 
 
-Lastly, it has to be taken in consideration that the performance mixing real and sythetic on just one material also influence the outcome of the others which only contained real images in the dataset.
+With the results obtained during the coursework and the outcome of other synthetic datasets-based projects, it can be stated that the correct performance of a synthetic images dataset depends whether it has been mixed with real images. This happens because virtual and real cameras are different sensors.
+
+
+Lastly, it must be taken in consideration that the performance mixing real and sythetic images on just one material also influence the outcome of the others which only contained real images in the dataset.
 
 
 
 
 
 %-------------------------------------------------------------------
-\section{Future work}
+\section*{Future work}
 %-------------------------------------------------------------------
 \label{cap6b:sec:future-work}
 
@@ -68,16 +70,16 @@ Lastly, it has to be taken in consideration that the performance mixing real and
 
 The project has several scalable features. The first one is obtaining a larger dataset, which would add more variety of materials and objects to identify. This can be done from real images by themselves, or mixing them with synthetic images. In the case of the second option it is necessary to obtain or generate high quality three-dimensional models of all the materials and objects required. Another expandable characteristic to allow greater diversity of the generated images is to extent the number of images available for the background.
 
-In order to generate more realistic images, it would be necessary to review the lighting in the scene, making it alike to how the objects are later seen in a real environment.
-Also, it is necessary to acquire a real image dataset of the materials added. The amount of images this would require depends whether it is to be combined with synthetic images or not.
+So ast alike to how the objects are later seen in a real environment.
+Also, it would be necessary to acquire a real image dataset of the materials added. The amount of images this would require depends on whether it is needed to be combined with synthetic images or not.
 
-Once the dataset has been obtained just trainning and generate the model is left to finally import it into the application using Android Studio.
-All added materials also must be related to its appropriate container or disposal site, which is the information the user is looking for.
+Once the dataset has been obtained, just training and generating the model is left to finally import it into the application using Android Studio.
+All added materials must also be related to its appropriate container or disposal site, which is the information the user will looking for.
 
-To improve the network and expand the dataset, it could be developed a feature where users can send their own tagged photographs  allowing the continuous growth of the application and a better service to users.
+To improve the network and expand the dataset, it could be developed a feature where users can send their own tagged photographs, allowing the continuous growth of the application and a better service for the users.
 
 
-Another interesting additional improvement is to convert the images generator into an executable application independent of Unity, in which users can generate datasets for their projects using their own models imported into it, or use some ones offered by default, for example those used in this coursework. Although the runtime import of models is not very widespread in video games, due to the number and diversity of users that Unity has, this functionality has been widely discussed and explored. It can be find packages to do so, for example `` TriLib 2 - Model Loading Package '' by Ricardo Reis \ footnote {\ url {https://assetstore.unity.com/packages/tools/modeling/trilib-2 -model-loading-package-157548}}, `` Runtime OBJ Importer '' from Dummiesman \ footnote {\ url {https://assetstore.unity.com/packages/tools/modeling/runtime-obj-importer-49547} } u `` OBJReader '' from Starscene Software \ footnote {\ url {https://starscenesoftware.com/objreader.html\#ObjReader}}, as well as numerous forum discussions on the subject.
+Another additional and interesting improvement would be to convert the images generator into an executable application independent of Unity, in which users can generate datasets for their projects using their own models imported into it, or use some offered by default, like, for instance, those used in this coursework. Although the runtime import of models is not very widespread in video games, due to the number and diversity of users that Unity has, this functionality has been widely discussed and explored. Packages of this kind can be found to do so, for example `` TriLib 2 - Model Loading Package '' by Ricardo Reis \ footnote {\ url {https://assetstore.unity.com/packages/tools/modeling/trilib-2 -model-loading-package-157548}}, `` Runtime OBJ Importer '' from Dummiesman \ footnote {\ url {https://assetstore.unity.com/packages/tools/modeling/runtime-obj-importer-49547} } u `` OBJReader '' from Starscene Software \ footnote {\ url {https://starscenesoftware.com/objreader.html\#ObjReader}}, as well as numerous forum discussions on the subject.
 
 
 The Android application itself has also several properties expandable in future work. One of them is to personalized more the user interface so it can offer information about the different containers available or the recycling process. Another option is to develop the application for iOS devices, allowing it to be used by more users.

@@ -15,7 +15,7 @@ En este capítulo se trata el desarrollo de la aplicación móvil y se estudia su f
 \section{Introducción}
 %-------------------------------------------------------------------
 \label{cap5:sec:introduccion}
-Como se ha comentado, la aplicación de identificación de objetos para reciclaje es el objetivo principal de este trabajo de fin de grado. Se trata de una aplicación para Android que, utilizando la cámara del dispositivo en el que está instalada, identifica el material del objeto al que está enfocando el usuario. En la interfaz aparecen las tres opciones con más probabilidad, acompañadas del porcentaje de confianza respecto a esa opción. Independientemente de cuántas etiquetas de materiales distintas haya, siempre se muestran las tres con mayor confianza.
+Como se ha comentado, la aplicación de identificación de objetos para reciclaje es el objetivo principal de este Trabajo de Fin de Grado. Se trata de una aplicación para Android que, utilizando la cámara del dispositivo en el que está instalada, identifica el material del objeto al que está enfocando el usuario. En la interfaz aparecen las tres opciones con más probabilidad, acompañadas del porcentaje de confianza respecto a esa opción. Independientemente de cuántas etiquetas de materiales distintas haya, siempre se muestran las tres con mayor confianza.
 La aplicación está constantemente interpretando lo que recibe desde la cámara, así que las etiquetas y sus respectivos porcentajes se actualizan ininterrumpidamente sin necesidad de estar tomando fotografías para cada elemento.
 
 
@@ -36,7 +36,7 @@ Ese \textit{bitmap} es convertido a \textit{byte~buffer}, denominado \textit{IMG
 
 La interfaz de la aplicación se divide en dos zonas. En la figura~\ref{fig:app} se muestra la aplicación en funcionamiento, donde pueden apreciarse las distintas características de esta. En la parte central se refleja todo aquello que se recibe a través la cámara del dispositivo y en la parte inferior se sitúa un panel en el que aparecen los resultados de la identificación. Estos se muestran en orden según de qué material se considera que se trata acompañado del contenedor en el que se debe desechar y el porcentaje de confianza de cada elemento.
 
-Como se comentó en el capítulo~\ref{cap3}, al hablar de la obtención del \textit{dataset} utilizado para el entrenamiento, para el prototipado se ha trabajado con tres materiales (metal, vidrio y plástico). En la aplicación se muestran las tres posibilidades de identificación sobre las que se tiene más confianza, lo que significa que en este caso se presentan todas las opciones disponibles. Esto es independiente de la cantidad de materiales disponibles identificables. Es decir, si como trabajo futuro la cantidad de materiales se ampliara, y no se alterara esta funcionalidad, se continuarían mostrando las tres opciones con mayor probabilidad.
+Como se comentó en el capítulo~\ref{cap3:app-generacion-imagenes}, al hablar de la obtención del \textit{dataset} utilizado para el entrenamiento, para el prototipado se ha trabajado con tres materiales (metal, vidrio y plástico). En la aplicación se muestran las tres posibilidades de identificación sobre las que se tiene más confianza, lo que significa que en este caso se presentan todas las opciones disponibles. Esto es independiente de la cantidad de materiales disponibles identificables. Es decir, si como trabajo futuro la cantidad de materiales se ampliara, y no se alterara esta funcionalidad, se continuarían mostrando las tres opciones con mayor probabilidad.
 
 El panel de los resultados puede desplegarse hacia arriba, de esta forma se visualizan varias características como la resolución con la que se recogen las imágenes, la rotación del dispositivo y el tiempo de inferencia, que es el tiempo que tarda en detectar de qué objeto se trata.
 Además de estas características, cuenta con dos opciones configurables por el usuario que permiten la mejora de la aplicación. La primera es la elección de cuántos hilos utiliza la aplicación, lo que permite acelerar la ejecución de los operadores. Esta aceleración tiene un coste; el aumento de los hilos utilizados hará que se necesiten más recursos y batería. La otra opción es elegir entre utilizar la CPU o la GPU. La GPU es uno de los aceleradores que TensorFlow~Lite puede aprovechar. En dispositivos de gama media o alta la GPU es más rápida que la CPU, lo que reduce notablemente el tiempo de inferencia.
@@ -80,8 +80,8 @@ Como ya se ha comentado, a la vista de os resultados descritos en el apartado~\r
 	\subfloat[Lata de bebida]
 		{{\includegraphics[width=0.31\textwidth]{Imagenes/appLataBebida}}}
 	\quad
-	\subfloat[Lata de encurtidos]
-		{{\includegraphics[width=0.31\textwidth]{Imagenes/appLataEncurtido}}}
+	\subfloat[Lata de pintura]
+		{{\includegraphics[width=0.31\textwidth]{Imagenes/appLataPintura}}}
 
 	\caption{Comparación con distintos objetos metálicos}
     \label{fig:latas}
@@ -107,7 +107,7 @@ Como se trata de casos de prueba, se prescinde de la información sobre en qué co
 El objeto de estudio principal han sido los objetos metálicos, ya que son aquellos que han sido entrenados con imágenes generadas. Sin embargo, también se ha probado sobre objetos de los otros materiales para comprobar el rendimiento respecto a estos.
 
 
-En la figura~\ref{fig:latas} se pueden observar los resultados respecto a distintos objetos metálicos. Casi todos los modelos detectan con un nivel alto de confianza que en los tres casos se trata de objetos metálicos. La única excepción es el del modelo entrenado por completo con imágenes sintéticas, el cual no de una respuesta determinante entre vidrio y plástico. Un caso destacable es el de la lata de conservas con el modelo completamente formado por imágenes reales, el cual aunque la identifica mayoritariamente como metal, el porcentaje no llega a superar el 50\%. Este resultado se explica con la ausencia de imágenes de objetos de este tipo que contaba dicho \textit{dataset}, lo cual significa que el entrenamiento con las imágenes sintéticas está aportando información útil e incluso mejorando la identificación.
+En la figura~\ref{fig:latas} se pueden observar los resultados respecto a distintos objetos metálicos. Casi todos los modelos detectan con un nivel alto de confianza que en los tres casos se trata de objetos metálicos. La única excepción es el del modelo entrenado por completo con imágenes sintéticas, el cual no de una respuesta determinante entre vidrio y plástico. %Un caso destacable es el de la lata de conservas con el modelo completamente formado por imágenes reales, el cual aunque la identifica mayoritariamente como metal, el porcentaje no llega a superar el 50\%. Este resultado se explica con la ausencia de imágenes de objetos de este tipo que contaba dicho \textit{dataset}, lo cual significa que el entrenamiento con las imágenes sintéticas está aportando información útil e incluso mejorando la identificación.
 
 
 

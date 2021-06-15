@@ -80,7 +80,7 @@ Otro ejemplo es el reconocimiento de matrículas de los coches presentes en una i
 
 %Destacamos además, algunos proyectos semejantes al que se presenta en este trabajo de fin de grado, ya que cuentan tanto con parte de identificación de objetos, como de generación de \textit{dataset}. En este punto del capítulo se hablará de lo primero, la identificación; en cambio la generación de imágenes se tratará más en profundidad en la sección~\ref{cap2:sec:generacion}.
 
-SynthDet~\cite{synthdet2020} es un proyecto cuyo fin es identificar los distintos productos contenidos en carritos de la compra con el objetivo de facturar automáticamente las adquisiciones de los clientes en supermercados. Está basado en Amazon~Go~\cite{amazongo2018}, supermercado de la empresa Amazon, ubicado en Seattle (Estados Unidos). 
+SynthDet~\cite{synthdet2020} es un proyecto cuyo fin es identificar los distintos productos contenidos en carritos de la compra con el objetivo de facturar automáticamente las adquisiciones de los clientes en supermercados. Está basado en Amazon~Go~\cite{polacco2018amazon}, supermercado de la empresa Amazon, ubicado en Seattle (Estados Unidos). 
 El modelo de Amazon~Go se basa en un sistema de cámaras y sensores distribuidos por el establecimiento que analizan los movimientos de los clientes. Estos, además de obtener la información necesaria para realizar los cobros, también extraen información sobre las pautas de comportamiento de los consumidores~\cite{polacco2018amazon}. SynthDet propone realizar la misma tarea de identificación y facturación de productos, pero entrenando el modelo a partir de imágenes sintéticas. Esta forma de entrenamiento se trata con mayor profundidad en la sección~\ref{cap2:sec:generacion}.
 
 Otros proyectos relacionados son la detección de drones~\cite{lepetitdrones2014} y la identificación de piezas industriales~\cite{industrialdetection2020}, que cuentan con un trasfondo similar de identificar objetos en entornos reales. 
@@ -183,7 +183,7 @@ Sin embargo, el primer paso para llevar a cabo el reconocimiento de objetos es l
 }
 
 Un problema del entrenamiento de redes neuronales es que se requieren muchos datos, y en caso de que la red esté enfocada a la identificación de objetos estos datos de entrenamiento deben de ser imágenes etiquetadas.
-Para facilitar la obtención de los \textit{dataset} en este trabajo de fin de grado se plantea la posibilidad de utilizar imágenes sintéticas.
+Para facilitar la obtención de los \textit{dataset} en este Trabajo de Fin de Grado se plantea la posibilidad de utilizar imágenes sintéticas.
 
 Actualmente hay un contacto continuo con los gráficos generados informáticamente. Desde el desarrollo de videojuegos hasta el diseño de un reactor nuclear se apoyan en la informática gráfica. Esto abarca dos grandes campos de aplicación. Por un lado se aplica en el proceso de reconstruir un modelo 2D o 3D a partir de una imagen, esto es denominado procesamiento de la imagen. El proceso contrario es la síntesis de la imagen, consiste en la construcción sintética de imágenes a partir de modelos de dos o tres dimensiones. Dichos modelos pueden haber sido producidos por métodos artificiales o recogidos del mundo real~\cite{lopez1999ig}.
 
