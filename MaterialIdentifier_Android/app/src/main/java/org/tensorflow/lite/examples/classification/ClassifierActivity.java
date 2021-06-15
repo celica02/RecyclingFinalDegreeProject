@@ -132,7 +132,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
             if (classifier3 != null) {
               //final long startTime = SystemClock.uptimeMillis();
               final List<Classifier.Recognition> results3 =
-                      classifier2.recognizeImage(rgbFrameBitmap, sensorOrientation);
+                      classifier3.recognizeImage(rgbFrameBitmap, sensorOrientation);
               //lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
               LOGGER.v("Detect: %s", results3);
 
