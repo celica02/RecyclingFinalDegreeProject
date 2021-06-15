@@ -253,7 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   materialsTypeCont: 0
   photosCont: 0
-  photosQuantity: 5
+  photosQuantity: 2
   png: 0
 --- !u!4 &564722365
 Transform:
