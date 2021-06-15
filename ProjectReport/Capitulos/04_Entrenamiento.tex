@@ -113,7 +113,7 @@ Para todos los \textit{datasets}, a partir del segundo episodio, se obtiene una 
 
 
 En la figura~\ref{fig:TestRN}, por el contrario, se observa cómo varía la exactitud al probarse el modelo con los datos de \textit{test}, aquí se sacan las primeras conclusiones sobre la red. Similar a como se realizó el entrenamiento, para el \textit{test} los datos también se dividen el lotes. En cada iteración la red se prueba sobre cada lote de imágenes y la tasa de acierto se va actualizando según los resultados obtenidos.
-Se observa que la mayoría de las opciones se mantienen casi todo el proceso en una precisión mayor del 90\%. Los casos en los que se puede contemplar una caída de la exactitud, son aquellos que cuentan con mayor porcentaje de imágenes sintéticas para el entrenamiento. Esto se debe a que al haber visto muy pocas imágenes reales de este material durante el entrenamiento ahora en el \textit{test} no las identifica como metal, provocando que la tasa de aciertos decrezca notablemente.
+Se observa que la mayoría de las opciones se mantienen casi todo el proceso en una tasa de acierto mayor del 90\%. Los casos en los que se puede contemplar una caída de la exactitud, son aquellos que cuentan con mayor porcentaje de imágenes sintéticas para el entrenamiento. Esto se debe a que al haber visto muy pocas imágenes reales de este material durante el entrenamiento ahora en el \textit{test} no las identifica como metal, provocando que la tasa de aciertos decrezca notablemente.
 
 
 
@@ -128,7 +128,7 @@ Los dos \textit{datasets} que cuentan con la mayor cantidad de imágenes sintétic
 De cara a elegir cuál de los modelos entrenados utilizar en la aplicación para dispositivos móviles, se tiene en cuenta el rendimiento de la red y la facilidad de obtención del \textit{dataset}. Esto se traduce en que se busca un modelo con un alto nivel de exactitud pero que también cuente con un gran número de imágenes generadas, ya que estas, con lo desarrollado en el proyecto, se pueden conseguir de manera más fácil que las reales.
 %\todo{ampliar esto en el capítulo 3}
 
-Finalmente, se considera como mejor opción el modelo entrenado con un 70\% de imágenes generadas en el material de metal. Esta opción es de las que mayor precisión tienen y a la vez permite tener un \textit{dataset} que funciona adecuadamente formado principalmente por imágenes sintéticas, lo que facilita su obtención.
+Finalmente, se considera como mejor opción el modelo entrenado con un 70\% de imágenes generadas en el material de metal. Esta opción es de las que mayor exactitud tienen y a la vez permite tener un \textit{dataset} que funciona adecuadamente formado principalmente por imágenes sintéticas, lo que facilita su obtención.
 
 
 
